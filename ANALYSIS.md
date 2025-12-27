@@ -116,69 +116,97 @@ ihm_validation/
 ├── reporting.py            ← Creates the final report (HTML, PDF)
 └── utils.py                ← Helper functions
 
-**Design principle**: Each data type has its own module. This makes it:
-- Easy to understand
-- Easy to test
-- Easy to add new data types (like FRET later)
+## 2. Technical Architecture
 
-### 2.2 How Data Flows Through System
-Input: Structure file + Experimental data
+### 2.1 Repository Structure - 18 Python Modules
+
+The codebase consists of 18 Python files totaling 9,261 lines of code:
+
+**Core Validation Modules (Data Type Specific):**
+- **cx.py** (1,298 lines) - Crosslinking-MS validation
+- **em.py** (887 lines) - 3D Electron Microscopy validation
+- **sas.py** (729 lines) - Small Angle Scattering validation
+
+**Input/Output:**
+- **mmcif_io.py** (1,349 lines) - Reads/writes structure files in mmCIF format
+- **format_checker.py** (104 lines) - Validates input format
+
+**Quality Assessment:**
+- **molprobity.py** (662 lines) - Geometry validation (bond angles, clashes, Ramachandran)
+- **excludedvolume.py** (211 lines) - Checks for steric clashes
+- **precision.py** (205 lines) - Model precision calculations
+
+**Reporting & Visualization:**
+- **report.py** (545 lines) - Generates validation reports
+- **get_plots.py** (624 lines) - Plot generation
+- **sas_plots.py** (443 lines) - SAS-specific plots
+- **images.py** (64,910 bytes) - Image/plot rendering
+- **generate_static_html_pages.py** (126 lines) - Static HTML pages
+
+**Orchestration & Utilities:**
+- **ihm_validator.py** (445 lines) - Main entry point, command-line interface
+- **utility.py** (864 lines) - Shared utility functions
+- **futures.py** (554 lines) - Async/parallel processing
+- **molprobity_convert.py** (169 lines) - Data conversion utilities
+- **__init__.py** (22 lines) - Package initialization
+
+**TOTAL: 9,261 lines of code**
+
+Input (mmCIF + metadata)
 ↓
-[STAGE 1] Load the data
-
-Read structure coordinates
-Read experimental data
-Check files are valid
+Format Checking (format_checker.py)
 ↓
-[STAGE 2] Data Quality Check
-Is the experimental data good quality?
-Produces quality metrics
+Data Parsing (mmcif_io.py)
 ↓
-[STAGE 3] Model Quality Check
-Are bond angles correct?
-Are there steric clashes?
-Produces geometry metrics
+Validation (runs in parallel via futures.py):
+├── Crosslinking-MS (cx.py)
+├── SAS (sas.py)
+├── 3DEM (em.py)
+└── Geometry (molprobity.py, excludedvolume.py)
 ↓
-[STAGE 4] Fit Assessment
-Does model match SAS data? (χ² value)
-Does model match crosslinks? (% satisfied)
-Does model match EM map? (correlation)
+Report Generation (report.py)
+├── Plots (get_plots.py, sas_plots.py, images.py)
+├── HTML (jinja2 templates)
+└── PDF (pdfkit)
 ↓
-[STAGE 5] Report Generation
-Compile all results
-Make graphs and plots
-Create HTML report
-Create PDF report
-↓
-Output: Validation Report
+Output (HTML + PDF report)
 
+### 2.3 Main Entry Point: ihm_validator.py
 
-### 2.3 Testing Structure
+The `ihm_validator.py` file is the **main orchestrator**. It:
 
-Tests are in `tests/` folder:
-tests/
-├── test_validation.py        ← Test the main pipeline
-├── test_data_quality.py      ← Test data quality checks
-├── test_model_quality.py     ← Test geometry checks
-├── test_sas.py               ← Test SAS validation
-├── test_crosslink.py         ← Test Crosslinking-MS validation
-├── test_3dem.py              ← Test 3DEM validation
-├── test_reporting.py         ← Test report generation
-└── data/                     ← Sample files for testing
-├── structures/           ← Sample structure files
-├── sas_data/            ← Sample SAS files
-└── crosslink_data/      ← Sample crosslink files
+1. Parses command-line arguments
+2. Reads input mmCIF structure file
+3. Extracts metadata and parameters
+4. Coordinates validation runs
+5. Generates reports in HTML/PDF
 
-**Why this matters**: Each part is tested separately. This ensures quality.
+**Key command-line options:**
+- `-f` - Input mmCIF file
+- `--output-root` - Where to save reports
+- `--databases-root` - Path to cached databases
+- `-p` - Physical principles used
+- `-models` - Number of models
+- `-mp` - Model precision value
+- `-v1` - Fit to modeling data info
+- `-v2` - Fit to validation data info
 
-### 2.4 Web Interface
+This allows flexibility in how validation is configured.
 
-When you use the validation server at https://validate.pdb-ihm.org, it uses:
+### 2.4 Why 18 Files Instead of 5-6?
 
-- **templates/** folder - HTML templates for the report
-- **static/** folder - CSS styling and JavaScript for interactivity
+The codebase is more **specialized** than typical validation software:
 
-These make the report look nice and professional.
+1. **Separate data type modules** (cx.py, em.py, sas.py) - Each is substantial
+2. **Detailed geometry checking** (molprobity.py) - Complex stereo validation
+3. **Advanced plotting** (get_plots.py, sas_plots.py, images.py) - Three separate modules
+4. **Multiple output formats** - HTML and PDF require separate handling
+5. **Async processing** (futures.py) - Handles parallel validation
+
+This is more granular than expected for a validation tool, showing:
+- Mature, production-grade design
+- Specialized scientific functions
+- Attention to performance (parallelization)
 
 ---
 
