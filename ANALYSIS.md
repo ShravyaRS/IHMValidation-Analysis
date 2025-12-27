@@ -1,6 +1,6 @@
 # IHMValidation: Complete Technical Analysis Report
 
-**Prepared by**: [Your Name]  
+**Prepared by**: Shravya R S
 **Date**: December 2025  
 **Repository**: https://github.com/salilab/IHMValidation  
 **License**: GPLv3
