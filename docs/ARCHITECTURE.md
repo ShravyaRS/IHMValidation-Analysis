@@ -1,119 +1,110 @@
-# IHMValidation: Architecture Deep Dive
+## Real Module Dependency Flow
+ihm_validator.py (Main Entry Point)
+                        |
+                        v
+                format_checker.py (Validate format)
+                        |
+                        v
+                mmcif_io.py (Parse structure)
+                        |
+    ____________________|____________________
+    |                   |                   |
+    v                   v                   v
+cx.py              sas.py               em.py
+(Crosslinking)    (Small Angle)         (Electron
+Validation      Scattering             Microscopy)
+(1,298 lines)    (729 lines)           (887 lines)
+|                   |                   |
+└─────────────┬─────┴───────────────────┘
+v
+molprobity.py + excludedvolume.py
+(Geometry & Steric Validation)
+|
+v
+futures.py (Run validations in parallel)
+|
+v
+|              |             |
+v              v             v
+report.py    get_plots.py   images.py
+(Compile      (Generate     (Render
+results)     plots)        images)
+|              |             |
+└──────────┬───┴─────────────┘
+v
+generate_static_html_pages.py
+|
+v
+Jinja2 templates + pdfkit
+|
+v
+HTML Report + PDF Report
+## Module Descriptions (Real Functions)
 
-## Overview Diagram
+### cx.py - Crosslinking-MS Validation (1,298 lines)
 
-How data flows through the system:
-INPUT FILES
-↓
-[Structure coordinates (mmCIF)]
-[Experimental data (SAS/MS/EM)]
-↓
-VALIDATION PIPELINE
-├── Stage 1: Load Data
-├── Stage 2: Data Quality Check
-├── Stage 3: Model Quality Check
-├── Stage 4: Fit Assessment
-└── Stage 5: Report Generation
-↓
-OUTPUT REPORT
-↓
-[HTML Report + PDF Report]
+**Functions include:**
+- `__init__()` - Initialize with structure
+- `get_models()` - Extract models from structure
+- `get_raw_restraints()` - Get crosslinks
+- `get_rtdtype()`, `get_ertype()` - Type assignments
+- `assign_ertypes()`, `assign_rtdtypes()` - Assign types
+- Calculates: satisfaction %, distance violations
 
-## Module Responsibilities
+### em.py - 3DEM Validation (887 lines)
 
-### validation.py (Main Controller)
-- Orchestrates the entire pipeline
-- Decides what to do and in what order
-- Manages input and output
-- Like the "conductor" of an orchestra
+**Functions include:**
+- `__init__()` - Initialize
+- `get_emdb_data()` - Fetch EM data
+- `get_emdb_map()` - Download EM map
+- `get_emdb_map_metadata()` - Get metadata
+- `get_emdb_map_validation()` - Validation metrics
+- `get_emdb_ids()` - Get EM IDs from structure
+- Calculates: map correlation, resolution fit
 
-### data_quality.py (Data Checks)
-- Checks if input files are valid
-- Checks if experimental data is good quality
-- Produces quality metrics
+### sas.py - SAS Validation (729 lines)
 
-### model_quality.py (Geometry Checks)
-- Checks if atoms are in correct positions
-- Checks bond angles
-- Checks for clashes between atoms
-- Like checking if Lego blocks fit together correctly
+**Functions include:**
+- `__init__()` - Initialize
+- `get_atsas_version()` - Check ATSAS tools
+- `get_sas_ids()` - Get SAS IDs
+- `get_sasbdb_ids()` - Get SASBDB IDs
+- `get_sascif_dicts()` - Parse SAS data
+- `get_intensities()` - Get scattering intensities
+- `get_rg_for_plot()` - Calculate Rg for plots
+- Calculates: χ² fit, Rg predictions
 
-### sas_validation.py (SAS-Specific)
-- Handles Small Angle Scattering data
-- Calculates if model matches SAS measurements
-- Specific to SAS data type
+### mmcif_io.py - Structure File I/O (1,349 lines)
 
-### crosslink_validation.py (Crosslinking-Specific)
-- Handles Crosslinking-MS data
-- Checks if crosslinks are satisfied
-- Specific to Crosslinking-MS data type
+**Purpose:** Parse and write PDB-IHM format mmCIF files
 
-### 3dem_validation.py (3DEM-Specific)
-- Handles Electron Microscopy data
-- Calculates correlation with EM map
-- Specific to 3DEM data type
+**This is the largest module because:**
+- mmCIF is complex format
+- Needs to handle all atom types
+- Must preserve all metadata
+- Requires coordinate transformations
 
-### reporting.py (Report Creator)
-- Takes all results
-- Creates visualizations (graphs, plots)
-- Makes HTML reports
-- Makes PDF reports
+### molprobity.py - Geometry Validation (662 lines)
 
-### utils.py (Helper Functions)
-- General utility functions
-- Reusable helper code
-- Formatting and common operations
+**Checks:**
+- Bond angles (Ramachandran)
+- Bond lengths
+- Steric clashes
+- Geometry outliers
 
-## Testing Structure
+### report.py - Report Generation (545 lines)
 
-Each module has a corresponding test file:
+**Generates:**
+- Summary statistics
+- Quality scores
+- Compliance metrics
+- Report structure
 
-- validation.py → test_validation.py
-- data_quality.py → test_data_quality.py
-- model_quality.py → test_model_quality.py
-- sas_validation.py → test_sas.py
-- crosslink_validation.py → test_crosslink.py
-- 3dem_validation.py → test_3dem.py
-- reporting.py → test_reporting.py
+### get_plots.py & sas_plots.py & images.py - Visualization
 
-Plus test data files in `data/` folder.
+Three separate modules for plotting:
+- **get_plots.py** - General plot logic
+- **sas_plots.py** - SAS-specific plots (profiles, fits)
+- **images.py** - Image rendering and processing
 
-**Why?** Each piece is tested separately to ensure it works correctly.
-
-## How It All Fits Together
-
-1. **validation.py** calls **data_quality.py** → Check if data is good
-2. **validation.py** calls **model_quality.py** → Check if geometry is good
-3. **validation.py** calls **sas_validation.py** (if SAS data) → Validate SAS
-4. **validation.py** calls **crosslink_validation.py** (if Crosslink data) → Validate crosslinks
-5. **validation.py** calls **3dem_validation.py** (if 3DEM data) → Validate 3DEM
-6. **validation.py** calls **reporting.py** → Create report
-
-It's like a recipe:
-- Start with ingredients (data)
-- Follow steps in order
-- End with final product (report)
-
-## Why This Design?
-
-### Modularity
-- Each module does ONE thing well
-- Easy to understand
-- Easy to test
-- Easy to modify
-
-### Extensibility
-- Want to add FRET support? 
-- Create fret_validation.py
-- Register it in validation.py
-- Done!
-
-### Maintainability
-- Change one module without affecting others
-- Fix bugs in isolation
-- Test independently
-
-### Scalability
-- Could run data types in parallel
-- Could distribute computation
-- Could add more data types easily
+Shows emphasis on **visual communication** of results.
