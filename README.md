@@ -2,7 +2,7 @@
 
 A detailed technical analysis and exploration of the [IHMValidation](https://github.com/salilab/IHMValidation) software - a Python pipeline for validation of integrative biomolecular structures.
 
-## 📋 Contents
+## Contents
 
 ### Main Analysis
 - **[ANALYSIS.md](ANALYSIS.md)** - Complete technical analysis report
@@ -14,7 +14,7 @@ A detailed technical analysis and exploration of the [IHMValidation](https://git
 - **[code-exploration/exploration-notes.md](code-exploration/exploration-notes.md)** - Detailed exploration notes
 - **[reports/test-results.md](reports/test-results.md)** - Test execution results
 
-## 🎯 About IHMValidation
+## About IHMValidation
 
 IHMValidation is a software pipeline that follows guidelines and recommendations from IHM TaskForce for assessment of integrative biomolecular structures. It validates structures built using multiple experimental data types:
 
@@ -23,30 +23,30 @@ IHMValidation is a software pipeline that follows guidelines and recommendations
 - **3DEM** (3D Electron Microscopy)
 - **FRET** (Under Development)
 
-## 📊 Analysis Scope
+## Analysis Scope
 
 This analysis includes:
-- ✅ README and project documentation review
-- ✅ Code architecture exploration
-- ✅ Dependency analysis
-- ✅ Code quality assessment
-- ✅ Testing and validation
-- ✅ GitHub issues analysis
-- ✅ Comparative analysis with traditional validation
-- ✅ Professional recommendations
+- README and project documentation review
+- Code architecture exploration
+- Dependency analysis
+- Code quality assessment
+- Testing and validation
+- GitHub issues analysis
+- Comparative analysis with traditional validation
+- Professional recommendations
 
-## 📖 Quick Start
+## Quick Start
 
 Start with [ANALYSIS.md](ANALYSIS.md) for the complete technical report.
 
-## 🔗 Links
+## Links
 
 - **IHMValidation GitHub**: https://github.com/salilab/IHMValidation
 - **Documentation**: https://ihmvalidation.readthedocs.io/
 - **Validation Server**: https://validate.pdb-ihm.org
 - **PDB-IHM**: https://pdb-ihm.org
 
-## 📝 License
+## License
 
 This analysis is provided as-is for educational and reference purposes.
 
