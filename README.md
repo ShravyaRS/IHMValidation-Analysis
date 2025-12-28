@@ -1,5 +1,11 @@
 # IHMValidation Analysis: Comprehensive Technical Investigation
 
+[![Analysis Complete](https://img.shields.io/badge/Analysis-Complete-success)](https://github.com/ShravyaRS/IHMValidation-Analysis)
+[![Goals Achieved](https://img.shields.io/badge/Goals-6%2F6-brightgreen)](https://github.com/ShravyaRS/IHMValidation-Analysis/blob/main/COMPLETE_ANALYSIS_SUMMARY.md)
+[![Bugs Found](https://img.shields.io/badge/Bugs-5%20Critical-red)](https://github.com/ShravyaRS/IHMValidation-Analysis/blob/main/reports/bug-report.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
+
 [![Analysis Complete](https://img.shields.io/badge/Analysis-Complete-success)]()
 [![Goals Achieved](https://img.shields.io/badge/Goals-6%2F6-brightgreen)]()
 [![Bugs Found](https://img.shields.io/badge/Bugs-5%20Critical-red)]()
