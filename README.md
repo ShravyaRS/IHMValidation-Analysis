@@ -344,10 +344,10 @@ Skip the 5+ error cycles - use our complete dependency list (see Quick Start abo
 
 ### For Academic Citation
 ```bibtex
-@misc{ihmvalidation_analysis_2024,
+@misc{ihmvalidation_analysis_2025,
   author = {Shravya RS},
   title = {IHMValidation: Comprehensive Technical Analysis and Bug Discovery},
-  year = {2024},
+  year = {2025},
   publisher = {GitHub},
   howpublished = {\url{https://github.com/ShravyaRS/IHMValidation-Analysis}},
   note = {Systematic analysis identifying 5 critical bugs in scientific software}
@@ -506,7 +506,7 @@ See [LICENSE](LICENSE) for full details.
 
 <div align="center">
 
-**Analysis Date:** December 28-29, 2024  
+**Analysis Date:** December 28-29, 2025  
 **Status:** Complete - All 6 Goals Achieved  
 **Quality:** Publication-Ready
 
