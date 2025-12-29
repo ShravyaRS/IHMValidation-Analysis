@@ -87,7 +87,7 @@ All 6 Goals Complete
 What users experience when trying to install IHMValidation:
 ```mermaid
 flowchart TD
-    A[User wants to validate structure] --> B[Clone IHMValidation repo]
+    A[Validate structure] --> B[Clone IHMValidation repo]
     B --> C[Run python ihm_validator.py]
     C --> D[Error: ModuleNotFoundError pdfkit]
     D --> E[pip install pdfkit]
