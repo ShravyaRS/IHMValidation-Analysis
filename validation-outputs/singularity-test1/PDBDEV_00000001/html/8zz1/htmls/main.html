@@ -1,0 +1,836 @@
+<!--
+main.html - Main HTML page of the report
+
+Copyright (C) 2019-2025 Arthur Zalevsky, Sai Ganesan, Benjamin M. Webb, Brinda Vallat
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see https://www.gnu.org/licenses/.
+-->
+
+<!--
+validation_report_layout.html - Additional layout for validation pages
+
+Copyright (C) 2019-2025 Arthur Zalevsky, Sai Ganesan, Benjamin M. Webb, Brinda Vallat
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see https://www.gnu.org/licenses/.
+-->
+
+<!--
+layout.html - Base layout
+
+Copyright (C) 2019-2025 Arthur Zalevsky, Sai Ganesan, Benjamin M. Webb, Brinda Vallat
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see https://www.gnu.org/licenses/.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>PDB-IHM Validation Report</title>
+    <!-- add bootstrap css file -->
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/css/main.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/css/layout.css">
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.3.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.3.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.3.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.4.3.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.3.min.js"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      Bokeh.set_log_level("info");
+    </script>
+  </head>
+  <body style="background-color: #669966; ">
+    <!-- wrap all content into fluid container -->
+    <div class="container-fluid">
+      <!-- header -->
+      <div class="card" style="border: none; margin-bottom: 0px; margin-right: 10px; margin-left: 30px; ">
+        <!-- header -->
+        <!-- looks like empty and unnecessary element -->
+        <div class="float-left">
+          <b><span id="siteid"></span></b>
+        </div>
+        <!-- end of element -->
+        <!-- actual header -->
+        <div class="card-body" style="padding: 0px 0px;background-color: rgba(102,153,102, 0.5); ">
+          <div class="row">
+            <div class=" col-sm-9" style="margin-left: 0px;">
+              <a href="/">
+                
+                  <img src="/images/logon.png" class="float-left" alt="PDBIHM.org" height="100" width="110" style="margin-top: 0px; margin-bottom: 0px" />
+                
+                <p>
+                  <h1 style="margin-left: 0px; color: #003366;">PDB-IHM</h1>
+                  <h5 class="float-left" style="color: #003366;">
+                    System for Archiving Integrative Structures
+                  </h5>
+                </p>
+              </a>
+            </div>
+            <!-- looks like empty and unnecessary element -->
+            <div class="col-sm-3 d-flex align-items-end" style="margin-top: 0px;">
+              <h5 class="home-header ml-auto" style="margin-right:27px; color:#003366">
+                <b><small></small></b>
+              </h5>
+            </div>
+            <!-- end of element -->
+          </div>
+        </div>
+        <!--end of header -->
+        
+        
+  <!-- Main navbar -->
+  <nav class="navbar navbar-expand-xl navbar-dark">
+    <div class="dropdown">
+      <a class="navbar-brand" href="main.html">
+        <h5>
+          Validation Report for 8ZZ1
+        </h5>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
+  
+  <!-- Secondary navbar -->
+  <nav class="navbar navbar-expand-xl navbar-dark p-0">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="nav navbar-nav mr-auto">
+        
+        <!-- About validation -->
+        <li class="nav-item mr-4 dropdown">
+          <a class="btn btn-primary " href="/about_validation.html"><span class="overview">About <br> Validation</span></a>
+        </li>
+        <li class="nav-item mr-4 dropdown">
+          <a class="dropdown-toggle"  data-toggle="dropdown"><button type="button" class="btn btn-primary" onclick=window.location='main.html';>Validation <br> Overview</button></a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item colorclass" href="main.html#qual">Overall quality</a>
+          </div>
+        </li>
+        
+        <!-- Model details -->
+        <li class="nav-item mr-4 dropdown">
+          <a class="dropdown-toggle"  data-toggle="dropdown"><button type="button" class="btn btn-primary" onclick=window.location='model_composition.html';>Model <br> Details </button></a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item colorclass" href="model_composition.html#ensemble">Ensemble information</a>
+            <a class="dropdown-item colorclass" href="model_composition.html#summary">Summary</a>
+            <a class="dropdown-item colorclass" href="model_composition.html#representation">Representation</a>
+            <a class="dropdown-item colorclass" href="model_composition.html#data">Datasets used</a>
+            <a class="dropdown-item colorclass" href="model_composition.html#methods">Methods and software</a>
+          </div>
+        </li>
+        
+        <!-- Model details -->
+        <li class="nav-item mr-4 dropdown">
+          <a class="dropdown-toggle"  data-toggle="dropdown"><button type="button" class="btn btn-primary" onclick=window.location="data_quality.html";>Data <br> Quality </button></a>
+          <div class="dropdown-menu">
+            
+            
+            
+            
+            
+            
+              
+            
+              <a class=dropdown-item-text dropdown-toggle type=button>EM raw micrographs</a>
+            
+              <a class=dropdown-item-text dropdown-toggle type=button>2DEM class average</a>
+            
+          </div>
+        </li>
+  
+        <!-- Model quality -->
+        <li class="nav-item mr-4 dropdown">
+          <a class="dropdown-toggle"  data-toggle="dropdown"><button type="button" class="btn btn-primary" onclick=window.location='model_quality.html';>Model <br> Quality </button></a>
+          <div class="dropdown-menu">
+            
+              <a class="dropdown-item colorclass" href=model_quality.html#ex>Excluded volume</a>
+            
+            
+            
+          </div>
+        </li>
+        
+        <!-- Fit to data used for modeling -->
+        <li class="nav-item mr-4 dropdown">
+          
+            <a class="dropdown-toggle"  data-toggle="dropdown"><button type="button" class="btn btn-primary" onclick=window.location="formodeling.html";>Fit to Data <br> Used for Modeling </button></a>
+                
+          
+          
+  				<div class="dropdown-menu">
+            
+            
+						
+              <a class="dropdown-item colorclass" dropdown-toggle href=formodeling.html#crosslinking-ms>
+                Crosslinking-MS
+              </a>
+
+              <ul class=dropdown-submenu>
+                <li>
+                  <a class=dropdown-item2 href=formodeling.html#crosslinking-ms_ertypes>
+                    Restraint types
+                  </a>
+                </li>
+                <li>
+                  <a class=dropdown-item2 href=formodeling.html#crosslinking-ms_satisfaction>
+                    Satisfaction of restraints
+                  </a>
+                </li>
+              </ul>
+            
+            
+            
+  					
+            
+              <a class=dropdown-item-text dropdown-toggle type=button>EM raw micrographs</a>
+            
+              <a class=dropdown-item-text dropdown-toggle type=button>2DEM class average</a>
+            
+          </div>
+        </li>
+  
+        <!-- Fit to data used for validation -->
+        <li class="nav-item mr-4 dropdown">
+          <a class="btn button4" value="Disabled" disabled background-color: #555555 ><span >Fit to Data <br>Used for Validation</span></a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item-text" dropdown-toggle type=button >Data</a>
+          </div>
+        </li>
+        <li class="nav-item mr-4 dropdown">
+          <a class="btn btn-primary " href="/validation_help.html"><span class="overview">Validation <br> Help</span></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+        
+        
+<!-- start overall card body for front page -->
+<div class="card-body border-success" style="border-color: solid black;">
+  <!-- start overall card body for front page -->
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="card-header" style="background-color: #FFFFFF; border-color:#003366; height: 29rem;">
+        <h3 align=center>
+          <a href=/entry.html?8ZZ1>
+            8ZZ1
+          </a>
+        </h3>
+        <div class="box text-center no-padding float-left" style="text-align: center" >
+          <a href="../pdf/8zz1_full_validation.pdf">
+            <button style="background-color: #669966; margin-top: 10px;margin-bottom:10px; margin-right:0px;color: #FFF;height: 85px; width: 10em; border-radius: 10px;cursor: pointer; font-size:0.8em;">
+              <h5 align="center" style="text-align: center";>Download Validation Report</h5>
+            </button>
+          </a>
+        </div>
+        <div class="box text-center no-padding float-right" style="text-align: center" >
+          <a href="../pdf/8zz1_summary_validation.pdf">
+            <button style="background-color: #669966; margin-top: 10px;margin-bottom:10px; margin-right:0px;color: #FFF;height: 85px; width: 10em; border-radius: 10px;cursor: pointer; font-size:0.8em;">
+              <h5 align="center" style="text-align: center";>Download Summary Table</h5>
+            </button>
+          </a>
+        </div>
+        <div class="box text-center container-fluid no-padding">
+          <img src=/images/8zz1_resize_1.png class=image-fluid alt=Model Image style=width:300px align=center>
+        </div>
+      </div>
+      <!-- end card header -->
+    </div>
+    <!-- end col -->
+    <div class="col-lg-8 col-md-2">
+      <div class="card-header" style="background-color:#FFFFFF; border-color:#003366;">
+        <div class="bs-example" class="text-center">
+          <table class="table table-bordered" style="border-color:#003366; height: 25rem;">
+            
+              <tr>
+                <td style="text-align:center; vertical-align: middle; white-space:nowrap;">PDB ID</td>
+                <td style="text-align:center; vertical-align: middle;">8ZZ1
+                  <!-- Ad-hoc fix for extended PDB IDs -->
+                  
+                    | pdb_00008zz1
+                  
+                </td>
+              </tr>
+            
+              <tr>
+                <td style="text-align:center; vertical-align: middle; white-space:nowrap;">PDB-Dev ID</td>
+                <td style="text-align:center; vertical-align: middle;">PDBDEV_00000001
+                  <!-- Ad-hoc fix for extended PDB IDs -->
+                  
+                </td>
+              </tr>
+            
+            <tr>
+              <td style="text-align:center; vertical-align: middle; white-space:nowrap;">Structure Title</td>
+              <td style="text-align:center; vertical-align: middle;">Structure of the Nup84 sub-complex of the Nuclear Pore Complex </td>
+            </tr>
+            <tr>
+              <td style="text-align:center; vertical-align: middle; white-space:nowrap;">Structure Authors</td>
+              <td style="text-align:center; vertical-align: middle;">Shi, Y.; Fernandez-Martinez, J.; Tjioe, E.; Pellarin, R.; Kim, S.J.; Williams, R.; Schneidman-Duhovny, D.; Sali, A.; Rout, M.P.; Chait, B.T.</td>
+            </tr>
+            <!--
+            
+              <tr>
+                <td style="text-align:center; vertical-align: middle; white-space:nowrap;">Publication Title</td>
+                <td style="text-align:center; vertical-align: middle;"></td>
+              </tr>
+              <tr>
+                <td style="text-align:center; vertical-align: middle; white-space:nowrap;">Authors</td>
+                <td style="text-align:center; vertical-align: middle;"></td>
+              </tr>
+            
+            -->
+            <tr>
+              <td style="text-align:center; vertical-align: middle; white-space:nowrap;">Deposited on</td>
+              <td style="text-align:center; vertical-align: middle;">2016-08-31</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <!-- end card-header -->
+    </div>
+    <!--end column-->
+  </div>
+  <!--end row-->
+</div>
+<!-- end card bods-->
+<!-- start card body2 -->
+<div class="card-body">
+  <!-- start overall card body for front page -->
+  <div class="row">
+    <div class="col-lg-12">
+      
+      <div class="card-header" style="background-color: #FFFFFF; border-color:#003366;">
+        <!--
+summary.j2 - Content of the Overview section
+
+Copyright (C) 2025 Arthur Zalevsky <aozalevsky@gmail.com>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see https://www.gnu.org/licenses/.
+-->
+
+
+
+<!-- Summary -->
+<h4 align="center">
+  <u><a name=summary>1.1. Summary</a></u>
+  
+    <a class='help' title='help' style='background-color:#228B22;color:#000000;text-decoration:none font-size=16px' href='/validation_help.html#summary'>?</a>
+  
+
+</h4>
+
+<p align="justify">
+  <i>This entry consists of 2 model(s). A total of 28 dataset(s) were used to build this entry.</i>
+</p>
+
+
+  
+  <div class='bs-example' class='text-center'>
+    <table class='table table-bordered' style='border-color:#003366;'>
+      <thead>
+        <tr>
+          
+            <th align='center' class='text-center' style='vertical-align:middle'>
+              Name
+            </th>
+          
+            <th align='center' class='text-center' style='vertical-align:middle'>
+              Type
+            </th>
+          
+            <th align='center' class='text-center' style='vertical-align:middle'>
+              Count
+            </th>
+          
+        </tr>
+      </thead>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      2DEM class average
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Experimental data
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       1
+     
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Crosslinking-MS data
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Experimental data
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       2
+     
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      EM raw micrographs
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Experimental data
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       1
+     
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Experimental model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Starting model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       17
+     
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Comparative model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Starting model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       7
+     
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+    </table>
+  </div>
+ 
+
+      </div>
+      
+      <div class="card-header" style="background-color: #FFFFFF; border-color:#003366;">
+        <h4 align="center">
+          <a name='qual'>1.2. Overall quality</a>
+          
+  
+    <a class='help' title='help' style='background-color:#228B22;color:#000000;text-decoration:none font-size=16px' href='/validation_help.html#ataglance'>?</a>
+  
+
+        </h4>
+        <p align="justify">
+          <em>This validation report contains model quality assessments for all structures. For more detail for each assessment, use the dropdown menus at the top of this page. Number of plots is limited to 256.
+          </em>
+        </p>
+        
+          <p align="justify">
+            <em>Data quality and fit to model assessments for other datasets and model uncertainty are under development.
+            </em>
+          </p>
+        
+            
+        
+  
+        <div class="container">
+          <ul class="nav nav-tabs">
+            
+              <li>
+                <a class="nav-link " data-toggle="tab" href="#home">Model Quality</a>
+              </li>
+            
+          
+            
+              <li>
+                <a class="nav-link disabled" data-toggle="tab" href="#menu1" title="No input data were found in public databases">Data Quality</a>
+              </li>
+          
+            
+              <li>
+                <a class="nav-link " data-toggle="tab" href="#menu2">Fit to Data Used for Modeling</a>
+              </li>
+              
+            
+            <li>
+              <a class="nav-link disabled " data-toggle="tab" href="#menu3" class="tab-display">Fit to Data Used for Validation</a>
+            </li>
+          </ul>
+        
+          <div class="tab-content">
+            <div id="home" class="tab-pane active">
+              <div class="box text-center container-fluid no-padding" align='center'>
+                
+                  
+  <div class='bk-root' id='quality_at_glance_MQ' style="max-height: 75vh; overflow: auto; padding-bottom: 1em">
+  </div>
+  <script type="text/javascript">
+    item = JSON.parse('{"target_id": null, "root_id": "7150", "doc": {"defs": [], "roots": {"references": [{"attributes": {}, "id": "6749", "type": "AllLabels"}, {"attributes": {"fill_alpha": {"value": 0.1}, "fill_color": {"field": "fill_color"}, "hatch_alpha": {"value": 0.1}, "hatch_color": {"field": "hatch_color"}, "line_alpha": {"value": 0.1}, "line_color": {"value": "white"}, "right": {"field": "right"}, "y": {"field": "y"}}, "id": "6930", "type": "HBar"}, {"attributes": {}, "id": "6944", "type": "BasicTickFormatter"}, {"attributes": {"fill_alpha": {"value": 0.2}, "fill_color": {"field": "fill_color"}, "hatch_alpha": {"value": 0.2}, "hatch_color": {"field": "hatch_color"}, "line_alpha": {"value": 0.2}, "line_color": {"value": "white"}, "right": {"field": "right"}, "y": {"field": "y"}}, "id": "6735", "type": "HBar"}, {"attributes": {"bottom_units": "screen", "coordinates": null, "fill_alpha": 0.5, "fill_color": "lightgrey", "group": null, "left_units": "screen", "level": "overlay", "line_alpha": 1.0, "line_color": "black", "line_dash": [4, 4], "line_width": 2, "right_units": "screen", "syncable": false, "top_units": "screen"}, "id": "6723", "type": "BoxAnnotation"}, {"attributes": {}, "id": "6914", "type": "WheelZoomTool"}, {"attributes": {}, "id": "6942", "type": "AllLabels"}, {"attributes": {"fill_alpha": {"value": 0.2}, "fill_color": {"field": "fill_color"}, "hatch_alpha": {"value": 0.2}, "hatch_color": {"field": "hatch_color"}, "line_alpha": {"value": 0.2}, "line_color": {"value": "white"}, "right": {"field": "right"}, "y": {"field": "y"}}, "id": "6931", "type": "HBar"}, {"attributes": {"style": {"font-size": "1.5em", "font-weight": "bold", "text-align": "center", "width": "100%"}, "text": "<p>Model Quality: Excluded Volume Analysis</p>", "width": 800}, "id": "7121", "type": "Div"}, {"attributes": {}, "id": "6720", "type": "SaveTool"}, {"attributes": {}, "id": "6750", "type": "UnionRenderers"}, {"attributes": {"index": 0, "label": {"value": "99.88 %"}, "renderers": [{"id": "6932"}]}, "id": "6934", "type": "LegendItem"}, {"attributes": {"axis_label_text_font_style": "normal", "coordinates": null, "formatter": {"id": "6941"}, "group": null, "major_label_policy": {"id": "6942"}, "major_label_text_font_size": "14pt", "ticker": {"id": "6911"}}, "id": "6910", "type": "CategoricalAxis"}, {"attributes": {}, "id": "6751", "type": "Selection"}, {"attributes": {"overlay": {"id": "6919"}}, "id": "6915", "type": "BoxZoomTool"}, {"attributes": {}, "id": "6911", "type": "CategoricalTicker"}, {"attributes": {"source": {"id": "6928"}}, "id": "6933", "type": "CDSView"}, {"attributes": {}, "id": "6917", "type": "ResetTool"}, {"attributes": {"bottom_units": "screen", "coordinates": null, "fill_alpha": 0.5, "fill_color": "lightgrey", "group": null, "left_units": "screen", "level": "overlay", "line_alpha": 1.0, "line_color": "black", "line_dash": [4, 4], "line_width": 2, "right_units": "screen", "syncable": false, "top_units": "screen"}, "id": "6919", "type": "BoxAnnotation"}, {"attributes": {"children": [{"id": "7117"}, {"id": "7119"}]}, "id": "7120", "type": "Row"}, {"attributes": {"toolbars": [{"id": "6724"}, {"id": "6920"}], "tools": [{"id": "6717"}, {"id": "6718"}, {"id": "6719"}, {"id": "6720"}, {"id": "6721"}, {"id": "6722"}, {"id": "6913"}, {"id": "6914"}, {"id": "6915"}, {"id": "6916"}, {"id": "6917"}, {"id": "6918"}]}, "id": "7148", "type": "ProxyToolbar"}, {"attributes": {}, "id": "6916", "type": "SaveTool"}, {"attributes": {"axis": {"id": "6906"}, "coordinates": null, "group": null, "ticker": null}, "id": "6909", "type": "Grid"}, {"attributes": {"align": "center", "coordinates": null, "group": null, "vertical_align": "top"}, "id": "6936", "type": "Title"}, {"attributes": {"border_line_width": 0, "coordinates": null, "group": null, "items": [{"id": "6934"}], "label_text_font_size": "14pt", "location": "center"}, "id": "6935", "type": "Legend"}, {"attributes": {}, "id": "6913", "type": "PanTool"}, {"attributes": {"axis": {"id": "6910"}, "coordinates": null, "dimension": 1, "group": null, "ticker": null}, "id": "6912", "type": "Grid"}, {"attributes": {"desired_num_ticks": 3}, "id": "6907", "type": "BasicTicker"}, {"attributes": {"data": {"fill_color": ["#3f3f3f"], "hatch_color": ["#3f3f3f"], "right": [99.88], "y": ["Model 1"]}, "selected": {"id": "6751"}, "selection_policy": {"id": "6750"}}, "id": "6732", "type": "ColumnDataSource"}, {"attributes": {"tools": [{"id": "6717"}, {"id": "6718"}, {"id": "6719"}, {"id": "6720"}, {"id": "6721"}, {"id": "6722"}]}, "id": "6724", "type": "Toolbar"}, {"attributes": {"children": [{"id": "7121"}, {"id": "7120"}]}, "id": "7122", "type": "Column"}, {"attributes": {"children": [[{"id": "7122"}, 0, 0]]}, "id": "7147", "type": "GridBox"}, {"attributes": {"fill_color": {"field": "fill_color"}, "hatch_color": {"field": "hatch_color"}, "line_color": {"value": "white"}, "right": {"field": "right"}, "y": {"field": "y"}}, "id": "6929", "type": "HBar"}, {"attributes": {"below": [{"id": "6906"}], "center": [{"id": "6909"}, {"id": "6912"}], "height": 90, "left": [{"id": "6910"}], "min_border_top": 20, "output_backend": "svg", "renderers": [{"id": "6932"}], "right": [{"id": "6935"}], "title": {"id": "6936"}, "toolbar": {"id": "6920"}, "toolbar_location": null, "width": 700, "x_range": {"id": "6899"}, "x_scale": {"id": "6902"}, "y_range": {"id": "6897"}, "y_scale": {"id": "6904"}}, "id": "6898", "subtype": "Figure", "type": "Plot"}, {"attributes": {"source": {"id": "6732"}}, "id": "6737", "type": "CDSView"}, {"attributes": {"data": {"fill_color": ["#3f3f3f"], "hatch_color": ["#3f3f3f"], "right": [99.88], "y": ["Model 2"]}, "selected": {"id": "6947"}, "selection_policy": {"id": "6946"}}, "id": "6928", "type": "ColumnDataSource"}, {"attributes": {}, "id": "6904", "type": "CategoricalScale"}, {"attributes": {"factors": ["Model 1"]}, "id": "6701", "type": "FactorRange"}, {"attributes": {"toolbars": [{"id": "6724"}, {"id": "6920"}], "tools": [{"id": "6717"}, {"id": "6718"}, {"id": "6719"}, {"id": "6720"}, {"id": "6721"}, {"id": "6722"}, {"id": "6913"}, {"id": "6914"}, {"id": "6915"}, {"id": "6916"}, {"id": "6917"}, {"id": "6918"}]}, "id": "7118", "type": "ProxyToolbar"}, {"attributes": {"children": [[{"id": "6702"}, 0, 0], [{"id": "6898"}, 1, 0]]}, "id": "7117", "type": "GridBox"}, {"attributes": {"align": "center", "coordinates": null, "group": null, "vertical_align": "top"}, "id": "6740", "type": "Title"}, {"attributes": {"border_line_width": 0, "coordinates": null, "group": null, "items": [{"id": "6738"}], "label_text_font_size": "14pt", "location": "center"}, "id": "6739", "type": "Legend"}, {"attributes": {"fill_alpha": {"value": 0.1}, "fill_color": {"field": "fill_color"}, "hatch_alpha": {"value": 0.1}, "hatch_color": {"field": "hatch_color"}, "line_alpha": {"value": 0.1}, "line_color": {"value": "white"}, "right": {"field": "right"}, "y": {"field": "y"}}, "id": "6734", "type": "HBar"}, {"attributes": {"factors": ["Model 2"]}, "id": "6897", "type": "FactorRange"}, {"attributes": {}, "id": "6902", "type": "LinearScale"}, {"attributes": {"coordinates": null, "data_source": {"id": "6732"}, "glyph": {"id": "6733"}, "group": null, "hover_glyph": null, "muted_glyph": {"id": "6735"}, "nonselection_glyph": {"id": "6734"}, "view": {"id": "6737"}}, "id": "6736", "type": "GlyphRenderer"}, {"attributes": {"css_classes": ["scrollable"], "height": 450, "sizing_mode": "fixed", "toolbar": {"id": "7118"}, "width": 800}, "id": "7119", "type": "ToolbarBox"}, {"attributes": {}, "id": "6947", "type": "Selection"}, {"attributes": {}, "id": "6918", "type": "HelpTool"}, {"attributes": {}, "id": "6945", "type": "AllLabels"}, {"attributes": {"below": [{"id": "6710"}], "center": [{"id": "6713"}, {"id": "6716"}], "height": 90, "left": [{"id": "6714"}], "min_border_top": 20, "output_backend": "svg", "renderers": [{"id": "6736"}], "right": [{"id": "6739"}], "title": {"id": "6740"}, "toolbar": {"id": "6724"}, "toolbar_location": null, "width": 700, "x_range": {"id": "6703"}, "x_scale": {"id": "6706"}, "y_range": {"id": "6701"}, "y_scale": {"id": "6708"}}, "id": "6702", "subtype": "Figure", "type": "Plot"}, {"attributes": {"toolbar": {"id": "7148"}, "toolbar_location": "above"}, "id": "7149", "type": "ToolbarBox"}, {"attributes": {"fill_color": {"field": "fill_color"}, "hatch_color": {"field": "hatch_color"}, "line_color": {"value": "white"}, "right": {"field": "right"}, "y": {"field": "y"}}, "id": "6733", "type": "HBar"}, {"attributes": {}, "id": "6941", "type": "CategoricalTickFormatter"}, {"attributes": {"index": 0, "label": {"value": "99.88 %"}, "renderers": [{"id": "6736"}]}, "id": "6738", "type": "LegendItem"}, {"attributes": {}, "id": "6706", "type": "LinearScale"}, {"attributes": {"desired_num_ticks": 3}, "id": "6711", "type": "BasicTicker"}, {"attributes": {"end": 102}, "id": "6703", "type": "Range1d"}, {"attributes": {"axis": {"id": "6710"}, "coordinates": null, "group": null, "ticker": null}, "id": "6713", "type": "Grid"}, {"attributes": {"axis_label": "Satisfaction rate [%]", "axis_label_text_font_style": "normal", "coordinates": null, "formatter": {"id": "6748"}, "group": null, "major_label_policy": {"id": "6749"}, "major_label_text_font_size": "14pt", "ticker": {"id": "6711"}}, "id": "6710", "type": "LinearAxis"}, {"attributes": {"axis_label_text_font_style": "normal", "coordinates": null, "formatter": {"id": "6745"}, "group": null, "major_label_policy": {"id": "6746"}, "major_label_text_font_size": "14pt", "ticker": {"id": "6715"}}, "id": "6714", "type": "CategoricalAxis"}, {"attributes": {"tools": [{"id": "6913"}, {"id": "6914"}, {"id": "6915"}, {"id": "6916"}, {"id": "6917"}, {"id": "6918"}]}, "id": "6920", "type": "Toolbar"}, {"attributes": {}, "id": "6722", "type": "HelpTool"}, {"attributes": {}, "id": "6708", "type": "CategoricalScale"}, {"attributes": {}, "id": "6745", "type": "CategoricalTickFormatter"}, {"attributes": {}, "id": "6746", "type": "AllLabels"}, {"attributes": {}, "id": "6748", "type": "BasicTickFormatter"}, {"attributes": {"axis_label": "Satisfaction rate [%]", "axis_label_text_font_style": "normal", "coordinates": null, "formatter": {"id": "6944"}, "group": null, "major_label_policy": {"id": "6945"}, "major_label_text_font_size": "14pt", "ticker": {"id": "6907"}}, "id": "6906", "type": "LinearAxis"}, {"attributes": {}, "id": "6721", "type": "ResetTool"}, {"attributes": {"end": 102}, "id": "6899", "type": "Range1d"}, {"attributes": {"children": [{"id": "7149"}, {"id": "7147"}]}, "id": "7150", "type": "Column"}, {"attributes": {}, "id": "6717", "type": "PanTool"}, {"attributes": {"overlay": {"id": "6723"}}, "id": "6719", "type": "BoxZoomTool"}, {"attributes": {}, "id": "6718", "type": "WheelZoomTool"}, {"attributes": {}, "id": "6715", "type": "CategoricalTicker"}, {"attributes": {}, "id": "6946", "type": "UnionRenderers"}, {"attributes": {"axis": {"id": "6714"}, "coordinates": null, "dimension": 1, "group": null, "ticker": null}, "id": "6716", "type": "Grid"}, {"attributes": {"coordinates": null, "data_source": {"id": "6928"}, "glyph": {"id": "6929"}, "group": null, "hover_glyph": null, "muted_glyph": {"id": "6931"}, "nonselection_glyph": {"id": "6930"}, "view": {"id": "6933"}}, "id": "6932", "type": "GlyphRenderer"}], "root_ids": ["7150"]}, "title": "", "version": "2.4.3"}, "version": "2.4.3"}');
+    Bokeh.embed.embed_item(item, "quality_at_glance_MQ");
+  </script>
+
+                
+              </div>
+            </div>
+            <div id="menu1" class="tab-pane fade">
+              <div class="box text-center container-fluid no-padding" align='center'>
+                
+              </div>
+            </div>
+            <div id="menu2" class="tab-pane fade">
+              <div class="box text-center container-fluid no-padding" align='center'>
+              
+                
+  <div class='bk-root' id='quality_at_glance_FQ' style="max-height: 75vh; overflow: auto; padding-bottom: 1em">
+  </div>
+  <script type="text/javascript">
+    item = JSON.parse('{"target_id": null, "root_id": "7582", "doc": {"defs": [], "roots": {"references": [{"attributes": {"border_line_width": 0, "coordinates": null, "group": null, "items": [{"id": "7566"}, {"id": "7565"}], "label_text_font_size": "14pt", "location": "center"}, "id": "7567", "type": "Legend"}, {"attributes": {"index": 0, "label": {"value": "74.91 %"}, "renderers": [{"id": "7563"}]}, "id": "7565", "type": "LegendItem"}, {"attributes": {}, "id": "7543", "type": "CategoricalTicker"}, {"attributes": {"children": [{"id": "7581"}, {"id": "7579"}]}, "id": "7582", "type": "Column"}, {"attributes": {}, "id": "7546", "type": "WheelZoomTool"}, {"attributes": {"source": {"id": "7526"}}, "id": "7564", "type": "CDSView"}, {"attributes": {}, "id": "7545", "type": "PanTool"}, {"attributes": {}, "id": "7576", "type": "Selection"}, {"attributes": {}, "id": "7536", "type": "CategoricalScale"}, {"attributes": {"overlay": {"id": "7551"}}, "id": "7547", "type": "BoxZoomTool"}, {"attributes": {"axis": {"id": "7538"}, "coordinates": null, "group": null, "ticker": null}, "id": "7541", "type": "Grid"}, {"attributes": {}, "id": "7548", "type": "SaveTool"}, {"attributes": {"axis_label_text_font_size": "14pt", "axis_label_text_font_style": "normal", "coordinates": null, "formatter": {"id": "7570"}, "group": null, "major_label_policy": {"id": "7571"}, "major_label_text_font_size": "14pt", "ticker": {"id": "7543"}}, "id": "7542", "type": "CategoricalAxis"}, {"attributes": {}, "id": "7549", "type": "ResetTool"}, {"attributes": {"fill_alpha": {"value": 0.1}, "fill_color": {"field": "color"}, "hatch_alpha": {"value": 0.1}, "hatch_color": {"field": "color"}, "line_alpha": {"value": 0.1}, "line_color": {"value": "white"}, "right": {"field": "counts"}, "y": {"field": "Scores"}}, "id": "7561", "type": "HBar"}, {"attributes": {}, "id": "7575", "type": "UnionRenderers"}, {"attributes": {}, "id": "7573", "type": "BasicTickFormatter"}, {"attributes": {"tools": [{"id": "7545"}, {"id": "7546"}, {"id": "7547"}, {"id": "7548"}, {"id": "7549"}, {"id": "7550"}]}, "id": "7552", "type": "Toolbar"}, {"attributes": {}, "id": "7534", "type": "LinearScale"}, {"attributes": {"bottom_units": "screen", "coordinates": null, "fill_alpha": 0.5, "fill_color": "lightgrey", "group": null, "left_units": "screen", "level": "overlay", "line_alpha": 1.0, "line_color": "black", "line_dash": [4, 4], "line_width": 2, "right_units": "screen", "syncable": false, "top_units": "screen"}, "id": "7551", "type": "BoxAnnotation"}, {"attributes": {"coordinates": null, "data_source": {"id": "7526"}, "glyph": {"id": "7560"}, "group": null, "hover_glyph": null, "muted_glyph": {"id": "7562"}, "nonselection_glyph": {"id": "7561"}, "view": {"id": "7564"}}, "id": "7563", "type": "GlyphRenderer"}, {"attributes": {"toolbars": [{"id": "7552"}], "tools": [{"id": "7545"}, {"id": "7546"}, {"id": "7547"}, {"id": "7548"}, {"id": "7549"}, {"id": "7550"}]}, "id": "7580", "type": "ProxyToolbar"}, {"attributes": {}, "id": "7550", "type": "HelpTool"}, {"attributes": {"fill_color": {"field": "color"}, "hatch_color": {"field": "color"}, "line_color": {"value": "white"}, "right": {"field": "counts"}, "y": {"field": "Scores"}}, "id": "7560", "type": "HBar"}, {"attributes": {"data": {"Scores": ["Model group/Ensemble 1", "Model group/Ensemble 2"], "color": ["#e95e0d", "#fdb97d"], "counts": [74.91, 74.91], "legends": ["74.91 %", "74.91 %"]}, "selected": {"id": "7576"}, "selection_policy": {"id": "7575"}}, "id": "7526", "type": "ColumnDataSource"}, {"attributes": {}, "id": "7539", "type": "BasicTicker"}, {"attributes": {"end": 102}, "id": "7530", "type": "Range1d"}, {"attributes": {"axis_label": "Satisfaction rate [%]", "axis_label_text_font_size": "14pt", "axis_label_text_font_style": "normal", "coordinates": null, "formatter": {"id": "7573"}, "group": null, "major_label_policy": {"id": "7574"}, "major_label_text_font_size": "14pt", "ticker": {"id": "7539"}}, "id": "7538", "type": "LinearAxis"}, {"attributes": {"fill_alpha": {"value": 0.2}, "fill_color": {"field": "color"}, "hatch_alpha": {"value": 0.2}, "hatch_color": {"field": "color"}, "line_alpha": {"value": 0.2}, "line_color": {"value": "white"}, "right": {"field": "counts"}, "y": {"field": "Scores"}}, "id": "7562", "type": "HBar"}, {"attributes": {}, "id": "7574", "type": "AllLabels"}, {"attributes": {"toolbar": {"id": "7580"}, "toolbar_location": "above"}, "id": "7581", "type": "ToolbarBox"}, {"attributes": {}, "id": "7570", "type": "CategoricalTickFormatter"}, {"attributes": {"index": 1, "label": {"value": "74.91 %"}, "renderers": [{"id": "7563"}]}, "id": "7566", "type": "LegendItem"}, {"attributes": {"axis": {"id": "7542"}, "coordinates": null, "dimension": 1, "grid_line_color": null, "group": null, "ticker": null}, "id": "7544", "type": "Grid"}, {"attributes": {}, "id": "7571", "type": "AllLabels"}, {"attributes": {"below": [{"id": "7538"}], "center": [{"id": "7541"}, {"id": "7544"}], "height": 135, "left": [{"id": "7542"}], "output_backend": "svg", "renderers": [{"id": "7563"}], "right": [{"id": "7567"}], "title": {"id": "7528"}, "toolbar": {"id": "7552"}, "toolbar_location": null, "width": 800, "x_range": {"id": "7530"}, "x_scale": {"id": "7534"}, "y_range": {"id": "7532"}, "y_scale": {"id": "7536"}}, "id": "7527", "subtype": "Figure", "type": "Plot"}, {"attributes": {"align": "center", "coordinates": null, "group": null, "text": "Crosslink satisfaction", "text_font_size": "14pt", "vertical_align": "top"}, "id": "7528", "type": "Title"}, {"attributes": {"factors": ["Model group/Ensemble 1", "Model group/Ensemble 2"]}, "id": "7532", "type": "FactorRange"}, {"attributes": {"children": [[{"id": "7527"}, 0, 0]]}, "id": "7579", "type": "GridBox"}], "root_ids": ["7582"]}, "title": "", "version": "2.4.3"}, "version": "2.4.3"}');
+    Bokeh.embed.embed_item(item, "quality_at_glance_FQ");
+  </script>
+
+              
+              </div>
+            </div>
+            <div id="menu3" class="tab-pane fade">
+              <h3></h3>
+              <p></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end card-header -->
+      <!--
+report_version.j2 - Current version of the report
+
+Copyright (C) 2025 Arthur Zalevsky <aozalevsky@gmail.com>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see https://www.gnu.org/licenses/.
+-->
+
+<p>
+  <em>The following software was used in the production of this report:</em>
+</p>
+<ul style="list-style-type:none;">
+  
+  
+  
+  <li><em><a href='https://github.com/salilab/IHMValidation'>IHMValidation</a> Version 3.0</em></li>
+
+  <li><em><a href='https://github.com/ihmwg/python-ihm'>Python-IHM</a> Version 2.7</em></li>
+
+  
+
+  
+  
+  
+
+  
+
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+</ul>
+      <p style=margin-bottom:1cm;> </p>
+      <!--
+acknowledgments.j2 - Acknowledgments
+
+Copyright (C) 2019-2025 Arthur Zalevsky, Sai Ganesan, Benjamin M. Webb, Brinda Vallat
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see https://www.gnu.org/licenses/.
+-->
+
+<p align="justify"><em>Acknowledgments</em></p>
+<ul style="list-style-type:none;">
+  <li>
+    <p align="justify">
+      <em>
+      The development of integrative model validation metrics, implementation of a model validation pipeline, and creation of a validation report for integrative structures are funded by NSF awards to the <a href="https://pdb-ihm.org/about.html">PDB-IHM team</a> (DBI-1756248, DBI-2112966, DBI-2112967, DBI-2112968, and DBI-1756250) and awards from NSF, NIH, and DOE to the <a href="https://rcsb.org">RCSB PDB</a> (DBI-2321666, R01GM157729, and DE-SC0019749). The PDB-IHM team and members of the <a href="https://salilab.org/">Sali lab</a> contributed model validation metrics and software packages.
+      </em>
+    </p>
+  </li>
+  <li>
+    <p align="justify">
+      <em>
+        Dr. Jill Trewhella, Dr. Dina Schneidman, and members of the <a href="https://sasbdb.org">SASBDB</a> repository are acknowledged for their advice and support in implementing SAS validation methods. Team members from the labs of Dr. Juri Rappsilber, Dr. Alexander Leitner, Dr. Andrea Graziadei, and members of <a href="https://www.ebi.ac.uk/pride/">PRIDE</a> database are acknowledged for their advice and support in implementing crosslinking-MS validation methods. We are grateful to Dr. Shruthi Viswanath for discussions about uncertainty assessment of integrative structural models.
+      </em>
+    </p>
+  </li>
+  <li>
+    <p align="justify">
+      <em>
+        Members of the <a href='https://www.wwpdb.org/task/hybrid'>wwPDB Integrative/Hybrid Methods Task Force</a> provided recommendations and community support for the project.
+      </em>
+    </p>
+  </li>
+</ul>
+    </div>
+    <!-- end column -->
+  </div>
+  <!--end row-->
+</div>
+<!--end card body-->
+
+        
+        <!-- start footer -->
+        <footer class="page-footer">
+          <div class="container-fluid">
+            <div class="row" style="/color:#FFF; background-color: rgba(102,153,102, 0.5); padding-top: 10px; padding-bottom: 2px;">
+              <div class="col-sm-6" style="padding-top: 10px; padding-bottom: 10px;">
+                <a href="https://www.wwpdb.org/" target="_blank">
+                
+                  <img src="/images/wwpdb-logo11.png" alt="wwpdb" height="35px" width="160px"></a>
+                
+              </div>
+              <div class="col-sm-6">
+                <div class="float-right text-right">
+                  <p style="margin-bottom: 0px; margin-right: 0px;color: #000">Supported by<br />National Science Foundation</p>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="color:#FFF; background-color: #669966; padding-top: 3px; padding-bottom: 8px;">
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,491 @@
+<!--
+model_quality.html - Model quality HTML page
+
+Copyright (C) 2019-2025 Arthur Zalevsky, Sai Ganesan, Benjamin M. Webb, Brinda Vallat
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see https://www.gnu.org/licenses/.
+-->
+
+<!--
+validation_report_layout.html - Additional layout for validation pages
+
+Copyright (C) 2019-2025 Arthur Zalevsky, Sai Ganesan, Benjamin M. Webb, Brinda Vallat
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see https://www.gnu.org/licenses/.
+-->
+
+<!--
+layout.html - Base layout
+
+Copyright (C) 2019-2025 Arthur Zalevsky, Sai Ganesan, Benjamin M. Webb, Brinda Vallat
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see https://www.gnu.org/licenses/.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>PDB-IHM Validation Report</title>
+    <!-- add bootstrap css file -->
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/css/main.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/css/layout.css">
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.3.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.3.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.3.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.4.3.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.3.min.js"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      Bokeh.set_log_level("info");
+    </script>
+  </head>
+  <body style="background-color: #669966; ">
+    <!-- wrap all content into fluid container -->
+    <div class="container-fluid">
+      <!-- header -->
+      <div class="card" style="border: none; margin-bottom: 0px; margin-right: 10px; margin-left: 30px; ">
+        <!-- header -->
+        <!-- looks like empty and unnecessary element -->
+        <div class="float-left">
+          <b><span id="siteid"></span></b>
+        </div>
+        <!-- end of element -->
+        <!-- actual header -->
+        <div class="card-body" style="padding: 0px 0px;background-color: rgba(102,153,102, 0.5); ">
+          <div class="row">
+            <div class=" col-sm-9" style="margin-left: 0px;">
+              <a href="/">
+                
+                  <img src="/images/logon.png" class="float-left" alt="PDBIHM.org" height="100" width="110" style="margin-top: 0px; margin-bottom: 0px" />
+                
+                <p>
+                  <h1 style="margin-left: 0px; color: #003366;">PDB-IHM</h1>
+                  <h5 class="float-left" style="color: #003366;">
+                    System for Archiving Integrative Structures
+                  </h5>
+                </p>
+              </a>
+            </div>
+            <!-- looks like empty and unnecessary element -->
+            <div class="col-sm-3 d-flex align-items-end" style="margin-top: 0px;">
+              <h5 class="home-header ml-auto" style="margin-right:27px; color:#003366">
+                <b><small></small></b>
+              </h5>
+            </div>
+            <!-- end of element -->
+          </div>
+        </div>
+        <!--end of header -->
+        
+        
+  <!-- Main navbar -->
+  <nav class="navbar navbar-expand-xl navbar-dark">
+    <div class="dropdown">
+      <a class="navbar-brand" href="main.html">
+        <h5>
+          Validation Report for 8ZZ1
+        </h5>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
+  
+  <!-- Secondary navbar -->
+  <nav class="navbar navbar-expand-xl navbar-dark p-0">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="nav navbar-nav mr-auto">
+        
+        <!-- About validation -->
+        <li class="nav-item mr-4 dropdown">
+          <a class="btn btn-primary " href="/about_validation.html"><span class="overview">About <br> Validation</span></a>
+        </li>
+        <li class="nav-item mr-4 dropdown">
+          <a class="dropdown-toggle"  data-toggle="dropdown"><button type="button" class="btn btn-primary" onclick=window.location='main.html';>Validation <br> Overview</button></a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item colorclass" href="main.html#qual">Overall quality</a>
+          </div>
+        </li>
+        
+        <!-- Model details -->
+        <li class="nav-item mr-4 dropdown">
+          <a class="dropdown-toggle"  data-toggle="dropdown"><button type="button" class="btn btn-primary" onclick=window.location='model_composition.html';>Model <br> Details </button></a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item colorclass" href="model_composition.html#ensemble">Ensemble information</a>
+            <a class="dropdown-item colorclass" href="model_composition.html#summary">Summary</a>
+            <a class="dropdown-item colorclass" href="model_composition.html#representation">Representation</a>
+            <a class="dropdown-item colorclass" href="model_composition.html#data">Datasets used</a>
+            <a class="dropdown-item colorclass" href="model_composition.html#methods">Methods and software</a>
+          </div>
+        </li>
+        
+        <!-- Model details -->
+        <li class="nav-item mr-4 dropdown">
+          <a class="dropdown-toggle"  data-toggle="dropdown"><button type="button" class="btn btn-primary" onclick=window.location="data_quality.html";>Data <br> Quality </button></a>
+          <div class="dropdown-menu">
+            
+            
+            
+            
+            
+            
+              
+            
+              <a class=dropdown-item-text dropdown-toggle type=button>EM raw micrographs</a>
+            
+              <a class=dropdown-item-text dropdown-toggle type=button>2DEM class average</a>
+            
+          </div>
+        </li>
+  
+        <!-- Model quality -->
+        <li class="nav-item mr-4 dropdown">
+          <a class="dropdown-toggle"  data-toggle="dropdown"><button type="button" class="btn btn-primary" onclick=window.location='model_quality.html';>Model <br> Quality </button></a>
+          <div class="dropdown-menu">
+            
+              <a class="dropdown-item colorclass" href=model_quality.html#ex>Excluded volume</a>
+            
+            
+            
+          </div>
+        </li>
+        
+        <!-- Fit to data used for modeling -->
+        <li class="nav-item mr-4 dropdown">
+          
+            <a class="dropdown-toggle"  data-toggle="dropdown"><button type="button" class="btn btn-primary" onclick=window.location="formodeling.html";>Fit to Data <br> Used for Modeling </button></a>
+                
+          
+          
+  				<div class="dropdown-menu">
+            
+            
+						
+              <a class="dropdown-item colorclass" dropdown-toggle href=formodeling.html#crosslinking-ms>
+                Crosslinking-MS
+              </a>
+
+              <ul class=dropdown-submenu>
+                <li>
+                  <a class=dropdown-item2 href=formodeling.html#crosslinking-ms_ertypes>
+                    Restraint types
+                  </a>
+                </li>
+                <li>
+                  <a class=dropdown-item2 href=formodeling.html#crosslinking-ms_satisfaction>
+                    Satisfaction of restraints
+                  </a>
+                </li>
+              </ul>
+            
+            
+            
+  					
+            
+              <a class=dropdown-item-text dropdown-toggle type=button>EM raw micrographs</a>
+            
+              <a class=dropdown-item-text dropdown-toggle type=button>2DEM class average</a>
+            
+          </div>
+        </li>
+  
+        <!-- Fit to data used for validation -->
+        <li class="nav-item mr-4 dropdown">
+          <a class="btn button4" value="Disabled" disabled background-color: #555555 ><span >Fit to Data <br>Used for Validation</span></a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item-text" dropdown-toggle type=button >Data</a>
+          </div>
+        </li>
+        <li class="nav-item mr-4 dropdown">
+          <a class="btn btn-primary " href="/validation_help.html"><span class="overview">Validation <br> Help</span></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+        
+        
+<!--
+model_quality.j2 - Model quality content
+
+Copyright (C) 2019-2025 Arthur Zalevsky, Sai Ganesan, Benjamin M. Webb, Brinda Vallat
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see https://www.gnu.org/licenses/.
+-->
+
+
+
+<div class="card-body border-success" style="border-color: solid black;">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card-header" style="background-color: #FFF; padding: 0px;">
+        <h3 align="center">
+          <u>4. Model quality</u>
+          
+  
+    <a class='help' title='help' style='background-color:#228B22;color:#000000;text-decoration:none font-size=16px' href='/validation_help.html#modelquality'>?</a>
+  
+
+        </h3>
+        <p class="ex2"> For models with atomic structures, MolProbity analysis is performed. For models with coarse-grained or multi-scale structures, excluded volume analysis is performed.</p>
+        <!-- Bad systems without proper metrics -->
+        
+          <!-- Excluded volume for systems with coarse grain beads -->
+          
+            <h4 class= ex2 align=center>
+              <u>4.1a. Excluded Volume Analysis</u>
+              
+  
+    <a class='help' title='help' style='background-color:#228B22;color:#000000;text-decoration:none font-size=16px' href='/validation_help.html#exv'>?</a>
+  
+
+            </h4>
+            <i>Excluded volume satisfaction for the models in the entry are listed below. The Analysed column shows the number of particle-partice or particle-atom pairs for which excluded volume was analysed.</i>
+            <p class="ex2"></p>
+            
+  <div class='bs-example' class='text-center'>
+    <table class='table table-bordered' style='border-color:#003366;'>
+      <thead>
+        <tr>
+          
+            <th align='center' class='text-center' style='vertical-align:middle'>
+              Model ID
+            </th>
+          
+            <th align='center' class='text-center' style='vertical-align:middle'>
+              Analysed
+            </th>
+          
+            <th align='center' class='text-center' style='vertical-align:middle'>
+              Number of violations
+            </th>
+          
+            <th align='center' class='text-center' style='vertical-align:middle'>
+              Excluded Volume Satisfaction (%)
+            </th>
+          
+        </tr>
+      </thead>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       1
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       9165621
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       10899
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       99.88
+     
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       2
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       9165621
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       10935
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       99.88
+     
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+    </table>
+  </div>
+
+            <p class="ex2"></p>
+          
+          <!-- Atomic systems (molprobity) -->
+          
+        
+        
+        <!--
+prism.j2 - Local precision (PrISM) assessment content
+
+Copyright (C) 2025 Arthur Zalevsky <aozalevsky@gmail.com>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see https://www.gnu.org/licenses/.
+-->
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+        
+        <!-- start footer -->
+        <footer class="page-footer">
+          <div class="container-fluid">
+            <div class="row" style="/color:#FFF; background-color: rgba(102,153,102, 0.5); padding-top: 10px; padding-bottom: 2px;">
+              <div class="col-sm-6" style="padding-top: 10px; padding-bottom: 10px;">
+                <a href="https://www.wwpdb.org/" target="_blank">
+                
+                  <img src="/images/wwpdb-logo11.png" alt="wwpdb" height="35px" width="160px"></a>
+                
+              </div>
+              <div class="col-sm-6">
+                <div class="float-right text-right">
+                  <p style="margin-bottom: 0px; margin-right: 0px;color: #000">Supported by<br />National Science Foundation</p>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="color:#FFF; background-color: #669966; padding-top: 3px; padding-bottom: 8px;">
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

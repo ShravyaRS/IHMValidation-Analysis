@@ -1,0 +1,3257 @@
+<!--
+model_composition.html - Model details page
+
+Copyright (C) 2019-2025 Arthur Zalevsky, Sai Ganesan, Benjamin M. Webb, Brinda Vallat
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see https://www.gnu.org/licenses/.
+-->
+
+<!--
+validation_report_layout.html - Additional layout for validation pages
+
+Copyright (C) 2019-2025 Arthur Zalevsky, Sai Ganesan, Benjamin M. Webb, Brinda Vallat
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see https://www.gnu.org/licenses/.
+-->
+
+<!--
+layout.html - Base layout
+
+Copyright (C) 2019-2025 Arthur Zalevsky, Sai Ganesan, Benjamin M. Webb, Brinda Vallat
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see https://www.gnu.org/licenses/.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>PDB-IHM Validation Report</title>
+    <!-- add bootstrap css file -->
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/css/main.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/css/layout.css">
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.3.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.3.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.3.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.4.3.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.3.min.js"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      Bokeh.set_log_level("info");
+    </script>
+  </head>
+  <body style="background-color: #669966; ">
+    <!-- wrap all content into fluid container -->
+    <div class="container-fluid">
+      <!-- header -->
+      <div class="card" style="border: none; margin-bottom: 0px; margin-right: 10px; margin-left: 30px; ">
+        <!-- header -->
+        <!-- looks like empty and unnecessary element -->
+        <div class="float-left">
+          <b><span id="siteid"></span></b>
+        </div>
+        <!-- end of element -->
+        <!-- actual header -->
+        <div class="card-body" style="padding: 0px 0px;background-color: rgba(102,153,102, 0.5); ">
+          <div class="row">
+            <div class=" col-sm-9" style="margin-left: 0px;">
+              <a href="/">
+                
+                  <img src="/images/logon.png" class="float-left" alt="PDBIHM.org" height="100" width="110" style="margin-top: 0px; margin-bottom: 0px" />
+                
+                <p>
+                  <h1 style="margin-left: 0px; color: #003366;">PDB-IHM</h1>
+                  <h5 class="float-left" style="color: #003366;">
+                    System for Archiving Integrative Structures
+                  </h5>
+                </p>
+              </a>
+            </div>
+            <!-- looks like empty and unnecessary element -->
+            <div class="col-sm-3 d-flex align-items-end" style="margin-top: 0px;">
+              <h5 class="home-header ml-auto" style="margin-right:27px; color:#003366">
+                <b><small></small></b>
+              </h5>
+            </div>
+            <!-- end of element -->
+          </div>
+        </div>
+        <!--end of header -->
+        
+        
+  <!-- Main navbar -->
+  <nav class="navbar navbar-expand-xl navbar-dark">
+    <div class="dropdown">
+      <a class="navbar-brand" href="main.html">
+        <h5>
+          Validation Report for 8ZZ1
+        </h5>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
+  
+  <!-- Secondary navbar -->
+  <nav class="navbar navbar-expand-xl navbar-dark p-0">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="nav navbar-nav mr-auto">
+        
+        <!-- About validation -->
+        <li class="nav-item mr-4 dropdown">
+          <a class="btn btn-primary " href="/about_validation.html"><span class="overview">About <br> Validation</span></a>
+        </li>
+        <li class="nav-item mr-4 dropdown">
+          <a class="dropdown-toggle"  data-toggle="dropdown"><button type="button" class="btn btn-primary" onclick=window.location='main.html';>Validation <br> Overview</button></a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item colorclass" href="main.html#qual">Overall quality</a>
+          </div>
+        </li>
+        
+        <!-- Model details -->
+        <li class="nav-item mr-4 dropdown">
+          <a class="dropdown-toggle"  data-toggle="dropdown"><button type="button" class="btn btn-primary" onclick=window.location='model_composition.html';>Model <br> Details </button></a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item colorclass" href="model_composition.html#ensemble">Ensemble information</a>
+            <a class="dropdown-item colorclass" href="model_composition.html#summary">Summary</a>
+            <a class="dropdown-item colorclass" href="model_composition.html#representation">Representation</a>
+            <a class="dropdown-item colorclass" href="model_composition.html#data">Datasets used</a>
+            <a class="dropdown-item colorclass" href="model_composition.html#methods">Methods and software</a>
+          </div>
+        </li>
+        
+        <!-- Model details -->
+        <li class="nav-item mr-4 dropdown">
+          <a class="dropdown-toggle"  data-toggle="dropdown"><button type="button" class="btn btn-primary" onclick=window.location="data_quality.html";>Data <br> Quality </button></a>
+          <div class="dropdown-menu">
+            
+            
+            
+            
+            
+            
+              
+            
+              <a class=dropdown-item-text dropdown-toggle type=button>EM raw micrographs</a>
+            
+              <a class=dropdown-item-text dropdown-toggle type=button>2DEM class average</a>
+            
+          </div>
+        </li>
+  
+        <!-- Model quality -->
+        <li class="nav-item mr-4 dropdown">
+          <a class="dropdown-toggle"  data-toggle="dropdown"><button type="button" class="btn btn-primary" onclick=window.location='model_quality.html';>Model <br> Quality </button></a>
+          <div class="dropdown-menu">
+            
+              <a class="dropdown-item colorclass" href=model_quality.html#ex>Excluded volume</a>
+            
+            
+            
+          </div>
+        </li>
+        
+        <!-- Fit to data used for modeling -->
+        <li class="nav-item mr-4 dropdown">
+          
+            <a class="dropdown-toggle"  data-toggle="dropdown"><button type="button" class="btn btn-primary" onclick=window.location="formodeling.html";>Fit to Data <br> Used for Modeling </button></a>
+                
+          
+          
+  				<div class="dropdown-menu">
+            
+            
+						
+              <a class="dropdown-item colorclass" dropdown-toggle href=formodeling.html#crosslinking-ms>
+                Crosslinking-MS
+              </a>
+
+              <ul class=dropdown-submenu>
+                <li>
+                  <a class=dropdown-item2 href=formodeling.html#crosslinking-ms_ertypes>
+                    Restraint types
+                  </a>
+                </li>
+                <li>
+                  <a class=dropdown-item2 href=formodeling.html#crosslinking-ms_satisfaction>
+                    Satisfaction of restraints
+                  </a>
+                </li>
+              </ul>
+            
+            
+            
+  					
+            
+              <a class=dropdown-item-text dropdown-toggle type=button>EM raw micrographs</a>
+            
+              <a class=dropdown-item-text dropdown-toggle type=button>2DEM class average</a>
+            
+          </div>
+        </li>
+  
+        <!-- Fit to data used for validation -->
+        <li class="nav-item mr-4 dropdown">
+          <a class="btn button4" value="Disabled" disabled background-color: #555555 ><span >Fit to Data <br>Used for Validation</span></a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item-text" dropdown-toggle type=button >Data</a>
+          </div>
+        </li>
+        <li class="nav-item mr-4 dropdown">
+          <a class="btn btn-primary " href="/validation_help.html"><span class="overview">Validation <br> Help</span></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+        
+        
+
+  <!-- Ensemble information -->
+  <div class="card-body border-success" style="border-color: solid black;">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card-header" style="background-color: #FFF;">
+          <h4 align='center'>
+            <u><a name='ensemble'>2.1. Ensemble information</a></u><a class='help' title='help' style='background-color:#228B22;color:#000000;text-decoration:none font-size=16px' href="/validation_help.html#ensemble">?</a>
+          </h4>
+          
+            <p class ="ex2"><i>This entry consists of 2 distinct ensembles.</i></p>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Representation -->
+  <div class="card-body border-success" style="border-color: solid black;">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card-header" style="background-color: #FFF;">
+          <!--
+report_version.j2 - Current version of the report
+
+Copyright (C) 2025 Arthur Zalevsky <aozalevsky@gmail.com>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see https://www.gnu.org/licenses/.
+-->
+
+
+<h4 align="center">
+  <u><a name="representation">2.2. Representation</a></u> 
+  
+  
+    <a class='help' title='help' style='background-color:#228B22;color:#000000;text-decoration:none font-size=16px' href='/validation_help.html#representation'>?</a>
+  
+
+</h4>
+
+<p align="justify">
+  <i>This entry has 1 representation(s).</i>
+</p>
+
+<div id='rep_info'>
+  <table class="table table-bordered" style="border-color:#003366;"> 
+    <thead style="display: table-header-group;">
+      <tr>
+        <th align='center' class='text-center' style='vertical-align:middle'>ID</th>
+        <th align='center' class='text-center' style='vertical-align:middle'>Model(s)</th>
+        <th align='center' class='text-center' style='vertical-align:middle'>Entity ID</th>
+        <th align='center' class='text-center' style='vertical-align:middle'>Molecule name</th>
+        <th align='center' class='text-center' style='vertical-align:middle'>Chain(s) [auth]</th>
+        <th align='center' class='text-center' style='vertical-align:middle'>Total residues</th>
+        <th align='center' class='text-center' style='vertical-align:middle'>Rigid segments</th>
+        <th align='center' class='text-center' style='vertical-align:middle'>Flexible segments</th>
+        <!-- <th>Model coverage (%)</th>
+        <th align='center' class='text-center' style='vertical-align:middle'>Starting model coverage (%)</th> -->
+        <th align='center' class='text-center' style='vertical-align:middle'>Model coverage/<br>Starting model coverage<br>(%)</th>
+        <th align='center' class='text-center' style='vertical-align:middle'>Scale</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+        
+          
+          <tr>
+            
+              <td class="tdup" rowspan=7>1 </td>
+              <td class="tdup" rowspan=7>1-2</td>
+            
+            
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      1
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      Nup84
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup">
+  
+    
+      A
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+     
+       726
+     
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      7-20, 27-80, 96-126, 136-364, 372-483, 506-562, 575-726
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      1-6, 21-26, 81-95, 127-135, 365-371, 484-505, 563-574
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+     
+       100.00
+     
+  
+/<br>
+  
+     
+       89.39
+     
+  
+</td>
+              
+            
+              
+                
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      Multiscale: Coarse-grained: 1 - 20 residue(s) per bead
+    
+  
+</td>
+              
+            
+          </tr>
+          
+        
+          
+          <tr>
+            
+            
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      2
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      Nup85
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup">
+  
+    
+      B
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+     
+       744
+     
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      67-122, 135-427, 461-529, 533-602, 620-671, 680-743
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      1-66, 123-134, 428-460, 530-532, 603-619, 672-679, 744
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+     
+       100.00
+     
+  
+/<br>
+  
+     
+       81.18
+     
+  
+</td>
+              
+            
+              
+                
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      Multiscale: Coarse-grained: 1 - 20 residue(s) per bead
+    
+  
+</td>
+              
+            
+          </tr>
+          
+        
+          
+          <tr>
+            
+            
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      3
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      Nup120
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup">
+  
+    
+      C
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+     
+       1037
+     
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      1-29, 53-212, 221-305, 311-429, 440-710, 711-712, 727-781, 805-892, 903-910, 921-1010, 1023-1037
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      30-52, 213-220, 306-310, 430-439, 713-726, 782-804, 893-902, 911-920, 1011-1022
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+     
+       100.00
+     
+  
+/<br>
+  
+     
+       88.91
+     
+  
+</td>
+              
+            
+              
+                
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      Multiscale: Coarse-grained: 1 - 20 residue(s) per bead
+    
+  
+</td>
+              
+            
+          </tr>
+          
+        
+          
+          <tr>
+            
+            
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      4
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      Nup133
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup">
+  
+    
+      D
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+     
+       1157
+     
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      56-78, 86-125, 133-144, 162-184, 193-200, 206-249, 258-480, 490-763, 772-1155
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      1-55, 79-85, 126-132, 145-161, 185-192, 201-205, 250-257, 481-489, 764-771, 1156-1157
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+     
+       100.00
+     
+  
+/<br>
+  
+     
+       89.11
+     
+  
+</td>
+              
+            
+              
+                
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      Multiscale: Coarse-grained: 1 - 20 residue(s) per bead
+    
+  
+</td>
+              
+            
+          </tr>
+          
+        
+          
+          <tr>
+            
+            
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      5
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      Nup145c
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup">
+  
+    
+      E
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+     
+       712
+     
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      126-144, 151-175, 182-553
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      1-125, 145-150, 176-181, 554-712
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+     
+       100.00
+     
+  
+/<br>
+  
+     
+       58.43
+     
+  
+</td>
+              
+            
+              
+                
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      Multiscale: Coarse-grained: 1 - 20 residue(s) per bead
+    
+  
+</td>
+              
+            
+          </tr>
+          
+        
+          
+          <tr>
+            
+            
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      6
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      Seh1
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup">
+  
+    
+      F
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+     
+       349
+     
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      1-248, 288-346
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      249-287, 347-349
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+     
+       100.00
+     
+  
+/<br>
+  
+     
+       87.97
+     
+  
+</td>
+              
+            
+              
+                
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      Multiscale: Coarse-grained: 1 - 20 residue(s) per bead
+    
+  
+</td>
+              
+            
+          </tr>
+          
+        
+          
+          <tr>
+            
+            
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      7
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      Sec13
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup">
+  
+    
+      G
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+     
+       297
+     
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      2-158, 166-296
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      1, 159-165, 297
+    
+  
+</td>
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+     
+       100.00
+     
+  
+/<br>
+  
+     
+       96.97
+     
+  
+</td>
+              
+            
+              
+                
+              
+            
+              
+                <td class="tdup" rowspan=1>
+  
+    
+      Multiscale: Coarse-grained: 1 - 7 residue(s) per bead
+    
+  
+</td>
+              
+            
+          </tr>
+          
+        
+      
+    </tbody>
+  </table>
+</div> 
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <!-- Datasets summary -->
+  <div class="card-body border-success" style="border-color: solid black;">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card-header" style="background-color: #FFF;">
+          <h4 class="ex2" align="center"><u><a name='data'>2.3. Datasets used for modeling </a></u> <a class='help' title='help' style='background-color:#228B22;color:#000000;text-decoration:none font-size=16px' href="/validation_help.html#datasets">?</a></h4>
+          
+            <i>There are 28 unique datasets used to build the models in this entry.</i>
+          
+  
+          
+  <div class='bs-example' class='text-center'>
+    <table class='table table-bordered' style='border-color:#003366;'>
+      <thead>
+        <tr>
+          
+            <th align='center' class='text-center' style='vertical-align:middle'>
+              ID
+            </th>
+          
+            <th align='center' class='text-center' style='vertical-align:middle'>
+              Dataset type
+            </th>
+          
+            <th align='center' class='text-center' style='vertical-align:middle'>
+              Database name
+            </th>
+          
+            <th align='center' class='text-center' style='vertical-align:middle'>
+              Data access code
+            </th>
+          
+        </tr>
+      </thead>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       1
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Experimental model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      PDB
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://dx.doi.org/10.2210/pdb3jro/pdb>pdb_00003jro</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       2
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Experimental model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      PDB
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://dx.doi.org/10.2210/pdb3f3f/pdb>pdb_00003f3f</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       3
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Experimental model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      PDB
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://dx.doi.org/10.2210/pdb3iko/pdb>pdb_00003iko</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       4
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Comparative model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Zenodo
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://doi.org/10.5281/zenodo.1218053>10.5281/zenodo.1218053</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       5
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Experimental model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      PDB
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://dx.doi.org/10.2210/pdb3cqc/pdb>pdb_00003cqc</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       6
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Comparative model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Zenodo
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://doi.org/10.5281/zenodo.1218053>10.5281/zenodo.1218053</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       7
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Experimental model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      PDB
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://dx.doi.org/10.2210/pdb4lct/pdb>pdb_00004lct</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       8
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Experimental model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      PDB
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://dx.doi.org/10.2210/pdb2qx5/pdb>pdb_00002qx5</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       9
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Experimental model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      PDB
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://dx.doi.org/10.2210/pdb3ewe/pdb>pdb_00003ewe</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       10
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Comparative model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Zenodo
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://doi.org/10.5281/zenodo.1218053>10.5281/zenodo.1218053</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       11
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Experimental model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      PDB
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://dx.doi.org/10.2210/pdb3f7f/pdb>pdb_00003f7f</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       12
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Experimental model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      PDB
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://dx.doi.org/10.2210/pdb3hxr/pdb>pdb_00003hxr</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       13
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Experimental model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      PDB
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://dx.doi.org/10.2210/pdb4fhn/pdb>pdb_00004fhn</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       14
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Comparative model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Zenodo
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://doi.org/10.5281/zenodo.1218053>10.5281/zenodo.1218053</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       15
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Experimental model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      PDB
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://dx.doi.org/10.2210/pdb4q9t/pdb>pdb_00004q9t</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       16
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Comparative model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Zenodo
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://doi.org/10.5281/zenodo.1218053>10.5281/zenodo.1218053</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       17
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Experimental model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      PDB
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://dx.doi.org/10.2210/pdb3i4r/pdb>pdb_00003i4r</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       18
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Experimental model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      PDB
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://dx.doi.org/10.2210/pdb3kfo/pdb>pdb_00003kfo</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       19
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Comparative model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Zenodo
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://doi.org/10.5281/zenodo.1218053>10.5281/zenodo.1218053</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       20
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Experimental model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      PDB
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://dx.doi.org/10.2210/pdb3bg1/pdb>pdb_00003bg1</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       21
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Experimental model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      PDB
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://dx.doi.org/10.2210/pdb3bg0/pdb>pdb_00003bg0</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       22
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Comparative model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Zenodo
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://doi.org/10.5281/zenodo.1218053>10.5281/zenodo.1218053</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       23
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Experimental model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      PDB
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://dx.doi.org/10.2210/pdb3f3f/pdb>pdb_00003f3f</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       24
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Experimental model
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      PDB
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://dx.doi.org/10.2210/pdb2pm7/pdb>pdb_00002pm7</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       25
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Crosslinking-MS data
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Zenodo
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://doi.org/10.5281/zenodo.1218053>10.5281/zenodo.1218053</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       26
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Crosslinking-MS data
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Zenodo
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://doi.org/10.5281/zenodo.1218053>10.5281/zenodo.1218053</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       27
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      EM raw micrographs
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Zenodo
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://doi.org/10.5281/zenodo.58025>10.5281/zenodo.58025</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       28
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      2DEM class average
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Zenodo
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href=https://doi.org/10.5281/zenodo.1218053>10.5281/zenodo.1218053</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+    </table>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Protocols and software summary -->
+  <div class="card-body border-success" style="border-color: solid black;">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card-header" style="background-color: #FFF;">
+          <h4 class="ex2" align="center">
+            <u><a name="methods">2.4. Methodology and software</a></u><a class='help' title='help' style='background-color:#228B22;color:#000000;text-decoration:none font-size=16px' href="/validation_help.html#software">?</a>
+          </h4>
+          <!-- Protocols summary -->
+          
+            <i>This entry is a result of 1 distinct protocol.</i>
+          
+          
+          
+  <div class='bs-example' class='text-center'>
+    <table class='table table-bordered' style='border-color:#003366;'>
+      <thead>
+        <tr>
+          
+            <th align='center' class='text-center' style='vertical-align:middle'>
+              Step number
+            </th>
+          
+            <th align='center' class='text-center' style='vertical-align:middle'>
+              Protocol ID
+            </th>
+          
+            <th align='center' class='text-center' style='vertical-align:middle'>
+              Method name
+            </th>
+          
+            <th align='center' class='text-center' style='vertical-align:middle'>
+              Method type
+            </th>
+          
+            <th align='center' class='text-center' style='vertical-align:middle'>
+              Method description
+            </th>
+          
+            <th align='center' class='text-center' style='vertical-align:middle'>
+              Number of computed models
+            </th>
+          
+            <th align='center' class='text-center' style='vertical-align:middle'>
+              Multi state modeling
+            </th>
+          
+            <th align='center' class='text-center' style='vertical-align:middle'>
+              Multi scale modeling
+            </th>
+          
+        </tr>
+      </thead>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       1
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       1
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Sampling
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Replica exchange monte carlo
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Not available
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       500
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      False
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      True
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       2
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       1
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Sampling
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Replica exchange monte carlo
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      Not available
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       5000
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      False
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      True
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+    </table>
+  </div>
+
+          
+          <!-- Software summary -->
+          
+            <i>There are 6 software packages reported in this entry.</i>
+          
+  
+          
+  <div class='bs-example' class='text-center'>
+    <table class='table table-bordered' style='border-color:#003366;'>
+      <thead>
+        <tr>
+          
+            <th align='center' class='text-center' style='vertical-align:middle'>
+              ID
+            </th>
+          
+            <th align='center' class='text-center' style='vertical-align:middle'>
+              Software name
+            </th>
+          
+            <th align='center' class='text-center' style='vertical-align:middle'>
+              Software version
+            </th>
+          
+            <th align='center' class='text-center' style='vertical-align:middle'>
+              Software classification
+            </th>
+          
+            <th align='center' class='text-center' style='vertical-align:middle'>
+              Software location
+            </th>
+          
+        </tr>
+      </thead>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       1
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href="https://integrativemodeling.org">Integrative Modeling Platform (IMP)</a>
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      develop-0a5706e202
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      integrative model building
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href="https://integrativemodeling.org">https://integrativemodeling.org</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       2
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href="https://integrativemodeling.org">IMP PMI module</a>
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      67456c0
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      integrative model building
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href="https://integrativemodeling.org">https://integrativemodeling.org</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       3
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href="https://toolkit.tuebingen.mpg.de/hhpred">HHpred</a>
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      2.0.16
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      protein homology detection
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href="https://toolkit.tuebingen.mpg.de/hhpred">https://toolkit.tuebingen.mpg.de/hhpred</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       4
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href="http://bioinf.cs.ucl.ac.uk/psipred/">PSIPRED</a>
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       4.00
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      secondary structure prediction
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href="http://bioinf.cs.ucl.ac.uk/psipred/">http://bioinf.cs.ucl.ac.uk/psipred/</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       5
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href="http://bioinf.cs.ucl.ac.uk/psipred/?disopred=1">DISOPRED</a>
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       3
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      disorder prediction
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href="http://bioinf.cs.ucl.ac.uk/psipred/?disopred=1">http://bioinf.cs.ucl.ac.uk/psipred/?disopred=1</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+        <tr>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       6
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href="https://salilab.org/modeller/">MODELLER</a>
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+     
+       9.12
+     
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      comparative modeling
+    
+  
+
+              </div>
+            </td>
+          
+            <td style="text-align:center; vertical-align: middle;">
+              <div>
+                
+  
+    
+      <a href="https://salilab.org/modeller/">https://salilab.org/modeller/</a>
+    
+  
+
+              </div>
+            </td>
+          
+        </tr>
+      
+    </table>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+        
+        <!-- start footer -->
+        <footer class="page-footer">
+          <div class="container-fluid">
+            <div class="row" style="/color:#FFF; background-color: rgba(102,153,102, 0.5); padding-top: 10px; padding-bottom: 2px;">
+              <div class="col-sm-6" style="padding-top: 10px; padding-bottom: 10px;">
+                <a href="https://www.wwpdb.org/" target="_blank">
+                
+                  <img src="/images/wwpdb-logo11.png" alt="wwpdb" height="35px" width="160px"></a>
+                
+              </div>
+              <div class="col-sm-6">
+                <div class="float-right text-right">
+                  <p style="margin-bottom: 0px; margin-right: 0px;color: #000">Supported by<br />National Science Foundation</p>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="color:#FFF; background-color: #669966; padding-top: 3px; padding-bottom: 8px;">
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>
