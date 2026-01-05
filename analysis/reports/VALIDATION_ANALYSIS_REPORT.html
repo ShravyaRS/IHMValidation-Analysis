@@ -1,167 +1,144 @@
-#!/usr/bin/env python3
-"""
-Generate comprehensive research report
-"""
 
-import json
-import pandas as pd
-from pathlib import Path
-from datetime import datetime
-
-def generate_html_report():
-    """Create publication-quality HTML report"""
-    
-    # Load data
-    with open('analysis/data/summary.json') as f:
-        summary = json.load(f)
-    
-    df = pd.read_csv('analysis/data/validation_results.csv')
-    
-    # Get metrics count safely
-    numeric_cols = df.select_dtypes(include=['number']).columns
-    metrics_count = len([col for col in numeric_cols if col not in ['validation_success']])
-    
-    html = f"""
 <!DOCTYPE html>
 <html>
 <head>
     <title>IHM Validation Analysis Report</title>
     <style>
-        body {{
+        body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             max-width: 1200px;
             margin: 0 auto;
             padding: 40px;
             background-color: #f5f5f5;
             line-height: 1.6;
-        }}
-        .header {{
+        }
+        .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 40px;
             border-radius: 10px;
             margin-bottom: 30px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }}
-        h1 {{
+        }
+        h1 {
             margin: 0;
             font-size: 2.5em;
-        }}
-        .subtitle {{
+        }
+        .subtitle {
             margin-top: 10px;
             opacity: 0.9;
             font-size: 1.1em;
-        }}
-        .section {{
+        }
+        .section {
             background: white;
             padding: 30px;
             margin-bottom: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }}
-        h2 {{
+        }
+        h2 {
             color: #667eea;
             border-bottom: 3px solid #667eea;
             padding-bottom: 10px;
             margin-top: 0;
-        }}
-        .metric {{
+        }
+        .metric {
             display: inline-block;
             background: #f0f0f0;
             padding: 15px 25px;
             margin: 10px;
             border-radius: 5px;
             border-left: 4px solid #667eea;
-        }}
-        .metric-value {{
+        }
+        .metric-value {
             font-size: 2em;
             font-weight: bold;
             color: #667eea;
-        }}
-        .metric-label {{
+        }
+        .metric-label {
             color: #666;
             font-size: 0.9em;
             margin-top: 5px;
-        }}
-        .figure {{
+        }
+        .figure {
             text-align: center;
             margin: 30px 0;
-        }}
-        .figure img {{
+        }
+        .figure img {
             max-width: 100%;
             height: auto;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }}
-        .figure-caption {{
+        }
+        .figure-caption {
             margin-top: 10px;
             color: #666;
             font-style: italic;
-        }}
-        table {{
+        }
+        table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
-        }}
-        th, td {{
+        }
+        th, td {
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid #ddd;
-        }}
-        th {{
+        }
+        th {
             background-color: #667eea;
             color: white;
             font-weight: bold;
-        }}
-        tr:hover {{
+        }
+        tr:hover {
             background-color: #f5f5f5;
-        }}
-        .success {{
+        }
+        .success {
             color: #2ecc71;
             font-weight: bold;
-        }}
-        .failed {{
+        }
+        .failed {
             color: #e74c3c;
             font-weight: bold;
-        }}
-        .insight {{
+        }
+        .insight {
             background: #fff3cd;
             border-left: 4px solid #ffc107;
             padding: 15px;
             margin: 15px 0;
-        }}
-        .footer {{
+        }
+        .footer {
             text-align: center;
             margin-top: 50px;
             padding: 20px;
             color: #666;
             border-top: 2px solid #ddd;
-        }}
+        }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>IHM Validation Analysis Report</h1>
         <div class="subtitle">Systematic Testing of 8 Diverse PDB-Dev Structures</div>
-        <div class="subtitle">Generated: {datetime.now().strftime('%B %d, %Y at %H:%M')}</div>
+        <div class="subtitle">Generated: January 05, 2026 at 20:23</div>
     </div>
     
     <div class="section">
         <h2>Executive Summary</h2>
         <div class="metric">
-            <div class="metric-value">{summary['total_structures']}</div>
+            <div class="metric-value">8</div>
             <div class="metric-label">Structures Tested</div>
         </div>
         <div class="metric">
-            <div class="metric-value">{summary['successful_validations']}</div>
+            <div class="metric-value">4</div>
             <div class="metric-label">Successful Validations</div>
         </div>
         <div class="metric">
-            <div class="metric-value">{summary['success_rate']*100:.0f}%</div>
+            <div class="metric-value">50%</div>
             <div class="metric-label">Success Rate</div>
         </div>
         <div class="metric">
-            <div class="metric-value">{df['processing_time_seconds'].mean():.1f}s</div>
+            <div class="metric-value">20.5s</div>
             <div class="metric-label">Avg Processing Time</div>
         </div>
         
@@ -192,29 +169,63 @@ def generate_html_report():
                 <th>Status</th>
                 <th>Processing Time</th>
             </tr>
-    """
     
-    # Add structure details
-    for _, row in df.iterrows():
-        status_class = 'success' if row['validation_success'] else 'failed'
-        status_text = '✓ Success' if row['validation_success'] else '✗ Failed'
-        
-        # Get file size
-        cif_file = Path(f"test-data-extended/{row['structure']}.cif")
-        size_mb = cif_file.stat().st_size / (1024*1024) if cif_file.exists() else 0
-        
-        time_str = f"{row['processing_time_seconds']:.1f}s" if pd.notna(row.get('processing_time_seconds')) else 'N/A'
-        
-        html += f"""
             <tr>
-                <td>{row['structure']}</td>
-                <td>{size_mb:.2f}</td>
-                <td class="{status_class}">{status_text}</td>
-                <td>{time_str}</td>
+                <td>PDBDEV_00000001</td>
+                <td>2.76</td>
+                <td class="success">✓ Success</td>
+                <td>22.5s</td>
             </tr>
-        """
-    
-    html += """
+        
+            <tr>
+                <td>PDBDEV_00000010</td>
+                <td>5.79</td>
+                <td class="failed">✗ Failed</td>
+                <td>12.3s</td>
+            </tr>
+        
+            <tr>
+                <td>PDBDEV_00000015</td>
+                <td>1.17</td>
+                <td class="success">✓ Success</td>
+                <td>35.0s</td>
+            </tr>
+        
+            <tr>
+                <td>PDBDEV_00000020</td>
+                <td>2.18</td>
+                <td class="failed">✗ Failed</td>
+                <td>10.9s</td>
+            </tr>
+        
+            <tr>
+                <td>PDBDEV_00000025</td>
+                <td>2.15</td>
+                <td class="success">✓ Success</td>
+                <td>15.8s</td>
+            </tr>
+        
+            <tr>
+                <td>PDBDEV_00000030</td>
+                <td>2.70</td>
+                <td class="success">✓ Success</td>
+                <td>24.7s</td>
+            </tr>
+        
+            <tr>
+                <td>PDBDEV_00000035</td>
+                <td>7.28</td>
+                <td class="failed">✗ Failed</td>
+                <td>28.4s</td>
+            </tr>
+        
+            <tr>
+                <td>PDBDEV_00000040</td>
+                <td>0.41</td>
+                <td class="failed">✗ Failed</td>
+                <td>13.9s</td>
+            </tr>
+        
         </table>
     </div>
     
@@ -222,10 +233,10 @@ def generate_html_report():
         <h2>Performance Analysis</h2>
         <h3>Processing Time Statistics</h3>
         <ul>
-            <li><strong>Fastest:</strong> """ + f"{df['processing_time_seconds'].min():.1f} seconds" + """</li>
-            <li><strong>Slowest:</strong> """ + f"{df['processing_time_seconds'].max():.1f} seconds" + """</li>
-            <li><strong>Average:</strong> """ + f"{df['processing_time_seconds'].mean():.1f} seconds" + """</li>
-            <li><strong>Median:</strong> """ + f"{df['processing_time_seconds'].median():.1f} seconds" + """</li>
+            <li><strong>Fastest:</strong> 10.9 seconds</li>
+            <li><strong>Slowest:</strong> 35.0 seconds</li>
+            <li><strong>Average:</strong> 20.5 seconds</li>
+            <li><strong>Median:</strong> 19.2 seconds</li>
         </ul>
         
         <div class="insight">
@@ -238,24 +249,12 @@ def generate_html_report():
         <h2>Success Patterns</h2>
         <h3>Successful Structures</h3>
         <ul>
-    """
-    
-    successful = df[df['validation_success'] == True]
-    for struct in successful['structure']:
-        html += f"<li><strong>{struct}</strong></li>"
-    
-    html += """
+    <li><strong>PDBDEV_00000001</strong></li><li><strong>PDBDEV_00000015</strong></li><li><strong>PDBDEV_00000025</strong></li><li><strong>PDBDEV_00000030</strong></li>
         </ul>
         
         <h3>Failed Structures</h3>
         <ul>
-    """
-    
-    failed = df[df['validation_success'] == False]
-    for struct in failed['structure']:
-        html += f"<li><strong>{struct}</strong></li>"
-    
-    html += """
+    <li><strong>PDBDEV_00000010</strong></li><li><strong>PDBDEV_00000020</strong></li><li><strong>PDBDEV_00000035</strong></li><li><strong>PDBDEV_00000040</strong></li>
         </ul>
         
         <div class="insight">
@@ -323,20 +322,4 @@ def generate_html_report():
     </div>
 </body>
 </html>
-    """
     
-    output_file = 'analysis/reports/VALIDATION_ANALYSIS_REPORT.html'
-    Path('analysis/reports').mkdir(exist_ok=True, parents=True)
-    
-    with open(output_file, 'w') as f:
-        f.write(html)
-    
-    print(f"\n{'='*60}")
-    print("COMPREHENSIVE REPORT GENERATED")
-    print(f"{'='*60}")
-    print(f"\n✓ Report saved to: {output_file}")
-    print("\nOpen in browser to view the complete analysis!")
-    print(f"{'='*60}\n")
-
-if __name__ == '__main__':
-    generate_html_report()
