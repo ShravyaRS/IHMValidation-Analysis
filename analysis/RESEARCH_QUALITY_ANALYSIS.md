@@ -1,4 +1,3 @@
-
 # Systematic Analysis of IHM Validation Pipeline
 ## A Research Investigation
 
