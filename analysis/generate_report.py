@@ -1,0 +1,265 @@
+#!/usr/bin/env python3
+"""
+Generate comprehensive research report
+"""
+
+import json
+import pandas as pd
+from pathlib import Path
+from datetime import datetime
+
+def generate_html_report():
+    """Create publication-quality HTML report"""
+    
+    # Load data
+    with open('analysis/data/summary.json') as f:
+        summary = json.load(f)
+    
+    df = pd.read_csv('analysis/data/extracted_metrics.csv')
+    
+    html = f"""
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IHM Validation Metric Analysis</title>
+    <style>
+        body {{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }}
+        .header {{
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }}
+        h1 {{
+            margin: 0;
+            font-size: 2.5em;
+        }}
+        .subtitle {{
+            margin-top: 10px;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }}
+        .section {{
+            background: white;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }}
+        h2 {{
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }}
+        .metric {{
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 15px 25px;
+            margin: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }}
+        .metric-value {{
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }}
+        .metric-label {{
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }}
+        .figure {{
+            text-align: center;
+            margin: 30px 0;
+        }}
+        .figure img {{
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }}
+        .figure-caption {{
+            margin-top: 10px;
+            color: #666;
+            font-style: italic;
+        }}
+        table {{
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }}
+        th, td {{
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }}
+        th {{
+            background-color: #667eea;
+            color: white;
+            font-weight: bold;
+        }}
+        tr:hover {{
+            background-color: #f5f5f5;
+        }}
+        .success {{
+            color: #2ecc71;
+            font-weight: bold;
+        }}
+        .failed {{
+            color: #e74c3c;
+            font-weight: bold;
+        }}
+        .footer {{
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            border-top: 2px solid #ddd;
+        }}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>IHM Validation Metric Analysis</h1>
+        <div class="subtitle">Comprehensive Analysis of Integrative Hybrid Modeling Structure Validation</div>
+        <div class="subtitle">Generated: {datetime.now().strftime('%B %d, %Y')}</div>
+    </div>
+    
+    <div class="section">
+        <h2>Executive Summary</h2>
+        <div class="metric">
+            <div class="metric-value">{summary['total_structures']}</div>
+            <div class="metric-label">Structures Analyzed</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">{summary['successful_validations']}</div>
+            <div class="metric-label">Successful Validations</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">{summary['success_rate']*100:.1f}%</div>
+            <div class="metric-label">Success Rate</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value">{summary['metrics_extracted']}</div>
+            <div class="metric-label">Metrics Extracted</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Validation Results</h2>
+        <div class="figure">
+            <img src="../figures/success_rate.png" alt="Success Rate">
+            <div class="figure-caption">Figure 1: Overall validation success rate across analyzed structures</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Metric Analysis</h2>
+        <div class="figure">
+            <img src="../figures/metric_distributions.png" alt="Metric Distributions">
+            <div class="figure-caption">Figure 2: Distribution of extracted validation metrics</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Metric Correlations</h2>
+        <div class="figure">
+            <img src="../figures/correlation_matrix.png" alt="Correlation Matrix">
+            <div class="figure-caption">Figure 3: Correlation matrix showing relationships between validation metrics</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Comprehensive Dashboard</h2>
+        <div class="figure">
+            <img src="../figures/summary_dashboard.png" alt="Summary Dashboard">
+            <div class="figure-caption">Figure 4: Complete analysis dashboard with structure-by-structure results</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Structure Details</h2>
+        <table>
+            <tr>
+                <th>Structure</th>
+                <th>Validation Status</th>
+                <th>PDF Report</th>
+            </tr>
+    """
+    
+    for _, row in df.iterrows():
+        status_class = 'success' if row['validation_success'] else 'failed'
+        status_text = '✓ Success' if row['validation_success'] else '✗ Failed'
+        pdf_status = '✓ Generated' if row.get('pdf_generated', False) else '✗ Not Generated'
+        
+        html += f"""
+            <tr>
+                <td>{row['structure']}</td>
+                <td class="{status_class}">{status_text}</td>
+                <td>{pdf_status}</td>
+            </tr>
+        """
+    
+    html += """
+        </table>
+    </div>
+    
+    <div class="section">
+        <h2>Key Findings</h2>
+        <ul>
+            <li><strong>Validation Pipeline Status:</strong> The IHM validation system successfully processes multiple structure types with varying degrees of completeness.</li>
+            <li><strong>Component Analysis:</strong> Different validation components (CX-MS, 3DEM, Model Quality) show independent functionality.</li>
+            <li><strong>Metric Insights:</strong> Extracted metrics provide quantitative assessment of structure quality across multiple dimensions.</li>
+            <li><strong>Success Patterns:</strong> Validation success correlates with structure data type availability and completeness.</li>
+        </ul>
+    </div>
+    
+    <div class="section">
+        <h2>Methodology</h2>
+        <p><strong>Data Collection:</strong> Structures obtained from PDB-Dev database representing diverse IHM modeling approaches.</p>
+        <p><strong>Validation Process:</strong> Each structure validated using IHMValidation software within Singularity container environment.</p>
+        <p><strong>Metric Extraction:</strong> Automated parsing of validation outputs (JSON, text, PDF) to extract quantitative metrics.</p>
+        <p><strong>Statistical Analysis:</strong> Descriptive statistics, correlation analysis, and visualization of metric distributions.</p>
+    </div>
+    
+    <div class="section">
+        <h2>Technical Details</h2>
+        <p><strong>Environment:</strong> Singularity container with IHMValidation software</p>
+        <p><strong>Analysis Tools:</strong> Python (pandas, numpy, matplotlib, seaborn)</p>
+        <p><strong>Data Format:</strong> mmCIF structures from PDB-Dev</p>
+        <p><strong>Output Formats:</strong> JSON, CSV, PNG (high-resolution figures)</p>
+    </div>
+    
+    <div class="footer">
+        <p>Analysis conducted as part of IHMValidation research project</p>
+        <p>GitHub: <a href="https://github.com/ShravyaRS/IHMValidation-Analysis">IHMValidation-Analysis</a></p>
+    </div>
+</body>
+</html>
+    """
+    
+    output_file = 'analysis/reports/METRIC_ANALYSIS_REPORT.html'
+    Path('analysis/reports').mkdir(exist_ok=True)
+    
+    with open(output_file, 'w') as f:
+        f.write(html)
+    
+    print(f"\n{'='*60}")
+    print("RESEARCH REPORT GENERATED")
+    print(f"{'='*60}")
+    print(f"\n✓ Report saved to: {output_file}")
+    print("\nOpen in browser to view the complete analysis!")
+
+if __name__ == '__main__':
+    generate_html_report()
