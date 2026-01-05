@@ -1,0 +1,42 @@
+[
+  {
+    "pdf_generated": false,
+    "structure": "PDBDEV_00000040",
+    "validation_success": false
+  },
+  {
+    "pdf_generated": false,
+    "structure": "PDBDEV_00000030",
+    "validation_success": false
+  },
+  {
+    "pdf_generated": false,
+    "structure": "PDBDEV_00000001",
+    "validation_success": false
+  },
+  {
+    "pdf_generated": false,
+    "structure": "PDBDEV_00000020",
+    "validation_success": false
+  },
+  {
+    "pdf_generated": false,
+    "structure": "PDBDEV_00000025",
+    "validation_success": false
+  },
+  {
+    "pdf_generated": false,
+    "structure": "PDBDEV_00000035",
+    "validation_success": false
+  },
+  {
+    "pdf_generated": false,
+    "structure": "PDBDEV_00000010",
+    "validation_success": false
+  },
+  {
+    "pdf_generated": false,
+    "structure": "PDBDEV_00000015",
+    "validation_success": false
+  }
+]

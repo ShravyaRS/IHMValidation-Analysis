@@ -1,0 +1,16 @@
+{
+  "total_structures": 8,
+  "successful_validations": 0,
+  "success_rate": 0.0,
+  "metrics_extracted": 0,
+  "structures_analyzed": [
+    "PDBDEV_00000040",
+    "PDBDEV_00000030",
+    "PDBDEV_00000001",
+    "PDBDEV_00000020",
+    "PDBDEV_00000025",
+    "PDBDEV_00000035",
+    "PDBDEV_00000010",
+    "PDBDEV_00000015"
+  ]
+}
