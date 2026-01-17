@@ -2,13 +2,12 @@
 
 ## Executive Summary
 
-**Analysis Date:** $(date +"%Y-%m-%d")
 **Repository:** github.com/salilab/IHMValidation
 **Analysis Repository:** github.com/ShravyaRS/IHMValidation-Analysis
 
 ---
 
-## ✅ GOAL #1: New Verifiable Insights from Running the Tool
+## GOAL #1: New Verifiable Insights from Running the Tool
 
 ### Installation Journey & Dependencies Discovered
 
@@ -38,7 +37,7 @@ Output files: [Count from success1/]
 
 ---
 
-## ✅ GOAL #2: Concrete Limitations & Bugs Identified
+## GOAL #2: Concrete Limitations & Bugs Identified
 
 ### Bug #1: Missing Dependency Documentation
 **Severity:** HIGH
@@ -122,7 +121,7 @@ From static analysis:
 
 ---
 
-## ✅ GOAL #3: Documentation Improvements Identified
+## GOAL #3: Documentation Improvements Identified
 
 ### Critical Missing Documentation
 
@@ -166,7 +165,7 @@ docs/
 
 ---
 
-## 📋 GOAL #4: Technically Sound Enhancement Proposals
+## GOAL #4: Technically Sound Enhancement Proposals
 
 ### Enhancement #1: Proper Python Package Structure
 **Priority:** HIGH
@@ -235,7 +234,7 @@ output:
 
 ---
 
-## 🔄 GOAL #5: Reproducibility Framework
+## GOAL #5: Reproducibility Framework
 
 ### Docker Solution
 ```dockerfile
@@ -301,21 +300,21 @@ diff checksums_2.txt checksums_3.txt
 Is the model acceptable for publication?
 
 ├─ All validation metrics in "Good" range?
-│  ├─ YES → ✅ Publishable
-│  └─ NO → Continue assessment
+│  ├─ YES -> Publishable
+│  └─ NO -> Continue assessment
 │
 ├─ Critical constraints violated?
-│  ├─ NO → ⚠️ Acceptable with caveats
-│  └─ YES → ❌ Needs refinement
+│  ├─ NO ->  Acceptable with caveats
+│  └─ YES -> Needs refinement
 │
 └─ Multiple independent validations agree?
-   ├─ YES → Increases confidence
-   └─ NO → Investigate discrepancies
+   ├─ YES -> Increases confidence
+   └─ NO -> Investigate discrepancies
 ```
 
 ---
 
-## 📊 Summary Statistics
+## Summary Statistics
 
 ### Repository Analysis
 - Python files: 23
@@ -342,7 +341,7 @@ Is the model acceptable for publication?
 
 ---
 
-## 🎯 Recommendations
+## Recommendations
 
 ### Immediate (Week 1)
 1. Create requirements.txt
@@ -364,7 +363,7 @@ Is the model acceptable for publication?
 
 ---
 
-## 📁 Repository Contents
+## Repository Contents
 
 All work documented in: https://github.com/ShravyaRS/IHMValidation-Analysis
 ```
@@ -379,16 +378,16 @@ IHMValidation-Analysis/
 
 ---
 
-## ✅ Goals Achievement Summary
+## Goals Achievement Summary
 
 | Goal | Status | Evidence |
 |------|--------|----------|
-| #1 New Insights | ✅ Complete | Validation outputs, performance data |
-| #2 Bug Identification | ✅ Complete | 3 critical bugs documented |
-| #3 Documentation | ✅ Complete | Gaps identified, improvements proposed |
-| #4 Enhancements | ✅ Complete | 4 proposals with implementation details |
-| #5 Reproducibility | ✅ Complete | Docker solution, verification scripts |
-| #6 Scientific Context | ✅ Complete | Interpretation guide created |
+| #1 New Insights | Complete | Validation outputs, performance data |
+| #2 Bug Identification | Complete | 3 critical bugs documented |
+| #3 Documentation | Complete | Gaps identified, improvements proposed |
+| #4 Enhancements | Complete | 4 proposals with implementation details |
+| #5 Reproducibility | Complete | Docker solution, verification scripts |
+| #6 Scientific Context | Complete | Interpretation guide created |
 
 ---
 
@@ -428,12 +427,12 @@ wkhtmltopdf
 
 ### What's Working (7/8 - 87.5%)
 All validation components functional:
-- ✓ ATSAS/SAS validation
-- ✓ Cross-linking MS validation  
-- ✓ Model quality assessment
-- ✓ PDF report generation
-- ✓ EM webdriver initialization
-- ✓ Chimera error handling
+- ATSAS/SAS validation
+- Cross-linking MS validation  
+- Model quality assessment
+- PDF report generation
+- EM webdriver initialization
+- Chimera error handling
 
 ### Known Issue (1/8)
 **PDBDEV_00000010**: Extremely slow processing
@@ -446,7 +445,7 @@ All validation components functional:
 
 **Mission Accomplished**: Arthur's ATSAS issue completely resolved.
 
-- **Primary Goal**: Fix DATCMP/ATSAS → ✓ DONE
+- **Primary Goal**: Fix DATCMP/ATSAS -> DONE
 - **Success Rate**: 50% → 87.5% (75% improvement)
 - **Structures Fixed**: 3 additional structures now validate
 - **System Status**: Ready for production use
