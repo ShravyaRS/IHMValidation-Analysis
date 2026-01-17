@@ -1,61 +1,83 @@
-# IHMValidation Container: From 50% to 100% Success
+# IHMValidation Container - Production Ready
 
-[![Lint and Validate](https://github.com/ShravyaRS/IHMValidation-Analysis/actions/workflows/lint-and-validate.yml/badge.svg)](https://github.com/ShravyaRS/IHMValidation-Analysis/actions/workflows/lint-and-validate.yml)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Singularity](https://img.shields.io/badge/Singularity-3.8+-green.svg)](https://sylabs.io/singularity/)
-[![Ubuntu](https://img.shields.io/badge/Ubuntu-22.04-orange.svg)](https://ubuntu.com/)
-[![Success Rate](https://img.shields.io/badge/Validation_Success-100%25-brightgreen.svg)]()
+**Fixed ATSAS dependency issue. Achieved 100% validation success.**
 
+## The Contribution
 
-## Project Summary
+Built a working Singularity container for IHMValidation that resolves all dependency issues on Ubuntu 22.04.
 
-**In this project, we identified 5 critical bugs in the IHMValidation system, resolved all dependency and runtime issues, and produced a reproducible Singularity container that achieves 100% validation success across all test structures.**
+**Before:** 50% of structures failed validation (ATSAS missing)  
+**After:** 100% of structures validate successfully  
+**Time to deploy:** 45 minutes (one command)
 
-**Key Metrics:**
-- Fixed 5 blocking issues (ATSAS installation, EM webdriver, Chimera/ChimeraX/MapQ version checks)
-- Improved validation success rate from 50% to 100%
-- Validated 8 diverse integrative model structures
-- Created production-ready containerized solution with complete documentation
-
----
-
-## Executive Summary
-
-**Problem**: The IHMValidation system failed to validate 50% of test structures due to missing ATSAS dependencies and runtime errors in validation components.
-
-**Solution**: Systematically resolved dependency issues and implemented robust error handling across all validation pipelines.
-
-**Outcome**: Achieved 100% validation success rate (8/8 structures), with all components functioning reliably in a reproducible Singularity container.
-
----
 ## Quick Start
-
-### Prerequisites
-- Ubuntu 22.04 or compatible Linux
-- Singularity/Apptainer 3.8+
-- 10GB free disk space
-- sudo access
-
-### Installation
 ```bash
-# Clone repository
 git clone https://github.com/ShravyaRS/IHMValidation-Analysis.git
-cd IHMValidation-Analysis/IHMValidation
-
-# Build container (30-45 minutes)
-sudo singularity build ihmvalidation_complete.sif singularity/Singularity.def
+cd IHMValidation-Analysis
+sudo bash install_complete.sh
 ```
 
-### Usage
+## What Was Fixed
+
+1. **ATSAS Installation** - Added libicu66 dependency, switched to dpkg installation
+2. **EM Webdriver** - Initialized Selenium Firefox for plot generation  
+3. **Version Checks** - Added error handling for Chimera, ChimeraX, MapQ
+
+## Validation Results
+
+| Structure | Before | After |
+|-----------|--------|-------|
+| PDBDEV_00000001 | ✓ | ✓ |
+| PDBDEV_00000010 | ✗ | ✓ |
+| PDBDEV_00000015 | ✓ | ✓ |
+| PDBDEV_00000020 | ✗ | ✓ |
+| PDBDEV_00000025 | ✓ | ✓ |
+| PDBDEV_00000030 | ✓ | ✓ |
+| PDBDEV_00000035 | ✗ | ✓ |
+| PDBDEV_00000040 | ✗ | ✓ |
+
+**Success Rate: 4/8 (50%) → 8/8 (100%)**
+
+## Container Details
+
+- **Size:** 5.5GB
+- **Base:** Ubuntu 22.04
+- **Build time:** 30-45 minutes
+- **Runtime:** 2-10 minutes per structure
+
+## Usage
 ```bash
-# Validate a structure
-singularity exec ihmvalidation_complete.sif python3 \
+singularity exec IHMValidation/ihmvalidation_complete.sif python3 \
   /opt/IHMValidation/ihm_validation/ihm_validator.py \
-  -f your_structure.cif \
-  --output-root validation_output \
-  --output-prefix structure_name
+  -f structure.cif \
+  --output-root output \
+  --output-prefix name
 ```
 
-**Output**: Full validation PDF report with quality metrics, restraint satisfaction, and precision analysis.
+## Files
 
----
+- `install_complete.sh` - One-command installation
+- `IHMValidation/singularity/Singularity.def` - Container definition with fixes
+- `IHMValidation/patch_em_properly.py` - Runtime patches
+- `TECHNICAL_DETAILS.md` - Implementation details
+- `BUILD_INSTRUCTIONS.md` - Manual build guide
+
+## Repository Structure
+```
+├── install_complete.sh          # Run this to build
+├── IHMValidation/
+│   ├── singularity/Singularity.def   # Container with all fixes
+│   └── patch_em_properly.py          # Applied during build
+├── test-data-extended/          # 8 test structures
+└── validation-outputs-complete/ # Successful validation reports
+```
+
+## Technical Implementation
+
+See [TECHNICAL_DETAILS.md](TECHNICAL_DETAILS.md) for complete implementation details.
+
+See [BUILD_INSTRUCTIONS.md](BUILD_INSTRUCTIONS.md) for step-by-step build guide.
+
+## License
+
+MIT License - See [LICENSE](LICENSE)
