@@ -115,7 +115,7 @@ if findings['json_files']:
     print(f"{'='*60}")
     
     for json_file in findings['json_files']:
-        print(f"\n📄 {json_file}:")
+        print(f"\n{json_file}:")
         try:
             with open(json_file) as f:
                 data = json.load(f)
@@ -139,7 +139,7 @@ print(f"{'='*60}")
 
 log_files = glob.glob('reports/*.log')
 for log_file in log_files:
-    print(f"\n📋 {log_file}:")
+    print(f"\n{log_file}:")
     
     with open(log_file) as f:
         content = f.read()
@@ -147,12 +147,12 @@ for log_file in log_files:
     # Look for key indicators
     if 'Error' in content or 'error' in content:
         errors = [line for line in content.split('\n') if 'error' in line.lower()]
-        print(f"  ⚠ Errors found: {len(errors)}")
+        print(f"  Errors found: {len(errors)}")
         for err in errors[:3]:
             print(f"    - {err[:100]}")
     
     if 'Success' in content or 'complete' in content.lower():
-        print(f"  ✓ Contains success indicators")
+        print(f"  Contains success indicators")
     
     # Count validation mentions
     sas_count = content.lower().count('sas')
@@ -177,7 +177,7 @@ python3 scripts/final_analysis.py
 
 echo ""
 echo "=========================================="
-echo "✓ Phase 6 Complete!"
+echo "Phase 6 Complete!"
 echo "=========================================="
 echo ""
 echo "KEY FILES TO REVIEW:"

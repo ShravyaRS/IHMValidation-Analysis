@@ -76,13 +76,13 @@ cd ~/projects/IHMValidation-Analysis
 
 if [ -d validation-outputs/success1 ]; then
     echo "✓✓✓ SUCCESS! Output directory created!"
-    echo -e "\n📁 Generated files:"
+    echo -e "\nGenerated files:"
     find validation-outputs/success1 -type f | while read f; do
         size=$(du -h "$f" | cut -f1)
         echo "  ✓ $(basename $f) ($size)"
     done
     
-    echo -e "\n📊 Analyzing JSON outputs..."
+    echo -e "\nAnalyzing JSON outputs..."
     find validation-outputs/success1 -name "*.json" | while read json; do
         echo -e "\n--- $(basename $json) ---"
         python3 << PARSE
@@ -96,7 +96,7 @@ with open("$json") as f:
 PARSE
     done
 else
-    echo "⚠ Still no output, checking error..."
+    echo "Still no output, checking error..."
     tail -50 reports/SUCCESS_run1.log
 fi
 
@@ -114,7 +114,7 @@ cat > FINAL_ACHIEVEMENT_REPORT.md << 'REPORT'
 
 ---
 
-## ✅ GOAL #1: New Verifiable Insights from Running the Tool
+## GOAL #1: New Verifiable Insights from Running the Tool
 
 ### Installation Journey & Dependencies Discovered
 
@@ -144,7 +144,7 @@ Output files: [Count from success1/]
 
 ---
 
-## ✅ GOAL #2: Concrete Limitations & Bugs Identified
+## GOAL #2: Concrete Limitations & Bugs Identified
 
 ### Bug #1: Missing Dependency Documentation
 **Severity:** HIGH
@@ -228,7 +228,7 @@ From static analysis:
 
 ---
 
-## ✅ GOAL #3: Documentation Improvements Identified
+## GOAL #3: Documentation Improvements Identified
 
 ### Critical Missing Documentation
 
@@ -272,7 +272,7 @@ docs/
 
 ---
 
-## 📋 GOAL #4: Technically Sound Enhancement Proposals
+## GOAL #4: Technically Sound Enhancement Proposals
 
 ### Enhancement #1: Proper Python Package Structure
 **Priority:** HIGH
@@ -341,7 +341,7 @@ output:
 
 ---
 
-## 🔄 GOAL #5: Reproducibility Framework
+## GOAL #5: Reproducibility Framework
 
 ### Docker Solution
 ```dockerfile
@@ -383,7 +383,7 @@ diff checksums_2.txt checksums_3.txt
 
 ---
 
-## 🔬 GOAL #6: Scientific Interpretation Guide
+## GOAL #6: Scientific Interpretation Guide
 
 ### Validation Metrics Interpretation
 
@@ -407,12 +407,12 @@ diff checksums_2.txt checksums_3.txt
 Is the model acceptable for publication?
 
 ├─ All validation metrics in "Good" range?
-│  ├─ YES → ✅ Publishable
+│  ├─ YES → Publishable
 │  └─ NO → Continue assessment
 │
 ├─ Critical constraints violated?
-│  ├─ NO → ⚠️ Acceptable with caveats
-│  └─ YES → ❌ Needs refinement
+│  ├─ NO → Acceptable with caveats
+│  └─ YES → Needs refinement
 │
 └─ Multiple independent validations agree?
    ├─ YES → Increases confidence
@@ -421,7 +421,7 @@ Is the model acceptable for publication?
 
 ---
 
-## 📊 Summary Statistics
+## Summary Statistics
 
 ### Repository Analysis
 - Python files: 23
@@ -448,7 +448,7 @@ Is the model acceptable for publication?
 
 ---
 
-## 🎯 Recommendations
+## Recommendations
 
 ### Immediate (Week 1)
 1. Create requirements.txt
@@ -470,7 +470,7 @@ Is the model acceptable for publication?
 
 ---
 
-## 📁 Repository Contents
+## Repository Contents
 
 All work documented in: https://github.com/ShravyaRS/IHMValidation-Analysis
 ```
@@ -485,16 +485,16 @@ IHMValidation-Analysis/
 
 ---
 
-## ✅ Goals Achievement Summary
+## Goals Achievement Summary
 
 | Goal | Status | Evidence |
 |------|--------|----------|
-| #1 New Insights | ✅ Complete | Validation outputs, performance data |
-| #2 Bug Identification | ✅ Complete | 3 critical bugs documented |
-| #3 Documentation | ✅ Complete | Gaps identified, improvements proposed |
-| #4 Enhancements | ✅ Complete | 4 proposals with implementation details |
-| #5 Reproducibility | ✅ Complete | Docker solution, verification scripts |
-| #6 Scientific Context | ✅ Complete | Interpretation guide created |
+| #1 New Insights | Complete | Validation outputs, performance data |
+| #2 Bug Identification | Complete | 3 critical bugs documented |
+| #3 Documentation | Complete | Gaps identified, improvements proposed |
+| #4 Enhancements | Complete | 4 proposals with implementation details |
+| #5 Reproducibility | Complete | Docker solution, verification scripts |
+| #6 Scientific Context | Complete | Interpretation guide created |
 
 ---
 
@@ -503,18 +503,18 @@ REPORT
 
 echo ""
 echo "=========================================="
-echo "🎉 PHASE 7 COMPLETE - MISSION ACCOMPLISHED!"
+echo "PHASE 7 COMPLETE - MISSION ACCOMPLISHED!"
 echo "=========================================="
 echo ""
-echo "📋 FINAL_ACHIEVEMENT_REPORT.md created!"
+echo "FINAL_ACHIEVEMENT_REPORT.md created!"
 echo ""
 echo "All 6 goals achieved:"
-echo "  ✅ Goal #1: New insights from tool execution"
-echo "  ✅ Goal #2: Bugs and limitations identified"
-echo "  ✅ Goal #3: Documentation improvements proposed"
-echo "  ✅ Goal #4: Technical enhancements designed"
-echo "  ✅ Goal #5: Reproducibility framework created"
-echo "  ✅ Goal #6: Scientific interpretation guide written"
+echo "   Goal #1: New insights from tool execution"
+echo "   Goal #2: Bugs and limitations identified"
+echo "   Goal #3: Documentation improvements proposed"
+echo "   Goal #4: Technical enhancements designed"
+echo "   Goal #5: Reproducibility framework created"
+echo "   Goal #6: Scientific interpretation guide written"
 echo ""
 echo "Ready to commit and push to GitHub!"
 echo ""
