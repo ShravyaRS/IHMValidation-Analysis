@@ -1,4 +1,8 @@
 
+# Complete installation script for IHMValidation container
+# Consolidates all Phase 8 fixes into single reproducible build
+# Prerequisites: Ubuntu 22.04, Singularity 3.8+, 10GB disk space
+
 #!/bin/bash
 # Complete IHMValidation Container Installation Script
 # This consolidates all Phase 8 fixes into a single script
