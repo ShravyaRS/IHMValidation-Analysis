@@ -7,7 +7,7 @@
 - Model quality: WORKING
 - PDF/HTML reports: WORKING
 
-## Moving Forward - Arthur's Tasks
+## Moving Forward - Tasks
 
 ### Task 1: Review Preprint
 Ready to review with working validation context
