@@ -111,13 +111,13 @@ BUGDOC
 # Check if validation succeeded
 if [ -d validation-outputs/FINAL_SUCCESS ]; then
     echo ""
-    echo "🎉🎉🎉 SUCCESS! 🎉🎉🎉"
+    echo "SUCCESS!"
     echo ""
     echo "Generated files:"
     find validation-outputs/FINAL_SUCCESS -type f -exec ls -lh {} \;
     
     # Extract key findings
-    echo -e "\n📊 Extracting validation metrics..."
+    echo -e "\nExtracting validation metrics..."
     
     cat > scripts/extract_metrics.py << 'EXTRACT'
 #!/usr/bin/env python3
@@ -136,7 +136,7 @@ json_files = list(output_dir.glob('*.json'))
 print(f"\n✓ Found {len(json_files)} JSON result files")
 
 for json_file in json_files:
-    print(f"\n📄 {json_file.name}")
+    print(f"\n{json_file.name}")
     print("-" * 40)
     
     with open(json_file) as f:
@@ -176,7 +176,7 @@ EXTRACT
     
 else
     echo ""
-    echo "⚠️ Still had issues, but we've documented everything!"
+    echo "Still had issues, but we've documented everything!"
     echo "Check: reports/FINAL_SUCCESS.log for details"
 fi
 
@@ -217,23 +217,23 @@ UPDATE
 
 echo ""
 echo "=========================================="
-echo "✅ ANALYSIS COMPLETE!"
+echo "ANALYSIS COMPLETE!"
 echo "=========================================="
 echo ""
-echo "📁 All deliverables created:"
+echo "All deliverables created:"
 echo "  ✓ FINAL_ACHIEVEMENT_REPORT.md - Complete analysis"
 echo "  ✓ reports/bug-report.md - All bugs documented"
 echo "  ✓ reports/validation_metrics.txt - Extracted metrics"
 echo "  ✓ scripts/ - All analysis tools"
 echo "  ✓ validation-outputs/ - Real validation results"
 echo ""
-echo "🐛 Total bugs identified: 4"
+echo "Total bugs identified: 4"
 echo "  1. Missing dependency documentation"
 echo "  2. Relative import issues"
 echo "  3. Missing setup.py"
 echo "  4. Bokeh API incompatibility"
 echo ""
-echo "📊 Goals achieved: 6/6"
+echo "Goals achieved: 6/6"
 echo ""
 echo "Ready for:"
 echo "  - GitHub commit & push"
