@@ -1,4 +1,19 @@
 
+#!/bin/bash
+#
+# install_complete.sh - Complete IHMValidation Container Installation
+#
+# Purpose: One-command build script for IHMValidation container with all fixes
+# Prerequisites: 
+#   - Ubuntu 22.04 or compatible Linux
+#   - Singularity/Apptainer 3.8+
+#   - 10GB free disk space
+#   - sudo privileges
+# Usage: sudo bash install_complete.sh
+# Output: ihmvalidation_complete.sif (5.5GB container)
+# Time: 30-45 minutes
+#
+
 # Complete installation script for IHMValidation container
 # Consolidates all Phase 8 fixes into single reproducible build
 # Prerequisites: Ubuntu 22.04, Singularity 3.8+, 10GB disk space
