@@ -230,9 +230,6 @@ This project includes modifications to IHMValidation (see upstream license at ht
 ### Development Timeline
 ![Development Timeline](figures/generated/development_timeline.png)
 
-## Visual Analysis
-
-### 1. Success Rate Improvement
 ![Success Rate](figures/generated/1_success_rate.png)
 *Validation success improved from 50% (4/8 structures) to 100% (8/8 structures)*
 
@@ -255,4 +252,32 @@ This project includes modifications to IHMValidation (see upstream license at ht
 ### 6. Development Timeline
 ![Timeline](figures/generated/6_timeline.png)
 *Time invested and success rate progression through development phases*
+
+
+## Visual Analysis
+
+### Success Rate Improvement
+![Success Rate](figures/generated/1_success_rate.png)
+
+*Validation success improved from 50% to 100%*
+
+### Per-Structure Results
+![Structure Breakdown](figures/generated/2_structure_breakdown.png)
+
+*Individual validation results before and after fixes*
+
+### Validation Performance
+![Performance](figures/generated/3_performance.png)
+
+*Validation time correlates with structure size*
+
+### Impact of Fixes
+![Issues Impact](figures/generated/4_issues_impact.png)
+
+*ATSAS fix had the largest impact (3 structures)*
+
+### Development Timeline
+![Timeline](figures/generated/5_timeline.png)
+
+*17 hours total investment, 50% to 100% improvement*
 
