@@ -1,39 +1,40 @@
-
 # IHMValidation Container Analysis - Python Dependencies
-# For local development and testing (container has all dependencies built-in)
+# Tested and verified versions for reproducibility
 
 # Core Scientific Computing
 numpy==1.26.2
-scipy>=1.6.1
-matplotlib>=3.4.0
-pandas>=1.3.0
-seaborn>=0.12.0
+scipy>=1.6.1,<2.0.0
+matplotlib>=3.4.0,<4.0.0
+pandas>=1.3.0,<3.0.0
+seaborn>=0.12.0,<1.0.0
 
 # IHM Validation
 ihm==2.7
 
-# Visualization
-bokeh>=2.4.0
-selenium>=4.0.0
+# Visualization - CRITICAL VERSION CONSTRAINTS
+bokeh>=2.4.2,<3.0.0  # Bokeh 3.0 has breaking API changes
+panel>=0.14.0,<1.0.0  # Compatible with bokeh 2.x
+selenium>=4.0.0,<5.0.0
 
 # Data Processing
-networkx>=2.6.2
-biopython>=1.79
+networkx>=2.6.2,<4.0.0
+biopython>=1.79,<2.0.0
 
 # Reporting
-jinja2>=3.0.0
+jinja2>=3.0.0,<4.0.0
 
-# Utilities
-wget>=3.2
+# Development & Testing
+pytest>=7.0.0,<9.0.0
+pytest-cov>=4.0.0
+pylint>=2.15.0,<4.0.0
+black>=22.0.0,<25.0.0
 
-# Development Tools
-pytest>=7.0.0
-pylint>=2.15.0
-black>=22.0.0
+# Note: Full validation requires system packages installed in container:
+# - ATSAS 3.0.3-1 (SAS analysis)
+# - Chimera 1.19 (EM visualization)
+# - ChimeraX 1.11 (next-gen visualization)
+# - IMP (Integrative Modeling Platform)
+# - MODELLER 10.5 (comparative modeling)
 
-# Note: Container includes additional system packages:
-# - ATSAS 3.0.3-1
-# - Chimera 1.19
-# - ChimeraX 1.11
-# - IMP
-# - MODELLER 10.5
+# Installation:
+# pip install -r requirements.txt

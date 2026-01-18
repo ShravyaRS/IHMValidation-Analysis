@@ -11,6 +11,79 @@ Complete dependency resolution for IHMValidation on Ubuntu 22.04, achieving 100%
 
 ## Quick Start
 
+### Installation
+```bash
+# Clone repository
+git clone https://github.com/ShravyaRS/IHMValidation-Analysis.git
+cd IHMValidation-Analysis
+
+# One-line install
+bash install.sh
+```
+
+### Run Example (5 minutes)
+```bash
+bash run_example.sh
+```
+
+This validates an example structure and generates:
+- Full validation PDF report
+- Summary PDF report  
+- Interactive HTML dashboard
+
+Output location: `example_output/demo/`
+
+### Validate Your Structure
+```bash
+singularity exec IHMValidation/ihmvalidation_complete.sif python3 \
+  /opt/IHMValidation/ihm_validation/ihm_validator.py \
+  -f your_structure.cif \
+  --output-root validation_results \
+  --output-prefix structure_name
+```
+
+**Input**: mmCIF format structure file  
+**Output**: PDF reports + HTML visualization in `validation_results/structure_name/`
+
+### Command Line Options
+```bash
+# Basic usage
+python3 /opt/IHMValidation/ihm_validation/ihm_validator.py \
+  -f structure.cif \
+  --output-root output_dir \
+  --output-prefix name
+
+# Verbose mode (see detailed progress)
+python3 /opt/IHMValidation/ihm_validation/ihm_validator.py \
+  -v \
+  -f structure.cif \
+  --output-root output_dir \
+  --output-prefix name
+
+# Use cached databases (faster for multiple runs)
+python3 /opt/IHMValidation/ihm_validation/ihm_validator.py \
+  -f structure.cif \
+  --output-root output_dir \
+  --output-prefix name \
+  --cache cache_directory
+```
+
+### Expected Output
+```
+validation_results/
+└── structure_name/
+    ├── structure_name_full_validation.pdf      # Complete report
+    ├── structure_name_summary_validation.pdf   # Key findings
+    ├── structure_name_htmls.zip                # Interactive dashboard
+    └── structure_name/
+        ├── images/                             # Generated plots
+        ├── htmls/                              # Interactive HTML
+        └── supplementary_tables/               # Data tables
+```
+
+
+## Quick Start
+
 ### One-Line Install
 ```bash
 bash install.sh
@@ -127,3 +200,25 @@ MIT License - see LICENSE file
 
 - Issues: https://github.com/ShravyaRS/IHMValidation-Analysis/issues
 - Upstream: https://github.com/salilab/IHMValidation
+
+## Testing
+
+Verify installation and functionality:
+```bash
+# Run complete test suite
+bash run_tests.sh
+
+# Run specific tests
+python3 -m pytest tests/unit_tests/ -v
+python3 -m pytest tests/integration_tests/ -v
+python3 tests/scientific_controls/test_scientific_validation.py
+```
+
+**Test Coverage:**
+- Container integrity and dependencies
+- Validation logic (correct error detection)
+- Complete workflow (end-to-end)
+- Scientific correctness (biophysical validation)
+
+See [tests/README.md](tests/README.md) for details.
+
