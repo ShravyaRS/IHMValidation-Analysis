@@ -1,334 +1,296 @@
-
 #!/usr/bin/env python3
 """
-Generate professional figures for IHMValidation Analysis
+Generate high-quality publication-ready figures for IHMValidation Analysis
 """
 
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-from matplotlib.patches import FancyBboxPatch, Rectangle, FancyArrowPatch
 import numpy as np
+import seaborn as sns
 
-# Set professional style
-plt.style.use('seaborn-v0_8-darkgrid')
-plt.rcParams['figure.figsize'] = (12, 8)
-plt.rcParams['font.size'] = 11
-plt.rcParams['axes.labelsize'] = 12
-plt.rcParams['axes.titlesize'] = 14
-plt.rcParams['legend.fontsize'] = 10
+# Set publication-quality settings
+plt.rcParams['figure.dpi'] = 300
+plt.rcParams['savefig.dpi'] = 300
+plt.rcParams['font.family'] = 'DejaVu Sans'
+plt.rcParams['font.size'] = 12
+plt.rcParams['axes.labelsize'] = 14
+plt.rcParams['axes.titlesize'] = 16
+plt.rcParams['axes.titleweight'] = 'bold'
+plt.rcParams['xtick.labelsize'] = 11
+plt.rcParams['ytick.labelsize'] = 11
+plt.rcParams['legend.fontsize'] = 11
+plt.rcParams['figure.titlesize'] = 18
+plt.rcParams['lines.linewidth'] = 2.5
+plt.rcParams['axes.linewidth'] = 1.2
+plt.rcParams['grid.linewidth'] = 0.8
 
-# Create figures directory
+# Use seaborn color palette
+sns.set_palette("husl")
+
 import os
 os.makedirs('figures/generated', exist_ok=True)
 
 # ============================================================================
-# Figure 1: Success Rate Comparison
+# Figure 1: Success Rate - Simple and Clear
 # ============================================================================
-def create_success_rate_figure():
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+def create_success_rate_comparison():
+    fig, ax = plt.subplots(figsize=(10, 6))
     
-    # Before/After comparison
-    categories = ['Before Fix', 'After Fix']
-    success_rates = [50, 100]
-    colors = ['#e74c3c', '#27ae60']
+    categories = ['Before\nFix', 'After\nFix']
+    success = [4, 8]
+    total = [8, 8]
+    success_pct = [50, 100]
     
-    bars = ax1.bar(categories, success_rates, color=colors, alpha=0.8, edgecolor='black', linewidth=2)
-    ax1.set_ylabel('Success Rate (%)', fontweight='bold')
-    ax1.set_title('Validation Success Rate Improvement', fontweight='bold', fontsize=16)
-    ax1.set_ylim(0, 110)
-    ax1.grid(axis='y', alpha=0.3)
+    colors = ['#FF6B6B', '#51CF66']
+    bars = ax.bar(categories, success, color=colors, edgecolor='black', linewidth=2.5, alpha=0.85)
     
-    # Add value labels on bars
-    for bar, rate in zip(bars, success_rates):
+    # Add success rate labels
+    for i, (bar, pct) in enumerate(zip(bars, success_pct)):
         height = bar.get_height()
-        ax1.text(bar.get_x() + bar.get_width()/2., height,
-                f'{rate}%', ha='center', va='bottom', fontweight='bold', fontsize=14)
+        ax.text(bar.get_x() + bar.get_width()/2., height + 0.3,
+                f'{success[i]}/{total[i]}\n({pct}%)',
+                ha='center', va='bottom', fontsize=16, fontweight='bold')
     
-    # Structure-by-structure breakdown
-    structures = ['00001', '00010', '00015', '00020', '00025', '00030', '00035', '00040']
-    before = [1, 0, 1, 0, 1, 1, 0, 0]  # 1=pass, 0=fail
+    ax.set_ylabel('Structures Validated Successfully', fontweight='bold', fontsize=14)
+    ax.set_title('Validation Success Rate: Before vs After', fontsize=18, fontweight='bold', pad=20)
+    ax.set_ylim(0, 9)
+    ax.grid(axis='y', alpha=0.3, linestyle='--')
+    ax.set_axisbelow(True)
+    
+    # Add improvement arrow
+    ax.annotate('', xy=(1, 8), xytext=(0, 4),
+                arrowprops=dict(arrowstyle='->', lw=3, color='green', alpha=0.6))
+    ax.text(0.5, 6.5, '+100% improvement', ha='center', fontsize=13, 
+            color='green', fontweight='bold', rotation=35)
+    
+    plt.tight_layout()
+    plt.savefig('figures/generated/1_success_rate.png', dpi=300, bbox_inches='tight', facecolor='white')
+    print("✓ Generated: 1_success_rate.png")
+    plt.close()
+
+# ============================================================================
+# Figure 2: Per-Structure Results
+# ============================================================================
+def create_structure_results():
+    fig, ax = plt.subplots(figsize=(12, 7))
+    
+    structures = ['PDBDEV\n00001', 'PDBDEV\n00010', 'PDBDEV\n00015', 'PDBDEV\n00020',
+                  'PDBDEV\n00025', 'PDBDEV\n00030', 'PDBDEV\n00035', 'PDBDEV\n00040']
+    before = [1, 0, 1, 0, 1, 1, 0, 0]
     after = [1, 1, 1, 1, 1, 1, 1, 1]
     
     x = np.arange(len(structures))
     width = 0.35
     
-    bars1 = ax2.bar(x - width/2, before, width, label='Before', color='#e74c3c', alpha=0.8, edgecolor='black')
-    bars2 = ax2.bar(x + width/2, after, width, label='After', color='#27ae60', alpha=0.8, edgecolor='black')
+    bars1 = ax.bar(x - width/2, before, width, label='Before Fix', 
+                   color='#FF6B6B', edgecolor='black', linewidth=2, alpha=0.85)
+    bars2 = ax.bar(x + width/2, after, width, label='After Fix', 
+                   color='#51CF66', edgecolor='black', linewidth=2, alpha=0.85)
     
-    ax2.set_xlabel('Structure ID (PDBDEV_000000XX)', fontweight='bold')
-    ax2.set_ylabel('Pass (1) / Fail (0)', fontweight='bold')
-    ax2.set_title('Per-Structure Validation Results', fontweight='bold', fontsize=16)
-    ax2.set_xticks(x)
-    ax2.set_xticklabels(structures, rotation=45)
-    ax2.legend()
-    ax2.set_ylim(0, 1.2)
-    ax2.grid(axis='y', alpha=0.3)
+    ax.set_xlabel('Structure ID', fontweight='bold', fontsize=14)
+    ax.set_ylabel('Status (1=Pass, 0=Fail)', fontweight='bold', fontsize=14)
+    ax.set_title('Validation Results by Structure', fontsize=18, fontweight='bold', pad=20)
+    ax.set_xticks(x)
+    ax.set_xticklabels(structures, fontsize=10)
+    ax.set_ylim(0, 1.3)
+    ax.legend(loc='upper left', frameon=True, shadow=True)
+    ax.grid(axis='y', alpha=0.3, linestyle='--')
+    ax.set_axisbelow(True)
     
     plt.tight_layout()
-    plt.savefig('figures/generated/success_rate_comparison.png', dpi=300, bbox_inches='tight')
-    print("Generated: success_rate_comparison.png")
+    plt.savefig('figures/generated/2_structure_results.png', dpi=300, bbox_inches='tight', facecolor='white')
+    print("✓ Generated: 2_structure_results.png")
     plt.close()
 
 # ============================================================================
-# Figure 2: Validation Time by Structure Size
+# Figure 3: Issues Fixed
 # ============================================================================
-def create_validation_time_figure():
-    fig, ax = plt.subplots(figsize=(12, 7))
+def create_issues_fixed():
+    fig, ax = plt.subplots(figsize=(11, 7))
     
-    # Data
-    sizes = [1.6, 5.8, 2.3, 2.1, 1.8, 2.4, 2.0, 2.2]  # MB
-    times = [2.5, 9.0, 4.0, 3.0, 2.8, 4.5, 3.5, 3.8]  # minutes
-    structures = ['PDBDEV_00000001', 'PDBDEV_00000010', 'PDBDEV_00000015', 
-                  'PDBDEV_00000020', 'PDBDEV_00000025', 'PDBDEV_00000030',
-                  'PDBDEV_00000035', 'PDBDEV_00000040']
+    issues = ['ATSAS\nInstallation', 'EM Webdriver', 'Chimera\nVersion', 
+              'ChimeraX\nVersion', 'MapQ\nVersion']
+    impact = [3, 0, 1, 1, 1]
+    colors = ['#E74C3C', '#3498DB', '#F39C12', '#9B59B6', '#1ABC9C']
     
-    # Color by size
-    colors = plt.cm.viridis(np.array(sizes) / max(sizes))
+    bars = ax.barh(issues, impact, color=colors, edgecolor='black', 
+                   linewidth=2.5, alpha=0.85)
     
-    scatter = ax.scatter(sizes, times, s=300, c=sizes, cmap='viridis', 
-                        alpha=0.7, edgecolors='black', linewidth=2)
+    # Add labels
+    for i, (bar, val) in enumerate(zip(bars, impact)):
+        if val > 0:
+            ax.text(val + 0.1, bar.get_y() + bar.get_height()/2., 
+                   f'{val} structure{"s" if val > 1 else ""}',
+                   va='center', fontsize=12, fontweight='bold')
     
-    # Add structure labels
-    for i, txt in enumerate(['01', '10', '15', '20', '25', '30', '35', '40']):
-        ax.annotate(txt, (sizes[i], times[i]), ha='center', va='center', 
-                   fontweight='bold', fontsize=10)
-    
-    # Add trend line
-    z = np.polyfit(sizes, times, 1)
-    p = np.poly1d(z)
-    x_trend = np.linspace(min(sizes), max(sizes), 100)
-    ax.plot(x_trend, p(x_trend), "r--", alpha=0.8, linewidth=2, label='Trend')
-    
-    ax.set_xlabel('Structure Size (MB)', fontweight='bold', fontsize=12)
-    ax.set_ylabel('Validation Time (minutes)', fontweight='bold', fontsize=12)
-    ax.set_title('Validation Performance: Time vs Structure Size', fontweight='bold', fontsize=16)
-    ax.grid(True, alpha=0.3)
-    ax.legend()
-    
-    # Add colorbar
-    cbar = plt.colorbar(scatter, ax=ax)
-    cbar.set_label('Structure Size (MB)', fontweight='bold')
+    ax.set_xlabel('Number of Structures Fixed', fontweight='bold', fontsize=14)
+    ax.set_title('Impact of Each Fix', fontsize=18, fontweight='bold', pad=20)
+    ax.set_xlim(0, 3.8)
+    ax.grid(axis='x', alpha=0.3, linestyle='--')
+    ax.set_axisbelow(True)
     
     plt.tight_layout()
-    plt.savefig('figures/generated/validation_time_analysis.png', dpi=300, bbox_inches='tight')
-    print("Generated: validation_time_analysis.png")
+    plt.savefig('figures/generated/3_issues_fixed.png', dpi=300, bbox_inches='tight', facecolor='white')
+    print("✓ Generated: 3_issues_fixed.png")
     plt.close()
 
 # ============================================================================
-# Figure 3: Issues Fixed - Impact Analysis
+# Figure 4: Validation Time
 # ============================================================================
-def create_issues_fixed_figure():
-    fig, ax = plt.subplots(figsize=(14, 8))
-    
-    issues = ['ATSAS\nInstallation', 'EM Webdriver\nInitialization', 
-              'Chimera\nVersion Check', 'ChimeraX\nVersion Check', 
-              'MapQ\nVersion Check']
-    structures_fixed = [3, 0, 1, 1, 1]  # Number of structures fixed by each
-    colors = ['#e74c3c', '#3498db', '#f39c12', '#9b59b6', '#1abc9c']
-    
-    bars = ax.barh(issues, structures_fixed, color=colors, alpha=0.8, 
-                   edgecolor='black', linewidth=2)
-    
-    # Add value labels
-    for i, (bar, count) in enumerate(zip(bars, structures_fixed)):
-        width = bar.get_width()
-        ax.text(width, bar.get_y() + bar.get_height()/2., 
-               f'{count} structures', ha='left', va='center', 
-               fontweight='bold', fontsize=11, bbox=dict(boxstyle='round', 
-               facecolor='white', alpha=0.8))
-    
-    ax.set_xlabel('Number of Structures Fixed', fontweight='bold', fontsize=12)
-    ax.set_title('Impact of Each Fix on Validation Success', fontweight='bold', fontsize=16)
-    ax.set_xlim(0, 4)
-    ax.grid(axis='x', alpha=0.3)
-    
-    # Add legend for issue severity
-    severity_labels = ['Critical (blocks all SAS)', 'Enhancement', 
-                      'Stability Fix', 'Stability Fix', 'Large Structure Fix']
-    legend_elements = [mpatches.Patch(facecolor=colors[i], edgecolor='black', 
-                                     label=f'{issues[i].replace(chr(10), " ")}: {severity_labels[i]}')
-                      for i in range(len(issues))]
-    ax.legend(handles=legend_elements, loc='lower right', fontsize=10)
-    
-    plt.tight_layout()
-    plt.savefig('figures/generated/issues_impact_analysis.png', dpi=300, bbox_inches='tight')
-    print("Generated: issues_impact_analysis.png")
-    plt.close()
-
-# ============================================================================
-# Figure 4: Resource Usage Pattern
-# ============================================================================
-def create_resource_usage_figure():
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 10))
-    
-    # Memory usage over time
-    stages = ['Start', 'Format\nValidation', 'Quality\nCheck', 'SAS\nValidation', 
-              'CX-MS\nValidation', 'EM\nValidation', 'Report\nGeneration']
-    
-    # Small structure (2MB)
-    memory_small = [0.5, 1.2, 1.8, 2.5, 2.3, 3.0, 2.0]
-    # Large structure (6MB)
-    memory_large = [0.5, 1.5, 2.5, 3.5, 3.2, 6.0, 3.5]
-    
-    x = np.arange(len(stages))
-    
-    ax1.plot(x, memory_small, 'o-', linewidth=3, markersize=10, 
-            label='Small Structure (2MB)', color='#3498db', alpha=0.8)
-    ax1.plot(x, memory_large, 's-', linewidth=3, markersize=10, 
-            label='Large Structure (6MB)', color='#e74c3c', alpha=0.8)
-    ax1.fill_between(x, memory_small, alpha=0.2, color='#3498db')
-    ax1.fill_between(x, memory_large, alpha=0.2, color='#e74c3c')
-    
-    ax1.set_ylabel('Memory Usage (GB)', fontweight='bold', fontsize=12)
-    ax1.set_title('Memory Usage Pattern During Validation', fontweight='bold', fontsize=16)
-    ax1.set_xticks(x)
-    ax1.set_xticklabels(stages)
-    ax1.legend(loc='upper left', fontsize=11)
-    ax1.grid(True, alpha=0.3)
-    ax1.set_ylim(0, 7)
-    
-    # Add horizontal line for recommended RAM
-    ax1.axhline(y=4, color='orange', linestyle='--', linewidth=2, 
-               label='Minimum RAM (4GB)', alpha=0.7)
-    ax1.axhline(y=8, color='green', linestyle='--', linewidth=2, 
-               label='Recommended RAM (8GB)', alpha=0.7)
-    ax1.legend(loc='upper left', fontsize=11)
-    
-    # CPU usage distribution
-    components = ['SAS\nValidation', 'CX-MS\nValidation', 'EM\nValidation', 
-                  'Report\nGeneration', 'Other']
-    cpu_time = [30, 15, 40, 10, 5]  # percentage of total time
-    colors_cpu = ['#e74c3c', '#3498db', '#f39c12', '#9b59b6', '#95a5a6']
-    explode = (0.05, 0, 0.1, 0, 0)
-    
-    wedges, texts, autotexts = ax2.pie(cpu_time, explode=explode, labels=components, 
-                                       colors=colors_cpu, autopct='%1.1f%%',
-                                       shadow=True, startangle=90, 
-                                       textprops={'fontsize': 11, 'fontweight': 'bold'})
-    
-    ax2.set_title('CPU Time Distribution by Component', fontweight='bold', fontsize=16)
-    
-    # Make percentage text white for visibility
-    for autotext in autotexts:
-        autotext.set_color('white')
-        autotext.set_fontweight('bold')
-    
-    plt.tight_layout()
-    plt.savefig('figures/generated/resource_usage_patterns.png', dpi=300, bbox_inches='tight')
-    print("Generated: resource_usage_patterns.png")
-    plt.close()
-
-# ============================================================================
-# Figure 5: Validation Components Coverage
-# ============================================================================
-def create_component_coverage_figure():
-    fig, ax = plt.subplots(figsize=(12, 8))
+def create_validation_time():
+    fig, ax = plt.subplots(figsize=(11, 7))
     
     structures = ['00001', '00010', '00015', '00020', '00025', '00030', '00035', '00040']
+    sizes = [1.6, 5.8, 2.3, 2.1, 1.8, 2.4, 2.0, 2.2]
+    times = [2.5, 9.0, 4.0, 3.0, 2.8, 4.5, 3.5, 3.8]
     
-    # Component availability (1=present, 0=absent)
-    quality = [1, 1, 1, 1, 1, 1, 1, 1]
-    sas = [1, 1, 0, 1, 0, 1, 1, 1]
-    cxms = [1, 1, 1, 0, 1, 1, 1, 0]
-    em = [0, 1, 0, 0, 0, 1, 0, 1]
+    scatter = ax.scatter(sizes, times, s=400, c=sizes, cmap='viridis', 
+                        edgecolors='black', linewidth=2.5, alpha=0.85, zorder=3)
     
-    x = np.arange(len(structures))
-    width = 0.2
+    # Add labels
+    for i, txt in enumerate(structures):
+        ax.annotate(txt, (sizes[i], times[i]), ha='center', va='center',
+                   fontsize=10, fontweight='bold', color='white')
     
-    bars1 = ax.bar(x - 1.5*width, quality, width, label='Quality Check', 
-                   color='#27ae60', alpha=0.8, edgecolor='black')
-    bars2 = ax.bar(x - 0.5*width, sas, width, label='SAS Validation', 
-                   color='#e74c3c', alpha=0.8, edgecolor='black')
-    bars3 = ax.bar(x + 0.5*width, cxms, width, label='CX-MS Validation', 
-                   color='#3498db', alpha=0.8, edgecolor='black')
-    bars4 = ax.bar(x + 1.5*width, em, width, label='EM Validation', 
-                   color='#f39c12', alpha=0.8, edgecolor='black')
+    # Trend line
+    z = np.polyfit(sizes, times, 1)
+    p = np.poly1d(z)
+    x_line = np.linspace(min(sizes), max(sizes), 100)
+    ax.plot(x_line, p(x_line), 'r--', linewidth=2.5, alpha=0.7, label='Trend', zorder=2)
     
-    ax.set_xlabel('Structure ID (PDBDEV_000000XX)', fontweight='bold', fontsize=12)
-    ax.set_ylabel('Component Present (1) / Absent (0)', fontweight='bold', fontsize=12)
-    ax.set_title('Validation Components Coverage Across Test Structures', 
-                fontweight='bold', fontsize=16)
-    ax.set_xticks(x)
-    ax.set_xticklabels(structures, rotation=45)
-    ax.legend(loc='upper right', fontsize=11)
-    ax.set_ylim(0, 1.2)
-    ax.grid(axis='y', alpha=0.3)
+    ax.set_xlabel('Structure Size (MB)', fontweight='bold', fontsize=14)
+    ax.set_ylabel('Validation Time (minutes)', fontweight='bold', fontsize=14)
+    ax.set_title('Validation Performance', fontsize=18, fontweight='bold', pad=20)
+    ax.legend(fontsize=12)
+    ax.grid(True, alpha=0.3, linestyle='--', zorder=1)
+    ax.set_axisbelow(True)
+    
+    cbar = plt.colorbar(scatter, ax=ax)
+    cbar.set_label('Size (MB)', fontweight='bold', fontsize=12)
     
     plt.tight_layout()
-    plt.savefig('figures/generated/component_coverage.png', dpi=300, bbox_inches='tight')
-    print("Generated: component_coverage.png")
+    plt.savefig('figures/generated/4_validation_time.png', dpi=300, bbox_inches='tight', facecolor='white')
+    print("✓ Generated: 4_validation_time.png")
+    plt.close()
+
+# ============================================================================
+# Figure 5: Component Coverage
+# ============================================================================
+def create_component_coverage():
+    fig, ax = plt.subplots(figsize=(12, 7))
+    
+    components = ['Quality\nCheck', 'SAS\nValidation', 'CX-MS\nValidation', 'EM\nValidation']
+    structures = ['00001', '00010', '00015', '00020', '00025', '00030', '00035', '00040']
+    
+    # Coverage matrix
+    coverage = np.array([
+        [1, 1, 1, 1, 1, 1, 1, 1],  # Quality
+        [1, 1, 0, 1, 0, 1, 1, 1],  # SAS
+        [1, 1, 1, 0, 1, 1, 1, 0],  # CX-MS
+        [0, 1, 0, 0, 0, 1, 0, 1],  # EM
+    ])
+    
+    im = ax.imshow(coverage, cmap='RdYlGn', aspect='auto', vmin=0, vmax=1, alpha=0.9)
+    
+    ax.set_xticks(np.arange(len(structures)))
+    ax.set_yticks(np.arange(len(components)))
+    ax.set_xticklabels(structures)
+    ax.set_yticklabels(components)
+    
+    ax.set_xlabel('Structure ID (PDBDEV_000000XX)', fontweight='bold', fontsize=14)
+    ax.set_title('Validation Components by Structure', fontsize=18, fontweight='bold', pad=20)
+    
+    # Add text annotations
+    for i in range(len(components)):
+        for j in range(len(structures)):
+            text = 'Present' if coverage[i, j] else 'Absent'
+            color = 'white' if coverage[i, j] else 'black'
+            ax.text(j, i, text, ha="center", va="center", color=color, 
+                   fontsize=10, fontweight='bold')
+    
+    cbar = plt.colorbar(im, ax=ax, ticks=[0, 1])
+    cbar.set_label('Component Status', fontweight='bold', fontsize=12)
+    cbar.ax.set_yticklabels(['Absent', 'Present'])
+    
+    plt.tight_layout()
+    plt.savefig('figures/generated/5_component_coverage.png', dpi=300, bbox_inches='tight', facecolor='white')
+    print("✓ Generated: 5_component_coverage.png")
     plt.close()
 
 # ============================================================================
 # Figure 6: Development Timeline
 # ============================================================================
-def create_timeline_figure():
-    fig, ax = plt.subplots(figsize=(14, 8))
+def create_timeline():
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
     
-    phases = ['Phase 1-2:\nSetup &\nTesting', 'Phase 3-4:\nATSAS\nFix', 
-              'Phase 5-6:\nEM & Chimera\nFixes', 'Phase 7:\nChimeraX\nFix', 
-              'Phase 8:\nMapQ Fix &\nFinal Testing']
+    # Hours invested
+    phases = ['Setup\n&\nTest', 'ATSAS\nFix', 'EM &\nChimera', 'ChimeraX', 'MapQ &\nFinal']
     hours = [6, 4, 3, 1.5, 2.5]
-    success_rate = [50, 87.5, 87.5, 87.5, 100]
+    colors_hours = ['#3498DB', '#E74C3C', '#F39C12', '#9B59B6', '#1ABC9C']
     
-    # Create dual-axis plot
-    x = np.arange(len(phases))
+    bars = ax1.bar(phases, hours, color=colors_hours, edgecolor='black', 
+                   linewidth=2.5, alpha=0.85)
     
-    # Bar plot for hours
-    bars = ax.bar(x, hours, alpha=0.7, color='#3498db', edgecolor='black', linewidth=2)
-    ax.set_xlabel('Development Phase', fontweight='bold', fontsize=12)
-    ax.set_ylabel('Time Invested (hours)', fontweight='bold', fontsize=12, color='#3498db')
-    ax.set_title('Development Timeline: Effort vs Success Rate', fontweight='bold', fontsize=16)
-    ax.set_xticks(x)
-    ax.set_xticklabels(phases)
-    ax.tick_params(axis='y', labelcolor='#3498db')
-    ax.grid(axis='y', alpha=0.3)
-    
-    # Add hour labels on bars
-    for bar, hour in zip(bars, hours):
+    for bar, h in zip(bars, hours):
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width()/2., height,
-               f'{hour}h', ha='center', va='bottom', fontweight='bold', fontsize=10)
+        ax1.text(bar.get_x() + bar.get_width()/2., height + 0.2,
+                f'{h}h', ha='center', va='bottom', fontsize=11, fontweight='bold')
     
-    # Line plot for success rate
-    ax2 = ax.twinx()
-    line = ax2.plot(x, success_rate, 'o-', color='#27ae60', linewidth=3, 
-                   markersize=12, label='Success Rate')
-    ax2.set_ylabel('Validation Success Rate (%)', fontweight='bold', fontsize=12, color='#27ae60')
-    ax2.tick_params(axis='y', labelcolor='#27ae60')
+    ax1.set_ylabel('Hours Invested', fontweight='bold', fontsize=13)
+    ax1.set_title('Time Investment by Phase', fontsize=16, fontweight='bold', pad=15)
+    ax1.grid(axis='y', alpha=0.3, linestyle='--')
+    ax1.set_axisbelow(True)
+    
+    # Success rate progression
+    milestones = ['Start', 'After\nATSAS', 'After\nEM Fixes', 'Final']
+    success_rates = [50, 87.5, 87.5, 100]
+    
+    ax2.plot(milestones, success_rates, 'o-', color='#51CF66', linewidth=3.5, 
+            markersize=12, markeredgecolor='black', markeredgewidth=2)
+    ax2.fill_between(range(len(milestones)), success_rates, alpha=0.3, color='#51CF66')
+    
+    for i, rate in enumerate(success_rates):
+        ax2.text(i, rate + 3, f'{rate}%', ha='center', fontsize=12, fontweight='bold')
+    
+    ax2.set_ylabel('Success Rate (%)', fontweight='bold', fontsize=13)
+    ax2.set_title('Success Rate Progression', fontsize=16, fontweight='bold', pad=15)
     ax2.set_ylim(0, 110)
+    ax2.grid(True, alpha=0.3, linestyle='--')
+    ax2.set_axisbelow(True)
     
-    # Add success rate labels
-    for i, rate in enumerate(success_rate):
-        ax2.text(x[i], rate + 3, f'{rate}%', ha='center', fontweight='bold', 
-                fontsize=10, color='#27ae60')
+    # Add total hours
+    fig.text(0.5, 0.02, f'Total Development Time: {sum(hours)} hours', 
+            ha='center', fontsize=13, fontweight='bold',
+            bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
     
-    # Add cumulative hours
-    total_hours = sum(hours)
-    ax.text(0.98, 0.98, f'Total: {total_hours} hours', transform=ax.transAxes,
-           fontsize=12, fontweight='bold', verticalalignment='top', 
-           horizontalalignment='right', bbox=dict(boxstyle='round', 
-           facecolor='white', alpha=0.8))
-    
-    plt.tight_layout()
-    plt.savefig('figures/generated/development_timeline.png', dpi=300, bbox_inches='tight')
-    print("Generated: development_timeline.png")
+    plt.tight_layout(rect=[0, 0.05, 1, 1])
+    plt.savefig('figures/generated/6_timeline.png', dpi=300, bbox_inches='tight', facecolor='white')
+    print("✓ Generated: 6_timeline.png")
     plt.close()
 
 # ============================================================================
-# Generate all figures
+# Main execution
 # ============================================================================
 if __name__ == '__main__':
-    print("Generating professional figures...")
-    print()
+    print("\nGenerating high-quality publication figures...")
+    print("=" * 60)
     
-    create_success_rate_figure()
-    create_validation_time_figure()
-    create_issues_fixed_figure()
-    create_resource_usage_figure()
-    create_component_coverage_figure()
-    create_timeline_figure()
+    create_success_rate_comparison()
+    create_structure_results()
+    create_issues_fixed()
+    create_validation_time()
+    create_component_coverage()
+    create_timeline()
     
+    print("=" * 60)
+    print("\nAll figures generated successfully!")
+    print("Location: figures/generated/")
+    print("Format: PNG at 300 DPI (publication quality)")
+    print("\nFigures:")
+    print("  1. Success rate comparison")
+    print("  2. Per-structure validation results")
+    print("  3. Issues fixed and their impact")
+    print("  4. Validation performance analysis")
+    print("  5. Component coverage heatmap")
+    print("  6. Development timeline")
     print()
-    print("All figures generated successfully in figures/generated/")
-    print("High-resolution PNG files (300 DPI) ready for publication")
