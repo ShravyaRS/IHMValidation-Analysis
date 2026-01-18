@@ -22,5 +22,14 @@ SOFTWARE.
 
 ---
 
-This project includes and modifies IHMValidation, which has its own license.
-See https://github.com/salilab/IHMValidation for upstream license information.
+This project includes and modifies IHMValidation:
+- Source: https://github.com/salilab/IHMValidation
+- License: See upstream repository
+
+This project uses ATSAS:
+- Source: https://www.embl-hamburg.de/biosaxs/software.html
+- License: Academic/Commercial (check with EMBL)
+
+This project uses Chimera/ChimeraX:
+- Source: https://www.cgl.ucsf.edu/chimera/
+- License: Academic (check with UCSF)
