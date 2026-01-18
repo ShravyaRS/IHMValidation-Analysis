@@ -1,0 +1,22 @@
+
+# Commit Message Format
+# 
+# <type>: <subject> (max 50 chars)
+#
+# <body> (wrap at 72 chars)
+#
+# Types:
+# - feat: New feature
+# - fix: Bug fix
+# - docs: Documentation changes
+# - style: Code style changes (formatting)
+# - refactor: Code refactoring
+# - test: Adding or updating tests
+# - chore: Maintenance tasks
+#
+# Example:
+# feat: Add batch processing module for meta-analysis
+#
+# Implements batch_analyze.py to process multiple structures
+# and generate summary statistics. Includes visualization
+# of validation trends across datasets.

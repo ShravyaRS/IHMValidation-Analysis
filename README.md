@@ -9,6 +9,30 @@ Complete dependency resolution for IHMValidation on Ubuntu 22.04, achieving 100%
 
 ## Summary
 
+## Quick Start
+
+### One-Line Install
+```bash
+bash install.sh
+```
+
+### Run Example
+```bash
+bash run_example.sh
+```
+
+This validates an example structure and generates reports in `example_output/`.
+
+### Validate Your Structure
+```bash
+singularity exec IHMValidation/ihmvalidation_complete.sif python3 \
+  /opt/IHMValidation/ihm_validation/ihm_validator.py \
+  -f your_structure.cif \
+  --output-root output \
+  --output-prefix structure_name
+```
+
+
 Fixed ATSAS dependency installation issues preventing validation of structures with Small Angle Scattering data. Implemented error handling for EM validation components.
 
 **Result**: Validation success improved from 50% to 100% (4/8 to 8/8 structures).
