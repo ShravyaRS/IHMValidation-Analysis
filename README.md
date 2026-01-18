@@ -211,3 +211,23 @@ This project includes modifications to IHMValidation (see upstream license at ht
 - ATSAS team at EMBL Hamburg
 - Chimera/ChimeraX developers at UCSF
 - PDB-Dev team for test structures
+
+## Visual Analysis
+
+### Success Rate Improvement
+![Success Rate Comparison](figures/generated/success_rate_comparison.png)
+
+### Performance Analysis
+![Validation Time Analysis](figures/generated/validation_time_analysis.png)
+
+### Impact Assessment
+![Issues Impact Analysis](figures/generated/issues_impact_analysis.png)
+
+### Resource Usage
+![Resource Usage Patterns](figures/generated/resource_usage_patterns.png)
+
+### Component Coverage
+![Component Coverage](figures/generated/component_coverage.png)
+
+### Development Timeline
+![Development Timeline](figures/generated/development_timeline.png)
