@@ -12,7 +12,7 @@ seaborn>=0.12.0,<1.0.0
 ihm==2.7
 
 # Visualization - CRITICAL VERSION CONSTRAINTS
-bokeh>=2.4.2,<3.0.0  # Bokeh 3.0 has breaking API changes
+bokeh>=2.4.2  # Compatible with 2.x and 3.x after patch
 panel>=0.14.0,<1.0.0  # Compatible with bokeh 2.x
 selenium>=4.0.0,<5.0.0
 
