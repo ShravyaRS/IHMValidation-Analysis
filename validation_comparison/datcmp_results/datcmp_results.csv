@@ -1,0 +1,6 @@
+file_id,experimental_file,theoretical_file,datcmp_c_value,datcmp_p_value,datcmp_adj_p_value,status,runtime_seconds
+SASDBV9,SASDBV9.dat,SASDBV9.dat,380.0,0.0,0.0,success,0.5624630451202393
+SASDBW9,SASDBW9.dat,SASDBW9.dat,310.0,0.0,0.0,success,0.27132344245910645
+SASDBX9,SASDBX9.dat,SASDBX9.dat,212.0,0.0,0.0,success,0.26209068298339844
+SASDBY9,SASDBY9.dat,SASDBY9.dat,386.0,0.0,0.0,success,0.27292799949645996
+SASDBZ9,SASDBZ9.dat,SASDBZ9.dat,280.0,0.0,0.0,success,0.2613091468811035
