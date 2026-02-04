@@ -190,6 +190,23 @@ def generate_final_report():
     report.append("TECHNICAL NOTES")
     report.append("="*80)
     
+    # ADD THIS NEW CODE:
+    import sys
+    import scipy
+    
+    report.append(f"\nSoftware Environment:")
+    report.append(f"  - Python: {sys.version.split()[0]}")
+    report.append(f"  - NumPy: {np.__version__}")
+    report.append(f"  - SciPy: {scipy.__version__}")
+    report.append(f"  - Pandas: {pd.__version__}")
+    report.append(f"  - Operating System: Linux (Ubuntu 22.04)")
+    
+    report.append(f"\nImplementation Details:")
+    report.append(f"  - DATCMP: ATSAS suite v{get_atsas_version()}")
+    report.append(f"  - Python CorMap: Custom implementation based on Franke et al. (2015)")
+    report.append(f"  - Container: Singularity (ihmvalidation_complete.sif)")
+
+    
     report.append(f"\nImplementation Details:")
     report.append(f"  - DATCMP: ATSAS suite v{get_atsas_version()}")
     report.append(f"  - Python CorMap: Custom implementation based on Franke et al. (2015)")
@@ -206,6 +223,12 @@ def generate_final_report():
     report.append(f"\n{'='*80}")
     report.append("LIMITATIONS AND FUTURE WORK")
     report.append("="*80)
+    report.append(f"\n5. CONTINUOUS VALIDATION:")
+    report.append(f"   - Implement automated nightly validation on new PDB-IHM entries")
+    report.append(f"   - Monitor for systematic deviations in new data")
+    report.append(f"   - Maintain validation dashboard for ongoing quality assurance")
+    report.append(f"   - Alert on cases where CorMap and DATCMP significantly disagree")
+
     
     report.append(f"\n1. DATASET SIZE:")
     report.append(f"   - Current: {len(comparison)} experimental-fitted pairs")

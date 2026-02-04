@@ -2,7 +2,7 @@
 DATCMP vs CORMAP (PYTHON) VALIDATION REPORT
 ================================================================================
 
-Date: 2026-02-04 05:35:53
+Date: 2026-02-04 05:53:19
 Author: IHM Validation Analysis Team
 GitHub Issue: #118 - Verify cormapy can replace DATCMP
 Repository: https://github.com/ShravyaRS/IHMValidation-Analysis
@@ -109,6 +109,18 @@ Justification:
 TECHNICAL NOTES
 ================================================================================
 
+Software Environment:
+  - Python: 3.13.9
+  - NumPy: 2.4.0
+  - SciPy: 1.16.0
+  - Pandas: 2.3.3
+  - Operating System: Linux (Ubuntu 22.04)
+
+Implementation Details:
+  - DATCMP: ATSAS suite v3.2.1 (from Singularity container)
+  - Python CorMap: Custom implementation based on Franke et al. (2015)
+  - Container: Singularity (ihmvalidation_complete.sif)
+
 Implementation Details:
   - DATCMP: ATSAS suite v3.2.1 (from Singularity container)
   - Python CorMap: Custom implementation based on Franke et al. (2015)
@@ -125,6 +137,12 @@ CorMap Algorithm:
 ================================================================================
 LIMITATIONS AND FUTURE WORK
 ================================================================================
+
+5. CONTINUOUS VALIDATION:
+   - Implement automated nightly validation on new PDB-IHM entries
+   - Monitor for systematic deviations in new data
+   - Maintain validation dashboard for ongoing quality assurance
+   - Alert on cases where CorMap and DATCMP significantly disagree
 
 1. DATASET SIZE:
    - Current: 31 experimental-fitted pairs
