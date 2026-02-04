@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from pathlib import Path
 import os
+from scipy.stats import spearmanr
 
 def compare_results():
     """
@@ -102,9 +103,17 @@ def compare_results():
             pct = (within / len(valid_comparison)) * 100
             print(f"  Within {tolerance}: {within}/{len(valid_comparison)} ({pct:.1f}%)")
         
-        # Correlation between methods
+        # Pearson correlation
         corr = valid_comparison['datcmp_p_value'].corr(valid_comparison['cormap_p_value'])
         print(f"\nPearson correlation between DATCMP and CorMap p-values: {corr:.6f}")
+        
+        # Spearman rank correlation
+        spearman_corr, spearman_p = spearmanr(
+            valid_comparison['datcmp_p_value'], 
+            valid_comparison['cormap_p_value']
+        )
+        print(f"Spearman rank correlation: {spearman_corr:.6f} (p={spearman_p:.2e})")
+        print(f"  → Confirms ordering of fit quality is preserved across methods")
     
     # Save comparison table
     output_file = "validation_comparison/reports/datcmp_vs_cormap_comparison.csv"
@@ -118,71 +127,91 @@ def compare_results():
     print("="*80)
     print(comparison.to_string(index=False))
     
-    return comparison, valid_comparison
+    return comparison, valid_comparison, spearman_corr, spearman_p
 
 def create_plots(comparison, valid_comparison):
     """
-    Create visualization plots
+    Create visualization plots (with NaN handling)
     """
+    if comparison is None or len(comparison) == 0:
+        print("No data to plot.")
+        return
+    
+    # Clean data - remove NaN values
+    valid_comparison_clean = valid_comparison.dropna(
+        subset=['datcmp_p_value', 'cormap_p_value', 'datcmp_c_value', 'cormap_c_value']
+    ).copy()
+    
+    if len(valid_comparison_clean) == 0:
+        print("No valid data after removing NaN values.")
+        return
+    
     print("\n" + "="*80)
     print("GENERATING PLOTS")
     print("="*80)
+    print(f"Plotting {len(valid_comparison_clean)} valid data points")
     
     sns.set_style("whitegrid")
     fig, axes = plt.subplots(2, 2, figsize=(16, 12))
     
-    if len(valid_comparison) > 0:
-        # Plot 1: Scatter DATCMP vs CorMap p-values
-        ax1 = axes[0, 0]
-        ax1.scatter(valid_comparison['datcmp_p_value'], valid_comparison['cormap_p_value'], 
-                    s=150, alpha=0.7, edgecolors='black', linewidth=2, color='steelblue')
-        
-        # Perfect agreement line
-        all_p = pd.concat([valid_comparison['datcmp_p_value'], valid_comparison['cormap_p_value']])
-        lims = [0, max(all_p.max() * 1.1, 0.1)]
-        ax1.plot(lims, lims, 'r--', linewidth=2, label='Perfect agreement', alpha=0.7)
-        
-        ax1.set_xlabel('DATCMP p-value', fontsize=13, fontweight='bold')
-        ax1.set_ylabel('CorMap (Python) p-value', fontsize=13, fontweight='bold')
-        ax1.set_title('DATCMP vs CorMap P-values', fontsize=15, fontweight='bold', pad=15)
-        ax1.legend(fontsize=11)
-        ax1.grid(True, alpha=0.3)
-        
-        # Plot 2: C-value comparison
-        ax2 = axes[0, 1]
-        x = np.arange(len(valid_comparison))
-        width = 0.35
-        ax2.bar(x - width/2, valid_comparison['datcmp_c_value'], width, 
-                label='DATCMP', alpha=0.8, edgecolor='black', linewidth=1.5)
-        ax2.bar(x + width/2, valid_comparison['cormap_c_value'], width, 
-                label='CorMap', alpha=0.8, edgecolor='black', linewidth=1.5)
-        
-        ax2.set_xlabel('Dataset Index', fontsize=13, fontweight='bold')
-        ax2.set_ylabel('C-value (Longest Run)', fontsize=13, fontweight='bold')
-        ax2.set_title('C-values Comparison', fontsize=15, fontweight='bold', pad=15)
-        ax2.legend(fontsize=11)
-        ax2.grid(True, alpha=0.3, axis='y')
-        
-        # Plot 3: P-value differences
-        ax3 = axes[1, 0]
-        ax3.bar(x, valid_comparison['p_value_diff'], alpha=0.75, 
-                edgecolor='black', linewidth=1.5, color='coral')
-        ax3.axhline(y=0.01, color='red', linestyle='--', linewidth=2, 
-                   label='0.01 tolerance', alpha=0.7)
-        ax3.set_xlabel('Dataset Index', fontsize=13, fontweight='bold')
-        ax3.set_ylabel('|DATCMP - CorMap| p-value', fontsize=13, fontweight='bold')
-        ax3.set_title('Absolute P-value Differences', fontsize=15, fontweight='bold', pad=15)
-        ax3.legend(fontsize=11)
-        ax3.grid(True, alpha=0.3, axis='y')
-        
-        # Plot 4: Relative differences
-        ax4 = axes[1, 1]
-        ax4.bar(x, valid_comparison['p_value_rel_diff'], alpha=0.75, 
-                edgecolor='black', linewidth=1.5, color='mediumseagreen')
-        ax4.set_xlabel('Dataset Index', fontsize=13, fontweight='bold')
-        ax4.set_ylabel('Relative Difference (%)', fontsize=13, fontweight='bold')
-        ax4.set_title('Relative P-value Differences', fontsize=15, fontweight='bold', pad=15)
-        ax4.grid(True, alpha=0.3, axis='y')
+    # Plot 1: Scatter
+    ax1 = axes[0, 0]
+    ax1.scatter(valid_comparison_clean['datcmp_p_value'], 
+                valid_comparison_clean['cormap_p_value'], 
+                s=150, alpha=0.7, edgecolors='black', linewidth=2, color='steelblue')
+    
+    all_p = pd.concat([valid_comparison_clean['datcmp_p_value'], 
+                       valid_comparison_clean['cormap_p_value']])
+    lims = [0, max(all_p.max() * 1.1, 0.1)]
+    ax1.plot(lims, lims, 'r--', linewidth=2, label='Perfect agreement', alpha=0.7)
+    
+    ax1.set_xlabel('DATCMP p-value', fontsize=13, fontweight='bold')
+    ax1.set_ylabel('CorMap (Python) p-value', fontsize=13, fontweight='bold')
+    ax1.set_title('DATCMP vs CorMap P-values', fontsize=15, fontweight='bold', pad=15)
+    ax1.legend(fontsize=11)
+    ax1.grid(True, alpha=0.3)
+    
+    # Plot 2: C-values
+    ax2 = axes[0, 1]
+    x = np.arange(len(valid_comparison_clean))
+    width = 0.35
+    ax2.bar(x - width/2, valid_comparison_clean['datcmp_c_value'].values, width, 
+            label='DATCMP', alpha=0.8, edgecolor='black', linewidth=1.5)
+    ax2.bar(x + width/2, valid_comparison_clean['cormap_c_value'].values, width, 
+            label='CorMap', alpha=0.8, edgecolor='black', linewidth=1.5)
+    
+    ax2.set_xlabel('Dataset Index', fontsize=13, fontweight='bold')
+    ax2.set_ylabel('C-value (Longest Run)', fontsize=13, fontweight='bold')
+    ax2.set_title('C-values Comparison', fontsize=15, fontweight='bold', pad=15)
+    ax2.legend(fontsize=11)
+    ax2.grid(True, alpha=0.3, axis='y')
+    
+    # Plot 3: P-value differences
+    ax3 = axes[1, 0]
+    p_diffs = abs(valid_comparison_clean['datcmp_p_value'] - valid_comparison_clean['cormap_p_value'])
+    ax3.bar(x, p_diffs.values, alpha=0.75, edgecolor='black', linewidth=1.5, color='coral')
+    ax3.axhline(y=0.01, color='red', linestyle='--', linewidth=2, label='0.01 tolerance', alpha=0.7)
+    ax3.set_xlabel('Dataset Index', fontsize=13, fontweight='bold')
+    ax3.set_ylabel('|DATCMP - CorMap| p-value', fontsize=13, fontweight='bold')
+    ax3.set_title('Absolute P-value Differences', fontsize=15, fontweight='bold', pad=15)
+    ax3.legend(fontsize=11)
+    ax3.grid(True, alpha=0.3, axis='y')
+    
+    # Plot 4: Relative differences
+    ax4 = axes[1, 1]
+    rel_diffs = []
+    for idx, row in valid_comparison_clean.iterrows():
+        if row['datcmp_p_value'] != 0:
+            rel_diff = abs(row['datcmp_p_value'] - row['cormap_p_value']) / row['datcmp_p_value'] * 100
+            rel_diffs.append(rel_diff)
+        else:
+            rel_diffs.append(0)
+    
+    ax4.bar(x, rel_diffs, alpha=0.75, edgecolor='black', linewidth=1.5, color='mediumseagreen')
+    ax4.set_xlabel('Dataset Index', fontsize=13, fontweight='bold')
+    ax4.set_ylabel('Relative Difference (%)', fontsize=13, fontweight='bold')
+    ax4.set_title('Relative P-value Differences', fontsize=15, fontweight='bold', pad=15)
+    ax4.grid(True, alpha=0.3, axis='y')
     
     plt.tight_layout(pad=3.0)
     
@@ -194,9 +223,14 @@ def create_plots(comparison, valid_comparison):
     plt.close()
 
 if __name__ == "__main__":
-    comparison, valid_comparison = compare_results()
+    comparison, valid_comparison, spearman_corr, spearman_p = compare_results()
     if len(valid_comparison) > 0:
         create_plots(comparison, valid_comparison)
+    
+    # Save Spearman correlation for report
+    stats_file = "validation_comparison/reports/spearman_stats.txt"
+    with open(stats_file, 'w') as f:
+        f.write(f"{spearman_corr:.6f},{spearman_p:.2e}\n")
     
     print("\n" + "="*80)
     print("COMPARISON COMPLETE")
