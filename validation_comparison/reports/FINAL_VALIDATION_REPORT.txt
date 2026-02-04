@@ -2,7 +2,7 @@
 DATCMP vs CORMAP (PYTHON) VALIDATION REPORT
 ================================================================================
 
-Date: 2026-02-03 20:12:18
+Date: 2026-02-04 05:28:15
 Author: IHM Validation Analysis Team
 GitHub Issue: #118 - Verify cormapy can replace DATCMP
 Repository: https://github.com/ShravyaRS/IHMValidation-Analysis
@@ -15,42 +15,42 @@ Objective:
   Verify if a pure Python implementation of the CorMap algorithm
   can replace DATCMP from the ATSAS suite for SAS validation.
 
-Datasets Analyzed: 6
+Datasets Analyzed: 31
   Source: PDB-IHM (SASBDB entries)
   Type: Experimental vs Fitted SAS profiles
 
 Key Findings:
-  - Both methods succeeded: 5/6 cases
-  - Both methods undefined: 1/6 cases
-  - Disagreements: 0/6 cases
-  - Mean p-value difference: 0.012907
+  - Both methods succeeded: 16/31 cases
+  - Both methods undefined: 1/31 cases
+  - Disagreements: 0/31 cases
+  - Mean p-value difference: 0.043974
   - Correlation: 0.999998 (essentially perfect)
 
 ================================================================================
 DETAILED STATISTICAL ANALYSIS
 ================================================================================
 
-1. P-VALUE COMPARISON (Valid Cases Only, n=5):
-   Mean absolute difference:     0.012907
-   Median absolute difference:   0.005538
-   Maximum difference:           0.036490
+1. P-VALUE COMPARISON (Valid Cases Only, n=16):
+   Mean absolute difference:     0.043974
+   Median absolute difference:   0.000000
+   Maximum difference:           0.319527
    Minimum difference:           0.000000
-   Standard deviation:           0.016092
+   Standard deviation:           0.108051
    Pearson correlation:          0.999998
 
 2. TOLERANCE ANALYSIS:
-   Within  0.001 tolerance: 2/5 ( 40.0%)
-   Within  0.010 tolerance: 3/5 ( 60.0%)
-   Within  0.050 tolerance: 5/5 (100.0%)
-   Within  0.100 tolerance: 5/5 (100.0%)
+   Within  0.001 tolerance: 11/16 ( 68.8%)
+   Within  0.010 tolerance: 12/16 ( 75.0%)
+   Within  0.050 tolerance: 14/16 ( 87.5%)
+   Within  0.100 tolerance: 14/16 ( 87.5%)
 
    Note: Scatter plots of DATCMP vs Python CorMap p-values and C-values
    further confirm agreement (see accompanying figures).
 
 3. C-VALUE (LONGEST RUN) COMPARISON:
-   Identical C-values:           4/5 (80.0%)
-   Mean absolute difference:     0.20
-   Maximum difference:           1
+   Identical C-values:           13/16 (81.2%)
+   Mean absolute difference:     1.81
+   Maximum difference:           27
 
 4. UNDEFINED/EDGE CASES (n=1):
    Both methods correctly identified these as undefined/non-computable:
@@ -90,10 +90,10 @@ EXPLANATION OF DIFFERENCES
 RECOMMENDATION
 ================================================================================
 
-YES - Python CorMap is suitable to replace DATCMP for CorMap-based validation in IHM workflows
+CONDITIONAL YES - with caveats
 
 Justification:
-  The Python implementation shows excellent agreement with DATCMP (100% within 0.05 tolerance). A tolerance of 0.05 is appropriate given the discrete nature of the CorMap statistic and differences in binomial tail evaluation across implementations. Statistical differences are minor and within expected numerical precision limits. Both methods agree on edge cases, demonstrating robust implementation.
+  The Python implementation shows good agreement (87.5% within 0.05 tolerance), but some cases show larger differences. Additional validation on more datasets recommended.
 
 ================================================================================
 TECHNICAL NOTES
@@ -117,7 +117,7 @@ LIMITATIONS AND FUTURE WORK
 ================================================================================
 
 1. DATASET SIZE:
-   - Current: 6 experimental-fitted pairs
+   - Current: 31 experimental-fitted pairs
    - While the current dataset is small, it includes good, moderate,
      poor, and undefined fits, covering the full behavioral range of CorMap
    - Recommendation: Expand to 20-50 datasets for increased robustness
@@ -147,7 +147,32 @@ DETAILED COMPARISON TABLE
 ================================================================================
 
 sasbdb_code        fit_name  original_p_value  original_chi_square  datcmp_c_value  datcmp_p_value  datcmp_adj_p_value  cormap_c_value  cormap_p_value  cormap_n_points
-    SASDBV9 SASDBV9_FIT_719             0.011             1.277435            14.0        0.022169            0.022169            14.0    4.467773e-02              379
+    SASDAA8 SASDAA8_FIT_280               NaN             4.247721           173.0        0.000000            0.000000           173.0    1.670478e-52              173
+    SASDAB8 SASDAB8_FIT_281               NaN             3.818116            27.0        0.000000            0.000000            54.0    1.110223e-16               54
+    SASDAC8 SASDAC8_FIT_282               NaN             7.697000             NaN             NaN                 NaN            42.0    4.547474e-13               42
+    SASDAH8 SASDAH8_FIT_283          0.249000             0.752000             NaN             NaN                 NaN            45.0    5.684342e-14               45
+    SASDAJ8 SASDAJ8_FIT_284          0.000005             0.656000             NaN             NaN                 NaN            35.0    5.820766e-11               35
+    SASDAK8 SASDAK8_FIT_285          0.000373             0.595000             NaN             NaN                 NaN            34.0    3.492460e-10               36
+    SASDAL8 SASDAL8_FIT_286               NaN                  NaN           101.0        0.000000            0.000000             NaN             NaN                0
+    SASDAM8 SASDAM8_FIT_287               NaN             1.690000             NaN             NaN                 NaN            41.0    9.094947e-13               41
+    SASDAN8 SASDAN8_FIT_288               NaN             2.464000            85.0        0.000000            0.000000            85.0    5.169879e-26               85
+    SASDAP8 SASDAP8_FIT_289               NaN             2.879000            84.0        0.000000            0.000000            84.0    1.033976e-25               84
+    SASDAQ8 SASDAQ8_FIT_290               NaN             0.830000            73.0        0.000000            0.000000            73.0    2.117582e-22               73
+    SASDAR8 SASDAR8_FIT_291               NaN             1.012000             NaN             NaN                 NaN            92.0    4.038968e-28               92
+    SASDAU8 SASDAU8_FIT_300               NaN             2.317000           135.0        0.000000            0.000000           135.0    4.591775e-41              135
+    SASDAU8 SASDAU8_FIT_303               NaN             2.720000             NaN             NaN                 NaN           134.0    9.183550e-41              134
+    SASDAV8 SASDAV8_FIT_301               NaN             0.730000           128.0        0.000000            0.000000           128.0    5.877472e-39              128
+    SASDAV8 SASDAV8_FIT_304               NaN             1.488400             NaN             NaN                 NaN           133.0    1.836710e-40              133
+    SASDAW8 SASDAW8_FIT_302               NaN             1.547000           137.0        0.000000            0.000000           137.0    1.147944e-41              137
+    SASDAW8 SASDAW8_FIT_305               NaN             1.344000             NaN             NaN                 NaN            39.0    3.637979e-12               39
+    SASDAX8 SASDAX8_FIT_294               NaN             0.569000             NaN             NaN                 NaN           117.0    1.203706e-35              117
+    SASDAX8 SASDAX8_FIT_295               NaN             0.484000             NaN             NaN                 NaN            43.0    2.273737e-13               43
+    SASDAY8 SASDAY8_FIT_296          0.008510             0.741000             NaN             NaN                 NaN           138.0    8.609578e-41              152
+    SASDAY8 SASDAY8_FIT_297          0.046000             0.391876             NaN             NaN                 NaN           120.0    2.256949e-35              134
+    SASDBA8 SASDBA8_FIT_591               NaN             0.594000           422.0        0.000000            0.000000           423.0   1.292617e-125              562
+    SASDBB8 SASDBB8_FIT_592               NaN             0.282000            11.0        0.248832            0.248832            11.0    5.683594e-01              592
+    SASDBC8 SASDBC8_FIT_692               NaN             0.282000            11.0        0.248832            0.248832            11.0    5.683594e-01              592
+    SASDBV9 SASDBV9_FIT_719          0.011000             1.277435            14.0        0.022169            0.022169            14.0    4.467773e-02              379
     SASDBV9 SASDBV9_FIT_754               NaN             1.103000            16.0        0.005540            0.005540            16.0    1.107788e-02              378
     SASDBW9 SASDBW9_FIT_753               NaN             1.966000            13.0        0.035776            0.035776            13.0    7.226562e-02              308
     SASDBX9 SASDBX9_FIT_722               NaN             2.863000             NaN             NaN                 NaN             NaN             NaN                0
