@@ -1,5 +1,13 @@
 [
   {
+    "sasbdb_code": "SASDAA7",
+    "exp_file": "validation_comparison/extracted_data/SASDAA7_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDAA7_fit_208.dat",
+    "fit_name": "SASDAA7_FIT_208",
+    "original_p_value": null,
+    "original_chi_square": 0.978121
+  },
+  {
     "sasbdb_code": "SASDAA8",
     "exp_file": "validation_comparison/extracted_data/SASDAA8_exp.dat",
     "fit_file": "validation_comparison/extracted_data/SASDAA8_fit_280.dat",
@@ -80,6 +88,14 @@
     "original_chi_square": 2.879
   },
   {
+    "sasbdb_code": "SASDAP9",
+    "exp_file": "validation_comparison/extracted_data/SASDAP9_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDAP9_fit_326.dat",
+    "fit_name": "SASDAP9_FIT_326",
+    "original_p_value": null,
+    "original_chi_square": null
+  },
+  {
     "sasbdb_code": "SASDAQ8",
     "exp_file": "validation_comparison/extracted_data/SASDAQ8_exp.dat",
     "fit_file": "validation_comparison/extracted_data/SASDAQ8_fit_290.dat",
@@ -88,12 +104,44 @@
     "original_chi_square": 0.83
   },
   {
+    "sasbdb_code": "SASDAQ9",
+    "exp_file": "validation_comparison/extracted_data/SASDAQ9_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDAQ9_fit_327.dat",
+    "fit_name": "SASDAQ9_FIT_327",
+    "original_p_value": null,
+    "original_chi_square": null
+  },
+  {
     "sasbdb_code": "SASDAR8",
     "exp_file": "validation_comparison/extracted_data/SASDAR8_exp.dat",
     "fit_file": "validation_comparison/extracted_data/SASDAR8_fit_291.dat",
     "fit_name": "SASDAR8_FIT_291",
     "original_p_value": null,
     "original_chi_square": 1.012
+  },
+  {
+    "sasbdb_code": "SASDAR9",
+    "exp_file": "validation_comparison/extracted_data/SASDAR9_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDAR9_fit_328.dat",
+    "fit_name": "SASDAR9_FIT_328",
+    "original_p_value": null,
+    "original_chi_square": null
+  },
+  {
+    "sasbdb_code": "SASDAS9",
+    "exp_file": "validation_comparison/extracted_data/SASDAS9_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDAS9_fit_329.dat",
+    "fit_name": "SASDAS9_FIT_329",
+    "original_p_value": null,
+    "original_chi_square": null
+  },
+  {
+    "sasbdb_code": "SASDAT9",
+    "exp_file": "validation_comparison/extracted_data/SASDAT9_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDAT9_fit_330.dat",
+    "fit_name": "SASDAT9_FIT_330",
+    "original_p_value": null,
+    "original_chi_square": null
   },
   {
     "sasbdb_code": "SASDAU8",
@@ -112,6 +160,14 @@
     "original_chi_square": 2.72
   },
   {
+    "sasbdb_code": "SASDAU9",
+    "exp_file": "validation_comparison/extracted_data/SASDAU9_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDAU9_fit_331.dat",
+    "fit_name": "SASDAU9_FIT_331",
+    "original_p_value": null,
+    "original_chi_square": null
+  },
+  {
     "sasbdb_code": "SASDAV8",
     "exp_file": "validation_comparison/extracted_data/SASDAV8_exp.dat",
     "fit_file": "validation_comparison/extracted_data/SASDAV8_fit_301.dat",
@@ -126,6 +182,14 @@
     "fit_name": "SASDAV8_FIT_304",
     "original_p_value": null,
     "original_chi_square": 1.4884
+  },
+  {
+    "sasbdb_code": "SASDAV9",
+    "exp_file": "validation_comparison/extracted_data/SASDAV9_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDAV9_fit_332.dat",
+    "fit_name": "SASDAV9_FIT_332",
+    "original_p_value": null,
+    "original_chi_square": null
   },
   {
     "sasbdb_code": "SASDAW8",
@@ -144,6 +208,14 @@
     "original_chi_square": 1.344
   },
   {
+    "sasbdb_code": "SASDAW9",
+    "exp_file": "validation_comparison/extracted_data/SASDAW9_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDAW9_fit_333.dat",
+    "fit_name": "SASDAW9_FIT_333",
+    "original_p_value": null,
+    "original_chi_square": null
+  },
+  {
     "sasbdb_code": "SASDAX8",
     "exp_file": "validation_comparison/extracted_data/SASDAX8_exp.dat",
     "fit_file": "validation_comparison/extracted_data/SASDAX8_fit_294.dat",
@@ -158,6 +230,14 @@
     "fit_name": "SASDAX8_FIT_295",
     "original_p_value": null,
     "original_chi_square": 0.484
+  },
+  {
+    "sasbdb_code": "SASDAX9",
+    "exp_file": "validation_comparison/extracted_data/SASDAX9_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDAX9_fit_334.dat",
+    "fit_name": "SASDAX9_FIT_334",
+    "original_p_value": null,
+    "original_chi_square": null
   },
   {
     "sasbdb_code": "SASDAY8",
@@ -176,12 +256,36 @@
     "original_chi_square": 0.391876
   },
   {
+    "sasbdb_code": "SASDAY9",
+    "exp_file": "validation_comparison/extracted_data/SASDAY9_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDAY9_fit_335.dat",
+    "fit_name": "SASDAY9_FIT_335",
+    "original_p_value": null,
+    "original_chi_square": null
+  },
+  {
+    "sasbdb_code": "SASDAZ9",
+    "exp_file": "validation_comparison/extracted_data/SASDAZ9_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDAZ9_fit_336.dat",
+    "fit_name": "SASDAZ9_FIT_336",
+    "original_p_value": null,
+    "original_chi_square": null
+  },
+  {
     "sasbdb_code": "SASDBA8",
     "exp_file": "validation_comparison/extracted_data/SASDBA8_exp.dat",
     "fit_file": "validation_comparison/extracted_data/SASDBA8_fit_591.dat",
     "fit_name": "SASDBA8_FIT_591",
     "original_p_value": null,
     "original_chi_square": 0.594
+  },
+  {
+    "sasbdb_code": "SASDBA9",
+    "exp_file": "validation_comparison/extracted_data/SASDBA9_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDBA9_fit_645.dat",
+    "fit_name": "SASDBA9_FIT_645",
+    "original_p_value": null,
+    "original_chi_square": 2.48
   },
   {
     "sasbdb_code": "SASDBB8",
@@ -192,12 +296,108 @@
     "original_chi_square": 0.282
   },
   {
+    "sasbdb_code": "SASDBB9",
+    "exp_file": "validation_comparison/extracted_data/SASDBB9_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDBB9_fit_729.dat",
+    "fit_name": "SASDBB9_FIT_729",
+    "original_p_value": 0.0644,
+    "original_chi_square": 12.583
+  },
+  {
     "sasbdb_code": "SASDBC8",
     "exp_file": "validation_comparison/extracted_data/SASDBC8_exp.dat",
     "fit_file": "validation_comparison/extracted_data/SASDBC8_fit_692.dat",
     "fit_name": "SASDBC8_FIT_692",
     "original_p_value": null,
     "original_chi_square": 0.282
+  },
+  {
+    "sasbdb_code": "SASDBC9",
+    "exp_file": "validation_comparison/extracted_data/SASDBC9_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDBC9_fit_730.dat",
+    "fit_name": "SASDBC9_FIT_730",
+    "original_p_value": 0.531,
+    "original_chi_square": 0.606
+  },
+  {
+    "sasbdb_code": "SASDBD9",
+    "exp_file": "validation_comparison/extracted_data/SASDBD9_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDBD9_fit_728.dat",
+    "fit_name": "SASDBD9_FIT_728",
+    "original_p_value": 0.123,
+    "original_chi_square": 1.023
+  },
+  {
+    "sasbdb_code": "SASDBE9",
+    "exp_file": "validation_comparison/extracted_data/SASDBE9_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDBE9_fit_731.dat",
+    "fit_name": "SASDBE9_FIT_731",
+    "original_p_value": null,
+    "original_chi_square": 0.727
+  },
+  {
+    "sasbdb_code": "SASDBF9",
+    "exp_file": "validation_comparison/extracted_data/SASDBF9_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDBF9_fit_732.dat",
+    "fit_name": "SASDBF9_FIT_732",
+    "original_p_value": 0.0164,
+    "original_chi_square": 0.896
+  },
+  {
+    "sasbdb_code": "SASDBG9",
+    "exp_file": "validation_comparison/extracted_data/SASDBG9_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDBG9_fit_733.dat",
+    "fit_name": "SASDBG9_FIT_733",
+    "original_p_value": null,
+    "original_chi_square": 2.191
+  },
+  {
+    "sasbdb_code": "SASDBH9",
+    "exp_file": "validation_comparison/extracted_data/SASDBH9_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDBH9_fit_734.dat",
+    "fit_name": "SASDBH9_FIT_734",
+    "original_p_value": 0.0328,
+    "original_chi_square": 0.899
+  },
+  {
+    "sasbdb_code": "SASDBJ9",
+    "exp_file": "validation_comparison/extracted_data/SASDBJ9_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDBJ9_fit_710.dat",
+    "fit_name": "SASDBJ9_FIT_710",
+    "original_p_value": null,
+    "original_chi_square": 1.3
+  },
+  {
+    "sasbdb_code": "SASDBK9",
+    "exp_file": "validation_comparison/extracted_data/SASDBK9_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDBK9_fit_711.dat",
+    "fit_name": "SASDBK9_FIT_711",
+    "original_p_value": null,
+    "original_chi_square": 1.43
+  },
+  {
+    "sasbdb_code": "SASDBL9",
+    "exp_file": "validation_comparison/extracted_data/SASDBL9_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDBL9_fit_712.dat",
+    "fit_name": "SASDBL9_FIT_712",
+    "original_p_value": null,
+    "original_chi_square": 0.48
+  },
+  {
+    "sasbdb_code": "SASDBM9",
+    "exp_file": "validation_comparison/extracted_data/SASDBM9_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDBM9_fit_713.dat",
+    "fit_name": "SASDBM9_FIT_713",
+    "original_p_value": null,
+    "original_chi_square": 0.53
+  },
+  {
+    "sasbdb_code": "SASDBN9",
+    "exp_file": "validation_comparison/extracted_data/SASDBN9_exp.dat",
+    "fit_file": "validation_comparison/extracted_data/SASDBN9_fit_714.dat",
+    "fit_name": "SASDBN9_FIT_714",
+    "original_p_value": null,
+    "original_chi_square": 0.812
   },
   {
     "sasbdb_code": "SASDBV9",
