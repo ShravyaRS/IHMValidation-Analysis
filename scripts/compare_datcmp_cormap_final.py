@@ -235,3 +235,7 @@ if __name__ == "__main__":
     print("\n" + "="*80)
     print("COMPARISON COMPLETE")
     print("="*80)
+
+# Add at top of create_plots function:
+import warnings
+warnings.filterwarnings('ignore', category=RuntimeWarning)
