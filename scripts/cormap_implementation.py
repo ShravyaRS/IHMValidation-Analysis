@@ -12,27 +12,11 @@ def cormap_test(exp_q, exp_I, exp_err, fit_q, fit_I):
     """
     Perform CorMap test between experimental and fitted SAS data
     
-    Parameters:
-    -----------
-    exp_q : array-like
-        Experimental momentum transfer values
-    exp_I : array-like
-        Experimental intensities
-    exp_err : array-like
-        Experimental errors
-    fit_q : array-like
-        Fitted momentum transfer values
-    fit_I : array-like
-        Fitted intensities
-    
     Returns:
     --------
-    p_value : float
-        CorMap p-value
-    c_value : float
-        Number of runs (longest contiguous stretch)
+    p_value : float or None
+    c_value : int or None
     n_points : int
-        Number of points used in comparison
     """
     
     # Ensure arrays
@@ -42,38 +26,48 @@ def cormap_test(exp_q, exp_I, exp_err, fit_q, fit_I):
     fit_q = np.asarray(fit_q)
     fit_I = np.asarray(fit_I)
     
+    # Check for valid data
+    if len(exp_q) == 0 or len(fit_q) == 0:
+        return None, None, 0
+    
     # Interpolate fitted data to experimental q points
     fit_I_interp = np.interp(exp_q, fit_q, fit_I)
     
-    # Calculate normalized residuals
-    # Avoid division by zero
-    valid_mask = exp_err > 0
+    # Filter out zero or invalid errors
+    valid_mask = (exp_err > 0) & np.isfinite(exp_err)
     if not np.any(valid_mask):
-        return None, None, 0
+        return None, None, len(exp_q)
     
     exp_q = exp_q[valid_mask]
     exp_I = exp_I[valid_mask]
     exp_err = exp_err[valid_mask]
     fit_I_interp = fit_I_interp[valid_mask]
     
+    # Calculate normalized residuals
     residuals = (exp_I - fit_I_interp) / exp_err
     
-    # Convert to binary sequence (+1 if residual > 0, -1 if residual < 0)
+    # Special case: perfect match (all residuals ~0)
+    if np.all(np.abs(residuals) < 1e-10):
+        # Perfect agreement - return p=1.0
+        return 1.0, 1, len(residuals)
+    
+    # Convert to binary sequence
     signs = np.sign(residuals)
     
-    # Remove any zero residuals
+    # Remove zeros
     signs = signs[signs != 0]
     
     n = len(signs)
     
-    if n < 2:
+    # Need at least 3 points for meaningful CorMap test
+    if n < 3:
         return None, None, n
     
-    # Count runs (changes in sign)
+    # Count runs
     sign_changes = np.diff(signs) != 0
     n_runs = np.sum(sign_changes) + 1
     
-    # Calculate the longest run (C statistic)
+    # Calculate longest run (C statistic)
     runs = []
     current_run = 1
     for i in range(1, n):
@@ -86,30 +80,52 @@ def cormap_test(exp_q, exp_I, exp_err, fit_q, fit_I):
     
     c_value = max(runs) if runs else 1
     
-    # Calculate p-value using the CorMap formula
-    # P(C >= c) = probability of longest run being >= c by chance
-    # Using the formula: P ≈ 2(n - c + 1) * (1/2)^c
-    
+    # Calculate p-value: P(C >= c) = 2(n - c + 1) * (1/2)^c
     p_value = 2.0 * (n - c_value + 1) * (0.5 ** c_value)
     
     # Ensure p-value is in [0, 1]
-    p_value = min(p_value, 1.0)
-    p_value = max(p_value, 0.0)
+    p_value = min(max(p_value, 0.0), 1.0)
     
     return p_value, c_value, n
 
+
 def cormap_pairwise(exp_q, exp_I, exp_err, fit_q, fit_I):
     """
-    Wrapper for CorMap test matching DATCMP output format
+    Wrapper for CorMap test with proper status handling
     
     Returns:
     --------
     dict with keys: p_value, c_value, n_points, status
     """
     try:
+        # Ensure arrays
+        exp_q = np.asarray(exp_q, dtype=float)
+        exp_I = np.asarray(exp_I, dtype=float)
+        exp_err = np.asarray(exp_err, dtype=float)
+        fit_q = np.asarray(fit_q, dtype=float)
+        fit_I = np.asarray(fit_I, dtype=float)
+        
+        # Check for empty arrays
+        if len(exp_q) == 0 or len(fit_q) == 0:
+            return {
+                'p_value': None,
+                'c_value': None,
+                'n_points': 0,
+                'status': 'insufficient_data'
+            }
+        
         # Find common q-range
         q_min = max(exp_q.min(), fit_q.min())
         q_max = min(exp_q.max(), fit_q.max())
+        
+        # Check for overlap
+        if q_min >= q_max:
+            return {
+                'p_value': None,
+                'c_value': None,
+                'n_points': 0,
+                'status': 'insufficient_data'
+            }
         
         # Filter to common range
         exp_mask = (exp_q >= q_min) & (exp_q <= q_max)
@@ -122,25 +138,37 @@ def cormap_pairwise(exp_q, exp_I, exp_err, fit_q, fit_I):
         fit_q_common = fit_q[fit_mask]
         fit_I_common = fit_I[fit_mask]
         
+        # Check if we have enough overlap
         if len(exp_q_common) < 3:
             return {
                 'p_value': None,
                 'c_value': None,
-                'n_points': 0,
-                'status': 'undefined'
+                'n_points': len(exp_q_common),
+                'status': 'insufficient_data'
             }
-
         
+        # Run CorMap test
         p_value, c_value, n_points = cormap_test(
             exp_q_common, exp_I_common, exp_err_common,
             fit_q_common, fit_I_common
         )
         
+        # Determine status
+        if p_value is None:
+            if n_points == 0:
+                status = 'insufficient_data'
+            elif n_points < 3:
+                status = 'insufficient_data'
+            else:
+                status = 'undefined'
+        else:
+            status = 'success'
+        
         return {
             'p_value': p_value,
             'c_value': c_value,
             'n_points': n_points,
-            'status': 'success' if p_value is not None else 'undefined'
+            'status': status
         }
         
     except Exception as e:
@@ -154,9 +182,6 @@ def cormap_pairwise(exp_q, exp_I, exp_err, fit_q, fit_I):
 
 if __name__ == "__main__":
     # Test with simple data
-    import matplotlib.pyplot as plt
-    
-    # Generate test data
     q = np.linspace(0.01, 0.3, 100)
     I_exp = 100 * np.exp(-q**2 / 0.01) + np.random.normal(0, 5, 100)
     I_fit = 100 * np.exp(-q**2 / 0.01)
