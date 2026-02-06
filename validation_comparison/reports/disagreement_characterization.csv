@@ -1,5 +1,6 @@
-category,count,percentage
-boundary_cases,0,0.0
-extreme_saturation,0,0.0
-interpolation_artifacts,0,0.0
-other,4,16.0
+category,count,percentage,description
+boundary_cases,0,0.0,Near decision thresholds
+extreme_saturation,0,0.0,Below machine precision
+interpolation_artifacts,0,0.0,Different grid sampling
+high_p_low_signal,3,12.0,Noise-dominated regime
+systematic_offset,1,4.0,Numerical tail differences
