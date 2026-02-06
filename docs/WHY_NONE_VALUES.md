@@ -13,7 +13,7 @@ The CorMap test **requires** certain conditions to produce a valid p-value:
 
 ## Test Case Breakdown
 
-### ✅ Test 1: `perfect_match`
+### Test 1: `perfect_match`
 ```
 Status: success
 p-value: 1.0
@@ -21,7 +21,7 @@ C-value: 1
 ```
 **Why it works**: Has valid data, can compute residuals (even though all ~0), returns p=1.0 (perfect agreement)
 
-### ✅ Test 2: `poor_match`
+### Test 2: `poor_match`
 ```
 Status: success
 p-value: 1.58e-30
@@ -29,7 +29,7 @@ C-value: 100
 ```
 **Why it works**: Has valid data, systematic deviation detected, very low p-value indicates poor fit
 
-### ✅ Test 3: `no_overlap` → Returns None ✓
+### Test 3: `no_overlap` → Returns None ✓
 ```
 Status: insufficient_data
 p-value: None
@@ -41,7 +41,7 @@ C-value: None
 - **No overlap!** Cannot compare non-overlapping curves
 - Mathematically undefined → None is the right answer
 
-### ✅ Test 4: `zero_errors` → Returns None ✓
+### Test 4: `zero_errors` → Returns None ✓
 ```
 Status: undefined
 p-value: None
@@ -53,7 +53,7 @@ C-value: None
 - Division by zero → Cannot compute CorMap
 - None is the mathematically correct answer
 
-### ✅ Test 5: `small_dataset` → Returns None ✓
+### Test 5: `small_dataset` → Returns None ✓
 ```
 Status: insufficient_data
 p-value: None
@@ -90,7 +90,7 @@ status = 'insufficient_data'  # Explains why
 
 ### 2. **Prevents Misinterpretation**
 If we returned `p=0.0` for `no_overlap`, users might think:
-- "The fit is terrible!" ❌
+- "The fit is terrible!" 
 
 With `p=None`, users correctly understand:
 - "Cannot evaluate - no overlapping data" ✓
@@ -182,4 +182,4 @@ else:
 - Invalid cases return None
 - Status correctly describes what happened
 
-This is **production-quality error handling**! 🎉
+This is **error handling**! 
