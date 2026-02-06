@@ -1,0 +1,20 @@
+{
+  "python_cormap": {
+    "mean_time_ms": 0.20126270028413273,
+    "std_time_ms": 0.2555368883428261,
+    "min_time_ms": 0.05120800051372498,
+    "max_time_ms": 0.9614919981686398,
+    "mean_memory_mb": 0.0125
+  },
+  "datcmp": {
+    "estimated_time_ms": 500,
+    "note": "Estimated from validation runs with Singularity container"
+  },
+  "speedup": 2484.315272000846,
+  "system": {
+    "os": "Linux 6.6.87.2-microsoft-standard-WSL2",
+    "python": "3.13.9",
+    "cpu_cores": 8,
+    "ram_gb": 7.631069183349609
+  }
+}

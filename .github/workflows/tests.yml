@@ -1,0 +1,32 @@
+name: Validation Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        pip install numpy scipy pandas matplotlib seaborn
+    
+    - name: Run regression tests
+      run: |
+        cd tests
+        python test_cormap_regression.py
+    
+    - name: Test example validation
+      run: |
+        python scripts/cormap_implementation.py
