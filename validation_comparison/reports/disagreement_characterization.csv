@@ -1,6 +1,3 @@
-category,count,percentage,description
-boundary_cases,0,0.0,Near decision thresholds
-extreme_saturation,0,0.0,Below machine precision
-interpolation_artifacts,0,0.0,Different grid sampling
-high_p_low_signal,3,12.0,Noise-dominated regime
-systematic_offset,1,4.0,Numerical tail differences
+category,count,percentage,description,metric_name,metric_mean,metric_std,metric_min,metric_max
+high_p_low_signal,3,12.0,Good-quality fits with low statistical power,p-value ratio (max/min),2.276895980528336,0.010200547133054908,2.2624702284291436,2.284108856577932
+systematic_offset,1,4.0,Consistent p-value difference across full curve,Absolute p-value difference,0.0694460625,0.0,0.0694460625,0.0694460625
