@@ -8,7 +8,8 @@ Output: exp_fit_pairs.json (metadata for all pairs)
 
 Extraction logic:
 - Uses FIT block directly (contains both exp and fit on same q-grid)
-- Filters only points where q > 0 (removes q=0 padding point)
+- Filters points where q > 0 only (removes q=0 point)
+- I_exp=0 points at boundaries are KEPT (consistent with cormapy behavior)
 - Matches experimental errors from scan block by nearest q-value
 """
 
@@ -33,7 +34,7 @@ def parse_sascif(sascif_file):
     with open(sascif_file, 'r') as f:
         lines = f.readlines()
 
-    # Extract experimental scan block (has 5 columns, last is scan_id)
+    # Extract experimental scan block
     # Format: point_id  q  I  sigma  scan_id
     exp_block = []
     for line in lines:
@@ -60,10 +61,10 @@ def parse_sascif(sascif_file):
         if len(parts) >= 5:
             try:
                 fit_id = int(parts[0])
-                q      = float(parts[2])
-                I_exp  = float(parts[3])
-                I_fit  = float(parts[4])
-                if fit_id > 100:  # fit IDs are typically large numbers
+                float(parts[2])  # q
+                float(parts[3])  # I_exp
+                float(parts[4])  # I_fit
+                if fit_id > 100:
                     fit_ids.add(fit_id)
             except:
                 pass
@@ -73,6 +74,7 @@ def parse_sascif(sascif_file):
     for fit_id in sorted(fit_ids):
         # Extract fit block
         # Format: fit_id  point_id  q  I_exp  I_fit
+        # Filter: q > 0 only (keeps I_exp=0 boundary points)
         fit_rows = []
         for line in lines:
             parts = line.split()
@@ -81,7 +83,6 @@ def parse_sascif(sascif_file):
                     q     = float(parts[2])
                     I_exp = float(parts[3])
                     I_fit = float(parts[4])
-                    # Filter: q > 0 only (removes q=0 padding)
                     if q > 0:
                         fit_rows.append([q, I_exp, I_fit])
                 except:
@@ -89,8 +90,6 @@ def parse_sascif(sascif_file):
 
         if len(fit_rows) < 3:
             continue
-
-        fit_array = np.array(fit_rows)
 
         # Match sigma from experimental block by nearest q-value
         matched_exp = []
@@ -132,11 +131,12 @@ def run_extraction():
     print("EXTRACTING EXP-FIT PAIRS FROM SASCIF FILES")
     print("="*80)
     print(f"Cache directory: {CACHE_DIR}")
+    print(f"Filter: q > 0 only (consistent with cormapy behavior)")
     print(f"Files found: {len(sascif_files)}")
 
-    pairs    = []
-    success  = 0
-    no_fits  = 0
+    pairs   = []
+    success = 0
+    no_fits = 0
 
     for sascif_file in sascif_files:
         sasbdb_code = sascif_file.stem
@@ -177,10 +177,10 @@ def run_extraction():
     print(f"\n{'='*80}")
     print("SUMMARY")
     print("="*80)
-    print(f"Files processed:    {len(sascif_files)}")
-    print(f"Pairs extracted:    {success}")
-    print(f"No fit data:        {no_fits}")
-    print(f"Metadata saved:     {OUTPUT_JSON}")
+    print(f"Files processed: {len(sascif_files)}")
+    print(f"Pairs extracted: {success}")
+    print(f"No fit data:     {no_fits}")
+    print(f"Metadata saved:  {OUTPUT_JSON}")
     print("="*80)
 
     return pairs
