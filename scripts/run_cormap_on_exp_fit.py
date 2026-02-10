@@ -1,127 +1,191 @@
 #!/usr/bin/env python3
+"""
+Run CorMap validation using freesas (cormapy)
+Replaces custom p-value implementation with freesas.cormap.gof
+"""
 
-import os
-import sys
-import pandas as pd
-from pathlib import Path
 import numpy as np
-import time
+import pandas as pd
 import json
+from pathlib import Path
+from freesas.cormap import gof
 
-# Import our CorMap implementation
-sys.path.insert(0, str(Path(__file__).parent))
-from cormap_implementation import cormap_pairwise
-
-def load_dat_file(filepath):
+def extract_exp_fit_from_sascif(sascif_file, fit_id):
     """
-    Load .dat file with q, I, error columns
+    Extract experimental and fitted data from .sascif file
+    Uses FIT block q-grid directly to avoid interpolation artifacts
     """
-    try:
-        data = np.loadtxt(filepath, comments='#')
-        
-        if data.shape[1] >= 3:
-            q = data[:, 0]
-            I = data[:, 1]
-            err = data[:, 2]
-        elif data.shape[1] == 2:
-            q = data[:, 0]
-            I = data[:, 1]
-            err = np.ones_like(I) * 0.01
-        else:
-            raise ValueError(f"Invalid data format in {filepath}")
-        
-        return q, I, err
-    except Exception as e:
-        raise Exception(f"Error loading {filepath}: {str(e)}")
+    with open(sascif_file, 'r') as f:
+        lines = f.readlines()
 
-if __name__ == "__main__":
-    # Load exp-fit pairs
-    pairs_file = "validation_comparison/extracted_data/exp_fit_pairs.json"
-    output_csv = "validation_comparison/cormapy_results/cormap_exp_fit_results.csv"
-    
+    # Extract fit block
+    fit_block = []
+    for line in lines:
+        parts = line.split()
+        if len(parts) >= 5 and parts[0] == str(fit_id):
+            try:
+                q     = float(parts[2])
+                I_exp = float(parts[3])
+                I_fit = float(parts[4])
+                fit_block.append([q, I_exp, I_fit])
+            except:
+                pass
+
+    if not fit_block:
+        return None, None
+
+    # Filter out padding points (I_exp = 0)
+    valid_rows = [[q, I_exp, I_fit]
+                  for q, I_exp, I_fit in fit_block
+                  if I_exp != 0.0]
+
+    if not valid_rows:
+        return None, None
+
+    valid_data = np.array(valid_rows)
+
+    # Get experimental errors from scan block
+    # Find scan_id associated with this entry
+    exp_block = []
+    for line in lines:
+        parts = line.split()
+        if len(parts) == 5 and parts[-1].isdigit():
+            try:
+                q     = float(parts[1])
+                I     = float(parts[2])
+                sigma = float(parts[3])
+                if sigma > 0:
+                    exp_block.append([q, I, sigma])
+            except:
+                pass
+
+    if not exp_block:
+        return None, None
+
+    exp_array = np.array(exp_block)
+
+    # Match q-values to get sigma
+    matched_exp = []
+    matched_fit = []
+
+    for row in valid_rows:
+        q_target = row[0]
+        I_exp    = row[1]
+        I_fit    = row[2]
+
+        idx   = np.argmin(np.abs(exp_array[:, 0] - q_target))
+        sigma = exp_array[idx, 2]
+
+        if sigma > 0:
+            matched_exp.append([q_target, I_exp, sigma])
+            matched_fit.append([q_target, I_fit, sigma])
+
+    if len(matched_exp) < 3:
+        return None, None
+
+    return np.array(matched_exp), np.array(matched_fit)
+
+
+def run_cormap_freesas(pairs_file, cache_dir, output_file):
+    """
+    Run freesas cormap on all exp-fit pairs
+    """
     with open(pairs_file, 'r') as f:
         pairs = json.load(f)
-    
+
     print("="*80)
-    print("CORMAP (Python) VALIDATION: Experimental vs Fitted Data")
+    print("RUNNING CORMAP USING FREESAS")
     print("="*80)
-    print(f"Found {len(pairs)} exp-fit pairs\n")
-    
+    print(f"Total pairs: {len(pairs)}")
+
     results = []
-    
+    success = 0
+    failed  = 0
+
     for i, pair in enumerate(pairs, 1):
-        print(f"\n{'='*80}")
-        print(f"[{i}/{len(pairs)}] {pair['sasbdb_code']} - {pair['fit_name']}")
-        print(f"{'='*80}")
-        print(f"Experimental: {Path(pair['exp_file']).name}")
-        print(f"Fitted: {Path(pair['fit_file']).name}")
-        print(f"Original p-value: {pair['original_p_value']}")
-        print(f"Original chi-square: {pair['original_chi_square']}")
-        
-        exp_file = Path(pair['exp_file'])
-        fit_file = Path(pair['fit_file'])
-        
+        sasbdb_code = pair['sasbdb_code']
+        fit_name    = pair['fit_name']
+        sascif_file = Path(cache_dir) / f"{sasbdb_code}.sascif"
+
+        # Extract fit_id from fit_name (e.g. SASDBD9_FIT_728 -> 728)
         try:
-            # Load data
-            exp_q, exp_I, exp_err = load_dat_file(exp_file)
-            fit_q, fit_I, fit_err = load_dat_file(fit_file)
-            
-            print(f"  Experimental: {len(exp_q)} points, q range: [{exp_q.min():.4f}, {exp_q.max():.4f}]")
-            print(f"  Fitted: {len(fit_q)} points, q range: [{fit_q.min():.4f}, {fit_q.max():.4f}]")
-            
-            start_time = time.time()
-            result = cormap_pairwise(exp_q, exp_I, exp_err, fit_q, fit_I)
-            elapsed = time.time() - start_time
-            
+            fit_id = int(fit_name.split('_FIT_')[1])
+        except:
             results.append({
-                'sasbdb_code': pair['sasbdb_code'],
-                'fit_name': pair['fit_name'],
-                'exp_file': exp_file.name,
-                'fit_file': fit_file.name,
-                'original_p_value': pair['original_p_value'],
-                'original_chi_square': pair['original_chi_square'],
-                'cormap_c_value': result['c_value'],
-                'cormap_p_value': result['p_value'],
-                'cormap_n_points': result['n_points'],
-                'status': result['status'],
-                'runtime_seconds': elapsed
-            })
-            
-            print(f"\nCorMap Results:")
-            print(f"  C-value (longest run): {result['c_value']}")
-            print(f"  P-value: {result['p_value']}")
-            print(f"  N points: {result['n_points']}")
-            print(f"  Status: {result['status']}")
-            print(f"  Runtime: {elapsed:.2f}s")
-            
-            if pair['original_p_value'] is not None and result['p_value'] is not None:
-                diff = abs(result['p_value'] - pair['original_p_value'])
-                rel_diff = (diff / pair['original_p_value']) * 100 if pair['original_p_value'] != 0 else 0
-                print(f"  Difference from original: {diff:.6f} ({rel_diff:.2f}%)")
-        
-        except Exception as e:
-            print(f"  ERROR: {e}")
-            results.append({
-                'sasbdb_code': pair['sasbdb_code'],
-                'fit_name': pair['fit_name'],
-                'exp_file': exp_file.name,
-                'fit_file': fit_file.name,
-                'original_p_value': pair['original_p_value'],
-                'original_chi_square': pair['original_chi_square'],
-                'cormap_c_value': None,
+                'sasbdb_code': sasbdb_code,
+                'fit_name': fit_name,
                 'cormap_p_value': None,
-                'cormap_n_points': 0,
-                'status': f'error: {str(e)}',
-                'runtime_seconds': 0
+                'cormap_c_value': None,
+                'n_points': 0,
+                'status': 'parse_error'
             })
-    
+            failed += 1
+            continue
+
+        print(f"[{i}/{len(pairs)}] {sasbdb_code} FIT_{fit_id}...", end='', flush=True)
+
+        # Extract data
+        exp_data, fit_data = extract_exp_fit_from_sascif(sascif_file, fit_id)
+
+        if exp_data is None or fit_data is None:
+            print(" insufficient_data")
+            results.append({
+                'sasbdb_code': sasbdb_code,
+                'fit_name': fit_name,
+                'cormap_p_value': None,
+                'cormap_c_value': None,
+                'n_points': 0,
+                'status': 'insufficient_data'
+            })
+            failed += 1
+            continue
+
+        # Run freesas cormap
+        try:
+            result = gof(exp_data, fit_data)
+
+            print(f" C={result.c}, p={result.P:.6f}")
+            results.append({
+                'sasbdb_code': sasbdb_code,
+                'fit_name': fit_name,
+                'cormap_p_value': result.P,
+                'cormap_c_value': result.c,
+                'n_points': result.n,
+                'status': 'success'
+            })
+            success += 1
+
+        except Exception as e:
+            print(f" error: {str(e)[:40]}")
+            results.append({
+                'sasbdb_code': sasbdb_code,
+                'fit_name': fit_name,
+                'cormap_p_value': None,
+                'cormap_c_value': None,
+                'n_points': 0,
+                'status': f'error'
+            })
+            failed += 1
+
+    # Save results
     df = pd.DataFrame(results)
-    os.makedirs(Path(output_csv).parent, exist_ok=True)
-    df.to_csv(output_csv, index=False)
-    
+    df.to_csv(output_file, index=False)
+
     print(f"\n{'='*80}")
-    print(f"CORMAP VALIDATION COMPLETE")
-    print(f"{'='*80}")
-    print(f"Results saved to: {output_csv}")
-    print(f"\nResults Preview:")
-    print(df.to_string())
+    print("SUMMARY")
+    print("="*80)
+    print(f"Total pairs:     {len(pairs)}")
+    print(f"Successful:      {success}")
+    print(f"Failed:          {failed}")
+    print(f"Results saved:   {output_file}")
+    print("="*80)
+
+    return df
+
+
+if __name__ == "__main__":
+    pairs_file  = "validation_comparison/extracted_data/exp_fit_pairs.json"
+    cache_dir   = "/root/projects/IHMValidation-Analysis/Validation/cache"
+    output_file = "validation_comparison/reports/cormap_freesas_results.csv"
+
+    run_cormap_freesas(pairs_file, cache_dir, output_file)
