@@ -1,211 +1,190 @@
 #!/usr/bin/env python3
+"""
+Extract experimental and fitted SAS profiles from SASBDB .sascif files
 
-import os
-import sys
+Pipeline Step 1 of 4
+Input:  .sascif files in cache directory
+Output: exp_fit_pairs.json (metadata for all pairs)
+
+Extraction logic:
+- Uses FIT block directly (contains both exp and fit on same q-grid)
+- Filters only points where q > 0 (removes q=0 padding point)
+- Matches experimental errors from scan block by nearest q-value
+"""
+
+import numpy as np
+import json
 from pathlib import Path
-import re
 
-def extract_sas_data_from_sascif(sascif_path, output_dir):
+CACHE_DIR   = "/root/projects/IHMValidation-Analysis/Validation/cache"
+OUTPUT_DIR  = "validation_comparison/extracted_data"
+OUTPUT_JSON = f"{OUTPUT_DIR}/exp_fit_pairs.json"
+
+def parse_sascif(sascif_file):
     """
-    Extract experimental and fitted SAS data from .sascif file
-    Returns paths to experimental and fitted .dat files
+    Parse a .sascif file and return all fit blocks found.
+
+    Returns list of dicts:
+        fit_id    : int
+        exp_data  : np.array (q, I_exp, sigma)
+        fit_data  : np.array (q, I_fit, sigma)
+        n_points  : int
     """
-    print(f"\n{'='*80}")
-    print(f"Processing: {sascif_path}")
-    print(f"{'='*80}")
-    
-    with open(sascif_path, 'r') as f:
-        content = f.read()
-    
-    basename = Path(sascif_path).stem
-    
-    # Extract experimental data from _sas_scan_intensity
-    exp_data = []
-    in_exp_section = False
-    
-    lines = content.split('\n')
-    for i, line in enumerate(lines):
-        if '_sas_scan_intensity.scan_id' in line:
-            in_exp_section = True
-            continue
-        
-        if in_exp_section:
-            stripped = line.strip()
-            
-            if not stripped or stripped.startswith('#'):
-                continue
-            
-            if stripped.startswith('_') or stripped.startswith('loop_') or stripped.startswith('data_'):
-                break
-            
-            parts = stripped.split()
-            if len(parts) >= 5:
-                try:
-                    q = float(parts[1])
-                    intensity = float(parts[2])
-                    error = float(parts[3])
-                    exp_data.append(f"{q:15.8e} {intensity:15.8e} {error:15.8e}")
-                except (ValueError, IndexError):
-                    continue
-    
-    # Extract fitted data and p-value from _sas_model_fitting
-    fit_blocks = {}
-    current_fit_id = None
-    
-    for i, line in enumerate(lines):
-        # Find fit blocks
-        if line.startswith('data_') and '_FIT_' in line:
-            current_fit_id = line.strip().replace('data_', '')
-            fit_blocks[current_fit_id] = {
-                'p_value': None,
-                'chi_square': None,
-                'data': []
-            }
-        
-        # Extract p-value and chi-square
-        if current_fit_id and '_sas_model_fitting_details.p_value' in line:
+    with open(sascif_file, 'r') as f:
+        lines = f.readlines()
+
+    # Extract experimental scan block (has 5 columns, last is scan_id)
+    # Format: point_id  q  I  sigma  scan_id
+    exp_block = []
+    for line in lines:
+        parts = line.split()
+        if len(parts) == 5 and parts[-1].isdigit():
+            try:
+                q     = float(parts[1])
+                I     = float(parts[2])
+                sigma = float(parts[3])
+                if q > 0 and sigma > 0:
+                    exp_block.append([q, I, sigma])
+            except:
+                pass
+
+    if not exp_block:
+        return []
+
+    exp_array = np.array(exp_block)
+
+    # Find all fit IDs in the file
+    fit_ids = set()
+    for line in lines:
+        parts = line.split()
+        if len(parts) >= 5:
+            try:
+                fit_id = int(parts[0])
+                q      = float(parts[2])
+                I_exp  = float(parts[3])
+                I_fit  = float(parts[4])
+                if fit_id > 100:  # fit IDs are typically large numbers
+                    fit_ids.add(fit_id)
+            except:
+                pass
+
+    results = []
+
+    for fit_id in sorted(fit_ids):
+        # Extract fit block
+        # Format: fit_id  point_id  q  I_exp  I_fit
+        fit_rows = []
+        for line in lines:
             parts = line.split()
-            if len(parts) >= 2:
+            if len(parts) >= 5 and parts[0] == str(fit_id):
                 try:
-                    p_val = float(parts[1]) if parts[1] != '.' else None
-                    fit_blocks[current_fit_id]['p_value'] = p_val
-                except ValueError:
+                    q     = float(parts[2])
+                    I_exp = float(parts[3])
+                    I_fit = float(parts[4])
+                    # Filter: q > 0 only (removes q=0 padding)
+                    if q > 0:
+                        fit_rows.append([q, I_exp, I_fit])
+                except:
                     pass
-        
-        if current_fit_id and '_sas_model_fitting_details.chi_square' in line:
-            parts = line.split()
-            if len(parts) >= 2:
-                try:
-                    chi_sq = float(parts[1]) if parts[1] != '.' else None
-                    fit_blocks[current_fit_id]['chi_square'] = chi_sq
-                except ValueError:
-                    pass
-    
-    # Extract fitted intensity data
-    in_fit_section = False
-    current_fit_data_id = None
-    
-    for i, line in enumerate(lines):
-        if '_sas_model_fitting.fit' in line:
-            in_fit_section = True
+
+        if len(fit_rows) < 3:
             continue
-        
-        if in_fit_section:
-            stripped = line.strip()
-            
-            if not stripped or stripped.startswith('#'):
-                continue
-            
-            if stripped.startswith('_') or stripped.startswith('loop_') or stripped.startswith('data_'):
-                in_fit_section = False
-                current_fit_data_id = None
-                continue
-            
-            parts = stripped.split()
-            if len(parts) >= 4:
-                try:
-                    fit_id = int(parts[0])
-                    q = float(parts[2])
-                    i_exp = float(parts[3])
-                    i_fit = float(parts[4])
-                    
-                    # Find which fit block this belongs to
-                    for fit_name, fit_info in fit_blocks.items():
-                        if str(fit_id) in fit_name:
-                            # Use fitted intensity with same error as experimental
-                            # (or estimate error as 1% of fitted intensity)
-                            error = i_fit * 0.01
-                            fit_info['data'].append(f"{q:15.8e} {i_fit:15.8e} {error:15.8e}")
-                            break
-                except (ValueError, IndexError):
-                    continue
-    
-    # Save experimental data
-    exp_file = Path(output_dir) / f"{basename}_exp.dat"
-    if exp_data:
-        with open(exp_file, 'w') as f:
-            f.write("# q I(q) error - Experimental data\n")
-            f.write('\n'.join(exp_data))
-        print(f"✓ Experimental data: {len(exp_data)} points → {exp_file.name}")
-    else:
-        print(f"✗ No experimental data found")
-        exp_file = None
-    
-    # Save fitted data (use first fit with valid data)
-    fit_files = []
-    for fit_name, fit_info in fit_blocks.items():
-        if fit_info['data']:
-            fit_file = Path(output_dir) / f"{basename}_fit_{fit_name.split('_')[-1]}.dat"
-            with open(fit_file, 'w') as f:
-                f.write(f"# q I(q) error - Fitted data from {fit_name}\n")
-                f.write(f"# Original p-value: {fit_info['p_value']}\n")
-                f.write(f"# Original chi-square: {fit_info['chi_square']}\n")
-                f.write('\n'.join(fit_info['data']))
-            
-            fit_files.append({
-                'file': fit_file,
-                'fit_name': fit_name,
-                'p_value': fit_info['p_value'],
-                'chi_square': fit_info['chi_square'],
-                'n_points': len(fit_info['data'])
+
+        fit_array = np.array(fit_rows)
+
+        # Match sigma from experimental block by nearest q-value
+        matched_exp = []
+        matched_fit = []
+
+        for row in fit_rows:
+            q_target = row[0]
+            I_exp    = row[1]
+            I_fit    = row[2]
+
+            idx   = np.argmin(np.abs(exp_array[:, 0] - q_target))
+            sigma = exp_array[idx, 2]
+
+            if sigma > 0:
+                matched_exp.append([q_target, I_exp,  sigma])
+                matched_fit.append([q_target, I_fit, sigma])
+
+        if len(matched_exp) < 3:
+            continue
+
+        results.append({
+            'fit_id':   fit_id,
+            'exp_data': np.array(matched_exp),
+            'fit_data': np.array(matched_fit),
+            'n_points': len(matched_exp)
+        })
+
+    return results
+
+
+def run_extraction():
+    """Extract all exp-fit pairs from cache directory"""
+
+    Path(OUTPUT_DIR).mkdir(parents=True, exist_ok=True)
+
+    sascif_files = sorted(Path(CACHE_DIR).glob("*.sascif"))
+
+    print("="*80)
+    print("EXTRACTING EXP-FIT PAIRS FROM SASCIF FILES")
+    print("="*80)
+    print(f"Cache directory: {CACHE_DIR}")
+    print(f"Files found: {len(sascif_files)}")
+
+    pairs    = []
+    success  = 0
+    no_fits  = 0
+
+    for sascif_file in sascif_files:
+        sasbdb_code = sascif_file.stem
+        fits = parse_sascif(sascif_file)
+
+        if not fits:
+            no_fits += 1
+            continue
+
+        for fit in fits:
+            fit_name = f"{sasbdb_code}_FIT_{fit['fit_id']}"
+
+            # Save data files
+            exp_file = f"{OUTPUT_DIR}/{fit_name}_exp.dat"
+            fit_file = f"{OUTPUT_DIR}/{fit_name}_fit.dat"
+
+            np.savetxt(exp_file, fit['exp_data'], fmt='%.6e',
+                       header='q I sigma')
+            np.savetxt(fit_file, fit['fit_data'], fmt='%.6e',
+                       header='q I_fit sigma')
+
+            pairs.append({
+                'sasbdb_code': sasbdb_code,
+                'fit_name':    fit_name,
+                'fit_id':      fit['fit_id'],
+                'n_points':    fit['n_points'],
+                'exp_file':    exp_file,
+                'fit_file':    fit_file
             })
-            print(f"✓ Fitted data {fit_name}: {len(fit_info['data'])} points → {fit_file.name}")
-            print(f"  Original p-value: {fit_info['p_value']}")
-            print(f"  Original chi-square: {fit_info['chi_square']}")
-    
-    if not fit_files:
-        print(f"✗ No fitted data found")
-    
-    return exp_file, fit_files
+            success += 1
+
+        print(f"  {sasbdb_code}: {len(fits)} fit(s) extracted")
+
+    # Save metadata
+    with open(OUTPUT_JSON, 'w') as f:
+        json.dump(pairs, f, indent=2)
+
+    print(f"\n{'='*80}")
+    print("SUMMARY")
+    print("="*80)
+    print(f"Files processed:    {len(sascif_files)}")
+    print(f"Pairs extracted:    {success}")
+    print(f"No fit data:        {no_fits}")
+    print(f"Metadata saved:     {OUTPUT_JSON}")
+    print("="*80)
+
+    return pairs
+
 
 if __name__ == "__main__":
-    input_dir = "/root/projects/IHMValidation-Analysis/Validation/cache"
-    output_dir = "validation_comparison/extracted_data"
-    
-    os.makedirs(output_dir, exist_ok=True)
-    
-    sascif_files = sorted(Path(input_dir).glob("SASD*.sascif"))
-    
-    print("="*80)
-    print(f"SAS DATA EXTRACTION (Experimental + Fitted)")
-    print("="*80)
-    print(f"Input directory: {input_dir}")
-    print(f"Output directory: {output_dir}")
-    print(f"Found {len(sascif_files)} .sascif files")
-    
-    all_pairs = []
-    
-    for sascif_file in sascif_files:
-        exp_file, fit_files = extract_sas_data_from_sascif(sascif_file, output_dir)
-        
-        if exp_file and fit_files:
-            for fit_info in fit_files:
-                all_pairs.append({
-                    'sasbdb_code': sascif_file.stem,
-                    'exp_file': exp_file,
-                    'fit_file': fit_info['file'],
-                    'fit_name': fit_info['fit_name'],
-                    'original_p_value': fit_info['p_value'],
-                    'original_chi_square': fit_info['chi_square']
-                })
-    
-    print(f"\n{'='*80}")
-    print(f"Extraction Summary:")
-    print(f"  Total SASBDB entries: {len(sascif_files)}")
-    print(f"  Total exp-fit pairs: {len(all_pairs)}")
-    print(f"{'='*80}")
-    
-    # Save pairs info
-    import json
-    pairs_file = Path(output_dir) / "exp_fit_pairs.json"
-    with open(pairs_file, 'w') as f:
-        json.dump([{
-            'sasbdb_code': p['sasbdb_code'],
-            'exp_file': str(p['exp_file']),
-            'fit_file': str(p['fit_file']),
-            'fit_name': p['fit_name'],
-            'original_p_value': p['original_p_value'],
-            'original_chi_square': p['original_chi_square']
-        } for p in all_pairs], f, indent=2)
-    
-    print(f"\nPairs info saved to: {pairs_file}")
+    run_extraction()

@@ -12,9 +12,9 @@ NOTE: Custom p-value implementation replaced with freesas (cormapy)
 ================================================================================
 DATASET
 ================================================================================
-Total pairs tested:          56
+Total pairs tested:          43
 Both methods succeeded:      25
-Insufficient data:           13
+Insufficient data:           0
 
 ================================================================================
 AGREEMENT RESULTS
