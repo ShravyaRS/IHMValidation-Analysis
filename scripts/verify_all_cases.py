@@ -4,7 +4,7 @@ Verify all cases by running cormapy on extracted data.
 Compares FreeSAS cormap results against DATCMP for all available cases.
 
 Extraction filter: q > 0 only (consistent with cormapy behavior)
-Note: I_exp=0 boundary points are kept, same as professor's manual extraction.
+Note: I_exp=0 boundary points are kept, manual extraction.
 """
 
 import numpy as np
@@ -17,7 +17,7 @@ CACHE_DIR = "/root/projects/IHMValidation-Analysis/Validation/cache"
 def extract_ab(sascif_file, fit_id):
     """
     Extract a.dat (experimental) and b.dat (fitted) from sascif file.
-    Filter: q > 0 only (consistent with cormapy/professor extraction)
+    Filter: q > 0 only (consistent with cormapy/extraction)
     """
     with open(sascif_file) as f:
         lines = f.readlines()
