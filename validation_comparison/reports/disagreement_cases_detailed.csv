@@ -1,5 +1,0 @@
-category,sasbdb_code,fit_name,datcmp_p_value,cormap_p_value,p_diff,metric_value,metric_name
-high_p_low_signal,SASDBB8,SASDBB8_FIT_592,0.248832,0.568359375,0.319527375,2.284108856577932,p-value ratio (max/min)
-high_p_low_signal,SASDBC8,SASDBC8_FIT_692,0.248832,0.568359375,0.319527375,2.284108856577932,p-value ratio (max/min)
-high_p_low_signal,SASDBD9,SASDBD9_FIT_728,0.230925,0.5224609375,0.2915359375,2.2624702284291436,p-value ratio (max/min)
-systematic_offset,SASDBH9,SASDBH9_FIT_734,0.064343,0.1337890625,0.0694460625,0.0694460625,Absolute p-value difference

@@ -70,7 +70,7 @@ def run_datcmp(exp_file, fit_file, singularity_container):
 if __name__ == "__main__":
     # Load exp-fit pairs
     pairs_file = "validation_comparison/extracted_data/exp_fit_pairs.json"
-    container = "ihmvalidation_complete.sif"
+    container = "/root/projects/IHMValidation-Analysis/IHMValidation_backup/ihmvalidation_complete.sif"
     output_csv = "validation_comparison/datcmp_results/datcmp_exp_fit_results.csv"
     
     with open(pairs_file, 'r') as f:

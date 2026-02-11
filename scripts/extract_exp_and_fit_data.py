@@ -64,7 +64,7 @@ def parse_sascif(sascif_file):
                 float(parts[2])  # q
                 float(parts[3])  # I_exp
                 float(parts[4])  # I_fit
-                if fit_id > 100:
+                if fit_id > 50:  # some entries have IDs like 101-105
                     fit_ids.add(fit_id)
             except:
                 pass

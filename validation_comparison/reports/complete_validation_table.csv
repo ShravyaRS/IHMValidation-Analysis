@@ -1,0 +1,28 @@
+sasbdb_code,fit_id,n_points,freesas_c,freesas_p,datcmp_c,datcmp_p,diff,status,note
+SASDBV9,508.0,100.0,97.0,0.0,,,,no_datcmp,
+SASDBV9,719.0,380.0,14.0,0.022228,,,,no_datcmp,
+SASDBV9,754.0,379.0,16.0,0.005555,,,,no_datcmp,
+SASDBW9,509.0,100.0,99.0,0.0,,,,no_datcmp,
+SASDBW9,753.0,377.0,25.0,1.1e-05,,,,no_datcmp,
+SASDBY9,511.0,100.0,99.0,0.0,,,,no_datcmp,
+SASDBY9,752.0,386.0,27.0,3e-06,,,,no_datcmp,
+SASDBZ9,512.0,100.0,99.0,0.0,,,,no_datcmp,
+SASDBZ9,751.0,283.0,31.0,0.0,,,,no_datcmp,
+SASDC29,737.0,213.0,209.0,0.0,209.0,0.0,0.0,PASS,
+SASDC29,1152.0,564.0,0.0,1.0,564.0,0.0,,self_comparison_skip,I_exp==I_fit: self-comparison in sascif. FreeSAS p=1.0 (correct). DATCMP p=0.0 (bug).
+SASDCG7,687.0,228.0,221.0,0.0,219.0,0.0,0.0,PASS,
+SASDDD6,908.0,162.0,160.0,0.0,159.0,0.0,0.0,PASS,
+SASDDD6,1424.0,413.0,41.0,0.0,41.0,0.0,0.0,PASS,
+SASDG85,1639.0,140.0,139.0,0.0,140.0,0.0,0.0,PASS,
+SASDH44,,,,,,,,not_available_404,HTTP 404 on SASBDB
+SASDH54,,,,,,,,not_available_404,HTTP 404 on SASBDB
+SASDKU3,,,,,,,,not_available_404,HTTP 404 on SASBDB
+SASDKV3,,,,,,,,not_available_404,HTTP 404 on SASBDB
+SASDKW3,,,,,,,,not_available_404,HTTP 404 on SASBDB
+SASDKY3,,,,,,,,not_available_404,HTTP 404 on SASBDB
+SASDP23,,,,,,,,not_available_404,HTTP 404 on SASBDB
+SASDP24,,,,,,,,not_available_404,HTTP 404 on SASBDB
+SASDPY2,,,,,,,,not_available_404,HTTP 404 on SASBDB
+SASDT35,,,,,,,,not_available_404,HTTP 404 on SASBDB
+SASDT45,,,,,,,,not_available_404,HTTP 404 on SASBDB
+SASDXG3,,,,,,,,not_available_404,HTTP 404 on SASBDB
