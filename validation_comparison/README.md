@@ -1,5 +1,3 @@
-
-# Create a comprehensive README for the validation_comparison folder
 cat > validation_comparison/README.md << 'EOF'
 # DATCMP vs Python CorMap Validation (GitHub Issue #118)
 
