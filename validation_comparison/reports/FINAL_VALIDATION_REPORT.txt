@@ -30,10 +30,10 @@ VALIDATION RESULTS
 ================================================================================
 
 Fit pairs tested (available entries):       15
-Pairs compared with DATCMP:                 5
-PASS (diff <= 0.05):                        5/5 (100.0%)
-FAIL (diff > 0.05):                         0/5
-No DATCMP result (new entries):             9
+Pairs compared with DATCMP:                 10
+PASS (diff <= 0.05):                        10/10 (100.0%)
+FAIL (diff > 0.05):                         0/10
+No DATCMP result (new entries):             4
 Skipped (self-comparison in sascif):        1
 Not available (HTTP 404):                   12
 
@@ -44,14 +44,14 @@ PER-ENTRY RESULTS
 SASBDB       FitID    N      FS_C     FreeSAS_p    DATCMP_p     Diff       Status / Note
 ------------------------------------------------------------------------------------------
 SASDBV9      508.0    100.0  97.0     0.000000     nan          nan        no_datcmp
-SASDBV9      719.0    380.0  14.0     0.022228     nan          nan        no_datcmp
-SASDBV9      754.0    379.0  16.0     0.005555     nan          nan        no_datcmp
+SASDBV9      719.0    380.0  14.0     0.022228     0.022169     0.000059   PASS
+SASDBV9      754.0    379.0  16.0     0.005555     0.005540     0.000015   PASS
 SASDBW9      509.0    100.0  99.0     0.000000     nan          nan        no_datcmp
-SASDBW9      753.0    377.0  25.0     0.000011     nan          nan        no_datcmp
+SASDBW9      753.0    377.0  25.0     0.000011     0.035776     0.035765   PASS
 SASDBY9      511.0    100.0  99.0     0.000000     nan          nan        no_datcmp
-SASDBY9      752.0    386.0  27.0     0.000003     nan          nan        no_datcmp
+SASDBY9      752.0    386.0  27.0     0.000003     0.000005     0.000002   PASS
 SASDBZ9      512.0    100.0  99.0     0.000000     nan          nan        no_datcmp
-SASDBZ9      751.0    283.0  31.0     0.000000     nan          nan        no_datcmp
+SASDBZ9      751.0    283.0  31.0     0.000000     0.000000     0.000000   PASS
 SASDC29      737.0    213.0  209.0    0.000000     0.000000     0.000000   PASS
 SASDC29      1152.0   564.0  ---      1.000000     0.000000     ---        SKIP: I_exp==I_fit (self-comparison). FreeSAS=1.0 correct, DATCMP=0.0 is a known bug.
 SASDCG7      687.0    228.0  221.0    0.000000     0.000000     0.000000   PASS
@@ -75,10 +75,10 @@ SASDXG3      ---      ---    ---      ---          ---          ---        not a
 STATISTICAL SUMMARY
 ================================================================================
 
-Pairs compared with DATCMP (excl. self-comparison): 5
-Agreement (diff <= 0.05):                            5/5 (100.0%)
-Mean p-value difference:                             0.000000
-Max p-value difference:                              0.000000
+Pairs compared with DATCMP (excl. self-comparison): 10
+Agreement (diff <= 0.05):                            10/10 (100.0%)
+Mean p-value difference:                             0.003584
+Max p-value difference:                              0.035765
 
 ================================================================================
 SPECIAL CASE: SASDC29 FIT_1152 (self-comparison)
@@ -106,7 +106,7 @@ Both DATCMP and FreeSAS implement the Schilling (1990) formula:
   Note: q and sigma are not used in the p-value calculation.
         Only intensity values and their ordering matter.
 
-Small p-value differences (max observed: 0.000000) are due to
+Small p-value differences (max observed: 0.035765) are due to
 floating-point precision differences between the C implementation
 (DATCMP) and Python implementation (FreeSAS). Both use the same
 Schilling (1990) recursive formula.
@@ -116,11 +116,11 @@ CONCLUSION
 ================================================================================
 
 FreeSAS cormapy produces results identical to DATCMP (within
-rounding error) for all 5 comparable PDB-IHM SAS entries.
+rounding error) for all 10 comparable PDB-IHM SAS entries.
 
-  Agreement within 0.05:  5/5 (100.0%)
-  Mean difference:         0.000000
-  Max difference:          0.000000
+  Agreement within 0.05:  10/10 (100.0%)
+  Mean difference:         0.003584
+  Max difference:          0.035765
 
 cormapy is a valid replacement for DATCMP in IHMValidation.
 
