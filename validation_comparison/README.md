@@ -1,4 +1,3 @@
-cat > validation_comparison/README.md << 'EOF'
 # DATCMP vs Python CorMap Validation (GitHub Issue #118)
 
 ## Executive Summary
