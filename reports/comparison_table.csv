@@ -1,6 +1,0 @@
-file_id,datcmp_c_value,datcmp_p_value,datcmp_adj_p_value,cormapy_correlation,cormapy_p_value,cormapy_chi_squared,p_value_diff,p_value_rel_diff
-SASDBV9,380.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
-SASDBW9,310.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
-SASDBX9,212.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
-SASDBY9,386.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0
-SASDBZ9,280.0,0.0,0.0,0.9999999999999998,0.0,0.0,0.0,0.0

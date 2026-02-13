@@ -18,3 +18,5 @@ build.log
 # Exclude large data files
 validation_comparison/extracted_data/*.dat
 validation_comparison/extracted_data/exp_fit_pairs.json
+__pycache__/
+*.pyc
