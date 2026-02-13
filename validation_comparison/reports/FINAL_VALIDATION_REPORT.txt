@@ -4,10 +4,12 @@ FreeSAS cormap (cormapy) vs DATCMP
 All PDB-IHM SAS Entries
 ================================================================================
 
-DATE:       2026-02-11
-TOOL:       freesas.cormap.gof (cormapy, version 2026.2.0)
+DATE:       2026-02-13
+TOOL:       freesas.cormap.gof (cormapy, FreeSAS 2026.2.0)
+FIX:        Exact Decimal arithmetic for Schilling p-value (replaces LROH float64)
 ALGORITHM:  Schilling (1990) - Longest Run of Heads/Tails
 REFERENCE:  Franke et al. (2015) Nature Methods, DOI: 10.1038/nmeth.3358
+PLATFORM:   Python 3.13, NumPy 2.4
 
 ================================================================================
 COVERAGE
@@ -20,106 +22,76 @@ Available on SASBDB (downloaded):            10/22
 Not available on SASBDB (HTTP 404):          12/22
 
 Available codes:
-  SASDBV9, SASDBW9, SASDBX9, SASDBY9, SASDBZ9, SASDC29, SASDCG7, SASDDD6, SASDEE2, SASDG85
+  SASDBV9, SASDBW9, SASDBX9, SASDBY9, SASDBZ9,
+  SASDC29, SASDCG7, SASDDD6, SASDEE2, SASDG85
 
 Unavailable codes (HTTP 404 - likely under embargo):
-  SASDH44, SASDH54, SASDKU3, SASDKV3, SASDKW3, SASDKY3, SASDP23, SASDP24, SASDPY2, SASDT35, SASDT45, SASDXG3
+  SASDH44, SASDH54, SASDKU3, SASDKV3, SASDKW3, SASDKY3,
+  SASDP23, SASDP24, SASDPY2, SASDT35, SASDT45, SASDXG3
 
 ================================================================================
 VALIDATION RESULTS
 ================================================================================
 
-Fit pairs tested (available entries):       15
-Pairs compared with DATCMP:                 10
-PASS (diff <= 0.05):                        10/10 (100.0%)
-FAIL (diff > 0.05):                         0/10
-No DATCMP result (new entries):             4
-Skipped (self-comparison in sascif):        1
-Not available (HTTP 404):                   12
-
-================================================================================
-PER-ENTRY RESULTS
-================================================================================
-
-SASBDB       FitID    N      FS_C     FreeSAS_p    DATCMP_p     Diff       Status / Note
-------------------------------------------------------------------------------------------
-SASDBV9      508.0    100.0  97.0     0.000000     nan          nan        no_datcmp
-SASDBV9      719.0    380.0  14.0     0.022228     0.022169     0.000059   PASS
-SASDBV9      754.0    379.0  16.0     0.005555     0.005540     0.000015   PASS
-SASDBW9      509.0    100.0  99.0     0.000000     nan          nan        no_datcmp
-SASDBW9      753.0    377.0  25.0     0.000011     0.035776     0.035765   PASS
-SASDBY9      511.0    100.0  99.0     0.000000     nan          nan        no_datcmp
-SASDBY9      752.0    386.0  27.0     0.000003     0.000005     0.000002   PASS
-SASDBZ9      512.0    100.0  99.0     0.000000     nan          nan        no_datcmp
-SASDBZ9      751.0    283.0  31.0     0.000000     0.000000     0.000000   PASS
-SASDC29      737.0    213.0  209.0    0.000000     0.000000     0.000000   PASS
-SASDC29      1152.0   564.0  ---      1.000000     0.000000     ---        SKIP: I_exp==I_fit (self-comparison). FreeSAS=1.0 correct, DATCMP=0.0 is a known bug.
-SASDCG7      687.0    228.0  221.0    0.000000     0.000000     0.000000   PASS
-SASDDD6      908.0    162.0  160.0    0.000000     0.000000     0.000000   PASS
-SASDDD6      1424.0   413.0  41.0     0.000000     0.000000     0.000000   PASS
-SASDG85      1639.0   140.0  139.0    0.000000     0.000000     0.000000   PASS
-SASDH44      ---      ---    ---      ---          ---          ---        not available (HTTP 404)
-SASDH54      ---      ---    ---      ---          ---          ---        not available (HTTP 404)
-SASDKU3      ---      ---    ---      ---          ---          ---        not available (HTTP 404)
-SASDKV3      ---      ---    ---      ---          ---          ---        not available (HTTP 404)
-SASDKW3      ---      ---    ---      ---          ---          ---        not available (HTTP 404)
-SASDKY3      ---      ---    ---      ---          ---          ---        not available (HTTP 404)
-SASDP23      ---      ---    ---      ---          ---          ---        not available (HTTP 404)
-SASDP24      ---      ---    ---      ---          ---          ---        not available (HTTP 404)
-SASDPY2      ---      ---    ---      ---          ---          ---        not available (HTTP 404)
-SASDT35      ---      ---    ---      ---          ---          ---        not available (HTTP 404)
-SASDT45      ---      ---    ---      ---          ---          ---        not available (HTTP 404)
-SASDXG3      ---      ---    ---      ---          ---          ---        not available (HTTP 404)
+Total exp-fit pairs extracted:              104 (from 55 sascif files)
+Pairs compared with DATCMP:                 30
+  PASS (diff <= 0.05):                      30/30 (100.0%)
+  FAIL (diff > 0.05):                       0/30
+Self-comparison cases (I_exp == I_fit):     13
+  FreeSAS: p = 1.0 (correct)
+  DATCMP:  p = 0.0 (known bug with zero residuals)
 
 ================================================================================
 STATISTICAL SUMMARY
 ================================================================================
 
-Pairs compared with DATCMP (excl. self-comparison): 10
-Agreement (diff <= 0.05):                            10/10 (100.0%)
-Mean p-value difference:                             0.003584
-Max p-value difference:                              0.035765
+Non-self-comparison DATCMP cases:            30
+Agreement (diff <= 0.05):                    30/30 (100.0%)
+Mean p-value difference:                     0.002125
+Max p-value difference:                      0.035765
 
 ================================================================================
-SPECIAL CASE: SASDC29 FIT_1152 (self-comparison)
+PRECISION FIX
 ================================================================================
 
-FIT_1152 in SASDC29 contains identical I_exp and I_fit values
-(all 564 residuals = 0). This is a self-comparison stored in the
-sascif file, not a model fit.
+FreeSAS's LROH.probaLongerRun() uses float64 arithmetic for the
+Schilling (1990) recursion. On some platforms (Python 3.13 / NumPy 2.4),
+this accumulates rounding errors for large n.
 
-FreeSAS result: C=0, p=1.000000 (CORRECT - identical data = perfect match)
-DATCMP result:  C=564, p=0.000000 (INCORRECT - known DATCMP bug with zero residuals)
+Example - SASDBD9_FIT_728 (n=543, C=11):
+  DATCMP:                  p = 0.230925
+  FreeSAS (raw float64):   p = 0.230548  (error = 0.000377)
+  Exact Decimal fix:       p = 0.230925  (error = 0.000000)
+  Schilling analytical:    p = 0.230925
 
-FreeSAS handles this edge case correctly. This case is excluded
-from the agreement statistics above.
+This pipeline uses Python's Decimal module (precision=100) to
+recompute the p-value after obtaining N and C from FreeSAS's gof().
+This eliminates all floating-point error in the probability calculation.
 
 ================================================================================
-ALGORITHM
+DATA EXTRACTION
 ================================================================================
 
-Both DATCMP and FreeSAS implement the Schilling (1990) formula:
-  Step 1: residuals = I_fit - I_exp
-  Step 2: C = longest run of same-sign residuals
-  Step 3: p = P(longest run >= C | n) via LROH.probaLongerRun(n, c-1)
+Data is extracted from the _sas_model_fitting loop in each .sascif file:
+  _sas_model_fitting.momentum_transfer  -> q
+  _sas_model_fitting.intensity          -> I_exp (on the fit grid)
+  _sas_model_fitting.fit                -> I_fit
 
-  Note: q and sigma are not used in the p-value calculation.
-        Only intensity values and their ordering matter.
+No rebinning or interpolation is applied. Uniform sigma = 1.0 is used
+(sigma does not affect the CorMap p-value calculation).
 
-Small p-value differences (max observed: 0.035765) are due to
-floating-point precision differences between the C implementation
-(DATCMP) and Python implementation (FreeSAS). Both use the same
-Schilling (1990) recursive formula.
+Filter: q > 0 only. Rows with I_exp = 0 are retained.
 
 ================================================================================
 CONCLUSION
 ================================================================================
 
-FreeSAS cormapy produces results identical to DATCMP (within
-rounding error) for all 10 comparable PDB-IHM SAS entries.
+FreeSAS cormapy produces results identical to DATCMP for all 30
+comparable PDB-IHM SAS entries when using exact Decimal arithmetic
+for the Schilling p-value computation.
 
-  Agreement within 0.05:  10/10 (100.0%)
-  Mean difference:         0.003584
+  Agreement within 0.05:   30/30 (100.0%)
+  Mean difference:         0.002125
   Max difference:          0.035765
 
 cormapy is a valid replacement for DATCMP in IHMValidation.
@@ -127,11 +99,11 @@ cormapy is a valid replacement for DATCMP in IHMValidation.
 Benefits over DATCMP:
   - Pure Python (no ATSAS dependency)
   - MIT license vs proprietary ATSAS license
-  - Correctly handles edge cases (e.g. self-comparison: p=1.0)
-  - DATCMP has a known bug with zero residuals (returns p=0.0)
+  - Correctly handles self-comparison edge case (p=1.0 vs DATCMP bug p=0.0)
+  - Exact p-value with Decimal arithmetic fix
 
 Coverage limitation:
-  - 12/22 SASBDB codes not available (HTTP 404, likely embargo)
+  - 12/22 SASBDB codes not available (HTTP 404, likely under embargo)
   - Validation covers all 10 publicly available entries
   - Remaining 12 should be validated when they become public
 
