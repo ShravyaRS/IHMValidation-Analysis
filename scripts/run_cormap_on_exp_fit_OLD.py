@@ -19,6 +19,10 @@ getcontext().prec = 100
 
 
 def cormap_pvalue_exact(n, c_longest):
+    """
+    Compute CorMap p-value with exact arithmetic using Schilling (1990) recursion.
+    Replaces FreeSAS LROH.probaLongerRun() which has float64 precision issues.
+    """
     k = c_longest - 1
     if k > n:
         return 0.0
